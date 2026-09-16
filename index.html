@@ -3281,7 +3281,7 @@
         ]
       },
       title:'Eight discovery moments, owned by someone else',
-      sub:'These are the prompts where a buyer with no brand in mind builds a shortlist. Five of the eight are multivitamin queries, and Cosmix sells a multivitamin.',
+      sub:'These are the prompts where a buyer with no brand in mind builds a shortlist. 5 of 8 use multivitamin queries, and Cosmix sells a multivitamin.',
       cta:{ label:'Open report' } }
   ];
 
@@ -4173,9 +4173,9 @@
   });
 
   const FEED_ORDER = [
+    POSTS[9],
     POSTS[0], TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
-    POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7], POSTS[8],
-    POSTS[9]
+    POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7], POSTS[8]
   ];
   document.getElementById('feed').insertAdjacentHTML('beforeend',
     FEED_ORDER.map((c, i) => card(c) + (i === 2 ? connectCard('meta') : i === 5 ? connectCard('shopify') : '')).join(''));
