@@ -4180,12 +4180,12 @@
 
   const FEED_ORDER = [
     POSTS[8],
-    POSTS[9], TEXT_POSTS[5],
-    POSTS[0], TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
+    POSTS[9], POSTS[0], TEXT_POSTS[5],
+    TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
     POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7]
   ];
   document.getElementById('feed').insertAdjacentHTML('beforeend',
-    FEED_ORDER.map((c, i) => card(c) + (i === 2 ? connectCard('meta') : i === 5 ? connectCard('shopify') : '')).join(''));
+    FEED_ORDER.map((c, i) => card(c) + (i === 5 ? connectCard('shopify') : '')).join(''));
   paintSubbars();
 
   /* ---------------- interactions ---------------- */
