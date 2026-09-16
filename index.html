@@ -1019,7 +1019,6 @@
   }
   .act svg{overflow:visible;transition:transform .18s cubic-bezier(.34,1.56,.64,1),opacity .15s}
   .act:active svg{transform:scale(.88)}
-  .act-kill:hover{color:#ff7a72}
   .act.is-pop svg{animation:pop .42s cubic-bezier(.34,1.56,.64,1)}
   @keyframes pop{
     0%{transform:scale(1)}
@@ -1057,6 +1056,15 @@
   .act.bookmark:hover .tip,
   .act.bookmark:focus-visible .tip{transform:translate(0,0)}
   .act.bookmark .tip::after{left:auto;right:12px;transform:none}
+  /* first and last actions sit at the card edges — pin their tips inside so they never clip */
+  .act-group .act:first-child .tip{left:0;transform:translate(0,4px)}
+  .act-group .act:first-child:hover .tip,
+  .act-group .act:first-child:focus-visible .tip{transform:translate(0,0)}
+  .act-group .act:first-child .tip::after{left:14px}
+  .card-actions > .act:last-child .tip{left:auto;right:0;transform:translate(0,4px)}
+  .card-actions > .act:last-child:hover .tip,
+  .card-actions > .act:last-child:focus-visible .tip{transform:translate(0,0)}
+  .card-actions > .act:last-child .tip::after{left:auto;right:7px;margin-left:0}
   .tip-below::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#fafafa}
   .chip:hover .tip,.chip:focus-visible .tip{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
@@ -1181,11 +1189,6 @@
      Each icon moves the way its meaning moves. 180ms, nothing bouncy. */
   .act:hover svg{opacity:.72}
   .act:nth-child(1){transition:none}
-  /* keep and kill are a mirrored pair: same timing, opposite scale */
-  .act-keep svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1),opacity .15s}
-  .act-keep:hover svg{transform:scale(1.1)}
-  .act-kill svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1),opacity .15s}
-  .act-kill:hover svg{transform:scale(.9)}
   /* tweak leans into the loop rather than spinning through it */
   .act-remix svg{transition:transform .26s cubic-bezier(.34,1.3,.64,1),opacity .15s}
   .act-remix:hover svg{transform:rotate(-14deg) scale(1.12)}
@@ -2713,9 +2716,9 @@
     </div>
   </nav>
 
-  <button class="rail-badge" aria-label="Point Taken workspace">
+  <button class="rail-badge" aria-label="Cosmix workspace">
     <span class="ini">P</span>
-    <span class="rail-label">Point Taken</span>
+    <span class="rail-label">Cosmix</span>
   </button>
 </aside>
 
@@ -3199,14 +3202,14 @@
   const POSTS = [
     { agent:'creative', time:'12 min', ratio:'4:5',
       images:['assets/ptup-tall-1.jpg','assets/ptup-tall-2.jpg','assets/ptup-tall-3.jpg'],
-      title:'Made to Layer is holding attention longer than the product-led cuts',
-      sub:'The cape reads as festive layering when it billows off a swing, not when it is folded flat on a table. Worth shooting the next drop the same way.',
+      title:'Made to Absorb is holding attention longer than the product-led cuts',
+      sub:'The shake reads as a daily ritual when it is poured and in hand, not when the pouch is shot flat on a table. Worth shooting the next launch the same way.',
       cta:{ label:'Publish Campaign', logo:'meta', brandColor:'#0866FF' } },
 
     { agent:'performance', time:'28 min', ratio:'wide',
       images:['assets/ptup-wide-1.jpg'],
-      title:'A craft-proof campaign for The Jaipur kurta',
-      sub:'Block-print and natural-dye detail, called out on the garment itself rather than buried in copy underneath it.',
+      title:'A proof-led campaign for No-Nonsense Plant Protein',
+      sub:'27g of plant protein and a clean label, called out on the pack itself rather than buried in copy underneath it.',
       cta:{ label:'Approve concept' } },
 
     { agent:'visibility', time:'45 min',
@@ -3215,48 +3218,48 @@
         { label:'Content',    value:86, color:'#a8ff2e' },
         { label:'Storefront', value:74, color:'#22d3ee' }
       ]},
-      title:'Point Taken brand health climbed 12 points this week',
-      sub:'Stronger recall on handloom and block-print search terms and a cleaner product feed. Two weak spots remain in category coverage.',
+      title:'Cosmix brand health climbed 12 points this week',
+      sub:'Stronger recall on gut-health and plant-protein search terms and a cleaner product feed. Two weak spots remain in category coverage.',
       cta:{ label:'Open report' } },
 
     { agent:'creative', time:'1 hr', ratio:'square',
       images:['assets/ptup-sq-1.jpg','assets/ptup-sq-2.jpg','assets/ptup-sq-3.jpg','assets/ptup-sq-4.jpg'],
-      title:'Nine Made to Layer cuts, one for every placement',
+      title:'Nine Made to Absorb cuts, one for every placement',
       sub:'Same line, different casting and setting, so paid, organic and retail never end up running the identical frame.',
       cta:{ label:'Start creating' } },
 
     { agent:'storefront', time:'3 hr', ratio:'square',
-      images:['assets/ptup-prod-cloud.jpg'],
-      title:'Show why The Mulmul kurta outperforms a basic kurta',
-      sub:'The mulmul weave and hand-finished seams, marked on the garment where shoppers already look first.',
+      images:['assets/cx-carousel-1.jpg','assets/cx-carousel-2.jpg','assets/cx-carousel-3.jpg','assets/cx-carousel-4.jpg','assets/cx-carousel-5.jpg'],
+      title:'The My Happy Gut description reads like an ingredient list',
+      sub:'Rewritten around how it makes you feel rather than what is in it. Fourteen listings are in the same state.',
       cta:{ label:'Apply Update' } },
 
     { agent:'visibility', time:'1 hr',
       chart:{
-        title:'Indo-Western fusion wear recommendation',
+        title:'Clean plant protein recommendation',
         max:50,
-        note:'Underrepresented in handloom and block-print prompts',
+        note:'Underrepresented in gut-health and plant-protein prompts',
         rows:[
-          { label:'FabIndia',          value:45 },
-          { label:'Global Desi',       value:38 },
-          { label:'House of Indya',    value:27 },
-          { label:'Point Taken',       value:15, brand:true }
+          { label:'The Whole Truth',   value:45 },
+          { label:'OZiva',             value:38 },
+          { label:'Kapiva',            value:27 },
+          { label:'Cosmix',            value:15, brand:true }
         ]
       },
-      title:'Improve visibility for Indo-Western fusion wear searches',
-      sub:'Recommendations to help Point Taken surface when shoppers ask AI for handloom, block-print ethnic wear.',
+      title:'Improve visibility for clean plant protein searches',
+      sub:'Recommendations to help Cosmix surface when shoppers ask AI for clean, plant-based protein and gut health.',
       cta:{ label:'Open report' } },
 
     { agent:'creative', time:'2 hr', ratio:'4:5',
       images:['assets/ptup-tall-4.jpg'],
-      title:'The Mulmul kurta’s everyday drape, shot for vertical',
-      sub:'Built full-bleed at 4:5 for the feed, with the chikankari detail kept clear of the crop on every placement it lands in.',
+      title:'Fermented Yeast Protein’s everyday pour, shot for vertical',
+      sub:'Built full-bleed at 4:5 for the feed, with the on-pack claim kept clear of the crop on every placement it lands in.',
       cta:{ label:'Generate versions' } },
 
     { agent:'creative', time:'4 hr', ratio:'wide',
       images:['assets/ptup-wide-2.jpg'],
-      title:'The Jaipur kurta hero frame, recut for every surface',
-      sub:'The same campaign taken to 16:9 for site banners and pre-roll, with the block-print detail still inside the crop.',
+      title:'The No-Nonsense Protein hero frame, recut for every surface',
+      sub:'The same campaign taken to 16:9 for site banners and pre-roll, with the on-pack claim still inside the crop.',
       cta:{ label:'Explore trend' } }
   ];
 
@@ -3432,19 +3435,16 @@
 
       <div class="card-actions">
         <div class="act-group">
-          <button class="act act-keep" data-toast="keep" aria-label="Keep and show more posts like this">
-            ${svg(I.circleCheck, 20)}<span class="tip">Keep &amp; show more posts like this</span>
+          <button class="act" data-toast="like" aria-pressed="false" aria-label="Like">
+            ${svg(I.heart)}<span class="tip">Like to see more like this</span>
           </button>
-          <button class="act act-kill" aria-label="Kill direction and don't show posts like this">
-            ${svg(I.circleX, 20)}<span class="tip">Kill direction and don’t show posts like this</span>
-          </button>
-          <button class="act act-remix" aria-label="Tweak this with agents">
-            ${svg(I.wand, 20)}<span class="tip">Tweak this with agents</span>
+          <button class="act act-remix" aria-label="Remix with Agent">
+            ${svg(I.wand, 21)}<span class="tip">Remix with Agent</span>
           </button>
         </div>
         ${dots(p.images ? p.images.length : 0)}
-        <button class="act act-jam" aria-label="Jam with a team">
-          ${svg(I.users, 20)}<span class="tip">Jam with a team</span>
+        <button class="act act-jam" aria-label="Jam with team">
+          ${svg(I.users, 20)}<span class="tip">Jam with team</span>
         </button>
       </div>
 
@@ -3461,32 +3461,32 @@
   // extra cards so the columns read at the volume the deck is built for
   const DECK_ONLY = [
     { agent:'creative', time:'22 min', ratio:'square', images:['assets/ptup-sq-2.jpg'],
-      title:'A second casting for Made to Layer',
+      title:'A second casting for Made to Absorb',
       sub:'Same line, different model and setting, so paid and organic never run the identical frame.',
       cta:{ label:'Add to campaign' } },
     { agent:'creative', time:'3 hr', ratio:'wide', images:['assets/ptup-wide-3.jpg'],
-      title:'Craft callouts, pulled into a banner',
-      sub:'The Jaipur kurta’s handloom weave and block-print marks, recut to sit above the fold on the category page.',
+      title:'Label proof, pulled into a banner',
+      sub:'No-Nonsense Protein’s clean label and 27g claim, recut to sit above the fold on the category page.',
       cta:{ label:'Send to storefront' } },
     { agent:'performance', time:'40 min', ratio:'square', images:['assets/ptup-prod-flex.jpg'],
-      title:'The Jaipur kurta is carrying the account this week',
-      sub:'It is taking 38% of spend and returning 51% of revenue. Worth widening the budget before the festive weekend.',
+      title:'No-Nonsense Plant Protein is carrying the account this week',
+      sub:'It is taking 38% of spend and returning 51% of revenue. Worth widening the budget before the New Year reset.',
       cta:{ label:'Shift budget', logo:'meta', brandColor:'#0866FF' } },
     { agent:'performance', time:'5 hr', ratio:'wide', images:['assets/ptup-wide-2.jpg'],
-      title:'Three Made to Layer creatives are past frequency 4',
+      title:'Three Made to Absorb creatives are past frequency 4',
       sub:'Same audience seeing the same casting too often. Rotating in the newer castings should pull CPA back.',
       cta:{ label:'Rotate creative' } },
-    { agent:'storefront', time:'1 hr', ratio:'square', images:['assets/ptup-prod-chino.jpg'],
-      title:'The Dhoti pant description reads like a spec sheet',
-      sub:'Rewritten around how the trouser moves rather than what it is made of. Fourteen listings are in the same state.',
+    { agent:'storefront', time:'1 hr', ratio:'square', images:['assets/ptup-prod-cloud.jpg'],
+      title:'Show why Fermented Yeast Protein beats standard whey',
+      sub:'The FERMAGUT fermentation and clean label, marked on the pack where shoppers already look first.',
       cta:{ label:'Apply Update' } },
     { agent:'storefront', time:'6 hr', ratio:'4:5', images:['assets/ptup-tall-3.jpg'],
-      title:'Six fusion-wear listings are missing their size guide',
-      sub:'Every one of them is a Made to Layer or Jaipur kurta listing in the top twenty by traffic. The guide exists, it is just not attached.',
-      cta:{ label:'Attach guides' } },
+      title:'Six protein listings are missing their nutrition panel',
+      sub:'Every one of them is a Made to Absorb or No-Nonsense listing in the top twenty by traffic. The panel exists, it is just not attached.',
+      cta:{ label:'Attach panels' } },
     { agent:'visibility', time:'2 hr', ratio:'wide', images:['assets/ptup-wide-1.jpg'],
-      title:'You are absent from fusion-wear comparisons',
-      sub:'Four of five AI answers on Indo-Western fusion wear name the same three brands. None of them is you.',
+      title:'You are absent from plant-protein comparisons',
+      sub:'Four of five AI answers on clean plant protein name the same three brands. None of them is you.',
       cta:{ label:'Open report' } },
     { agent:'visibility', time:'8 hr', ratio:'square', images:['assets/ptup-sq-3.jpg'],
       title:'A long-form piece would move the needle',
@@ -3497,29 +3497,29 @@
   // short, data-led posts: a badge, a small table, then the decision
   const TEXT_POSTS = [
     { agent:'performance', time:'6 min', badge:['Catalog health','warn'],
-      rows:[['Disapproved on Meta','14 of 212'],['Cause','missing GTIN'],['Fix','one Shopify field']],
-      title:'Fourteen products are disapproved on Meta',
-      sub:'All fourteen share one cause. Fix the field once in Shopify and the next sync clears every one of them.',
+      rows:[['Disapproved on Meta','5 of 40'],['Cause','missing GTIN'],['Fix','one Shopify field']],
+      title:'Five products are disapproved on Meta',
+      sub:'All five share one cause. Fix the field once in Shopify and the next sync clears every one of them.',
       cta:{ label:'Open catalog health' } },
 
     { agent:'creative', time:'9 min', badge:['Shipped','ok'],
       rows:[['Concepts drafted','14'],['Kept','2'],['Ready to run','both'],
-            ['Held for the next drop','12']],
+            ['Held for the next launch','12']],
       title:'Fourteen concepts in, two out',
-      sub:'The two that survived are the ones where the fabric claim is on the garment rather than under it.',
+      sub:'The two that survived are the ones where the label claim is on the pack rather than under it.',
       cta:{ label:'Review the two' } },
 
     { agent:'storefront', time:'2 hr', badge:['Needs you','info'],
-      rows:[['Descriptions rewritten','31'],['Still saying "premium quality"','0'],
+      rows:[['Descriptions rewritten','31'],['Still saying "clinically proven"','0'],
             ['Waiting on approval','31']],
       title:'Thirty-one descriptions are rewritten and waiting',
-      sub:'They all leaned on the same empty phrase. Rewritten around how the garment behaves. Nothing is live until you approve.',
+      sub:'They all leaned on the same empty phrase. Rewritten around how it makes you feel. Nothing is live until you approve.',
       cta:{ label:'Approve all' } },
 
     { agent:'visibility', time:'5 hr', badge:['Losing','bad'],
       rows:[['Models asked','4'],['Named a competitor','3'],['Named you','0'],
-            ['Prompt','best fusion-wear kurta set in India']],
-      title:'You are absent from the fusion-wear answer',
+            ['Prompt','best clean plant protein in India']],
+      title:'You are absent from the plant-protein answer',
       sub:'Three of four models name the same competitor. The engines are quoting editorial, not product pages.',
       cta:{ label:'See what would change it' } },
 
@@ -3549,8 +3549,8 @@
   const CATALOG = new Set([
     'Fourteen products are disapproved on Meta',
     'Craft callouts, pulled into a banner',
-    'A second casting for Made to Layer',
-    'Show why The Mulmul kurta outperforms a basic kurta'
+    'A second casting for Made to Absorb',
+    'Show why Fermented Yeast Protein beats standard whey'
   ]);
   const sectorOf = (p) => CATALOG.has(p.title) ? 'catalog' : SECTOR_BY_AGENT[p.agent];
   const byAgent = (k) => ALL_POSTS.filter(p => sectorOf(p) === k);
@@ -3610,8 +3610,8 @@
   const SECTOR_STATE = {
     signals:    { on:false, note:'Waiting on your customer data' },
     catalog:    { on:true,  every:5200, shimmer:'3.1s', stream:['Re-syncing 212 products','Checking Meta feed rejections','Matching GTINs against Shopify','Re-reading stock on the live feed','Scoring the top 20 by rating'] },
-    creatives:  { on:true,  every:4300, shimmer:'2.7s', stream:['Finding new trends','Cutting three hero frames','Reading what landed last week','Matching the drop to placements','Drafting the next brief'] },
-    ads:        { on:true,  every:5900, shimmer:'3.4s', stream:['Reading yesterday spend','Checking frequency on four sets','Pulling a CPA delta','Watching the Jaipur kurta set','Scoring creative by hold rate'] },
+    creatives:  { on:true,  every:4300, shimmer:'2.7s', stream:['Finding new trends','Cutting three hero frames','Reading what landed last week','Matching the launch to placements','Drafting the next brief'] },
+    ads:        { on:true,  every:5900, shimmer:'3.4s', stream:['Reading yesterday spend','Checking frequency on four sets','Pulling a CPA delta','Watching the No-Nonsense Plant Protein set','Scoring creative by hold rate'] },
     storefront: { on:false, note:'Idle, last run 40 min ago' },
     visibility: { on:false, note:'Queued, next run in 12 min', soon:true }
   };
@@ -3627,7 +3627,7 @@
   };
 
   // whatever the brand turned out to be during setup
-  let BRAND_NAME = 'Point Taken';
+  let BRAND_NAME = 'Cosmix';
   window.__setBrand = (name) => { BRAND_NAME = name || BRAND_NAME; };
 
   const saved = new Set();
@@ -4166,7 +4166,6 @@
   /* ---------------- interactions ---------------- */
   const TOASTS = {
     like:  'We\u2019ll create more posts like this!',
-    keep:  'Kept — we’ll show you more like this',
     save:  'Saved',
     copy:  'Post link copied for sharing'
   };
@@ -4234,15 +4233,6 @@
 
     const b = e.target.closest('.act');
     if (!b) return;
-
-    // kill: the loop stops suggesting this, and the card leaves
-    if (b.classList.contains('act-kill')) {
-      toast('Killed — we’ll show you less like this');
-      const card = b.closest('.card');
-      card.classList.add('is-dismissed');
-      card.addEventListener('animationend', () => card.remove(), { once: true });
-      return;
-    }
 
     const toggle = b.hasAttribute('aria-pressed');
     const turningOn = !toggle || b.getAttribute('aria-pressed') === 'false';
@@ -4551,7 +4541,7 @@
     const opening = jam
       ? `I pulled this one up. <b>${a.name}</b> posted it ${post.time} ago.`
       : `I pulled this one up. <b>${a.name}</b> posted it ${post.time} ago, off the back of
-         what is moving for Point Taken right now.`;
+         what is moving for Cosmix right now.`;
 
     const body = jam ? `
       ${msg('.14s', `A ShopOS specialist can take it from here and work it through with you
@@ -4828,15 +4818,15 @@
 
   // ---------- sessions: one list behind both history and search ----------
   const SESSIONS = [
-    ['Today',       'Remix the Made to Layer carousel',            '12 min ago'],
-    ['Today',       'Three directions for The Jaipur kurta',       '1 hr ago'],
-    ['Today',       'Why is visibility flat on handloom terms',    '3 hr ago'],
-    ['Yesterday',   'Mulmul kurta product proof copy',             'Yesterday, 6:40 pm'],
-    ['Yesterday',   'Recut the hero frame for pre-roll',           'Yesterday, 2:15 pm'],
-    ['Yesterday',   'Jam with the team on the Mulmul kurta drape', 'Yesterday, 11:02 am'],
-    ['Last 7 days', 'Meta Ads budget split for the drop',          'Tuesday'],
-    ['Last 7 days', 'Rewrite the Dhoti pant description',          'Tuesday'],
-    ['Last 7 days', 'Who owns Indo-Western fusion wear in AI answers', 'Monday'],
+    ['Today',       'Remix the Made to Absorb carousel',           '12 min ago'],
+    ['Today',       'Three directions for No-Nonsense Protein',     '1 hr ago'],
+    ['Today',       'Why is visibility flat on gut-health terms',   '3 hr ago'],
+    ['Yesterday',   'Fermented Yeast Protein proof copy',           'Yesterday, 6:40 pm'],
+    ['Yesterday',   'Recut the hero frame for pre-roll',            'Yesterday, 2:15 pm'],
+    ['Yesterday',   'Jam with the team on the Fermented hero',      'Yesterday, 11:02 am'],
+    ['Last 7 days', 'Meta Ads budget split for the launch',         'Tuesday'],
+    ['Last 7 days', 'Rewrite the My Happy Gut description',         'Tuesday'],
+    ['Last 7 days', 'Who owns clean plant protein in AI answers',   'Monday'],
     ['Last 7 days', 'Brand health dip after the feed change',      'Sunday']
   ];
 
@@ -4975,12 +4965,12 @@
   // ---------- stories ----------
   const STORIES = {
     trends: { title:'Trends', avatar:'assets/agent-performance.svg', slides:[
-      { g:'linear-gradient(160deg,#38bdf8,#1d4ed8)', h:'Craft is winning',
-        p:'Searches for handloom and block-print pieces are up 34% this month, and the language has moved from occasion wear to everyday drape.' },
-      { g:'linear-gradient(160deg,#22d3ee,#0c2a6b)', h:'Draped silhouettes, easier wear',
-        p:'Draped silhouettes are outselling straight cuts two to one in metro cities. The Dhoti pant is sitting in the right place for it.' },
+      { g:'linear-gradient(160deg,#38bdf8,#1d4ed8)', h:'Gut-first is winning',
+        p:'Searches for gut health and clean protein are up 34% this month, and the language has moved from quick fixes to daily habits.' },
+      { g:'linear-gradient(160deg,#22d3ee,#0c2a6b)', h:'Fermented is breaking out',
+        p:'Fermented formats are outselling standard protein two to one in metro cities. Fermented Yeast Protein is sitting in the right place for it.' },
       { g:'linear-gradient(160deg,#93c5fd,#0369a1)', h:'Proof beats promise',
-        p:'Ads that show the craft claim on the garment hold attention roughly twice as long as ads that write it underneath.' }
+        p:'Ads that show the label claim on the pack hold attention roughly twice as long as ads that write it underneath.' }
     ]},
     new: { title:'What is new', avatar:'assets/agent-creative.svg', slides:[
       { g:'linear-gradient(160deg,#34d399,#065f46)', h:'Every ratio, one feed',
@@ -4999,11 +4989,11 @@
         p:'Pull the team into any card. The thread keeps the brief, so nobody starts from scratch.' }
     ]},
     ads: { title:'Popular ads', avatar:'assets/agent-storefront.svg', slides:[
-      { img:'assets/ptup-sq-1.jpg', h:'Made to Layer',
+      { img:'assets/ptup-sq-1.jpg', h:'Made to Absorb',
         p:'Your strongest cut this week. The lifestyle frame is holding attention twice as long as flat product.' },
-      { img:'assets/ptup-wide-1.jpg', h:'The Jaipur kurta',
-        p:'Putting the craft callouts on the garment lifted add to cart by 18% against the plain hero.' },
-      { img:'assets/ptup-prod-cloud.jpg', h:'The Mulmul kurta',
+      { img:'assets/ptup-wide-1.jpg', h:'No-Nonsense Plant Protein',
+        p:'Putting the label claims on the pack lifted add to cart by 18% against the plain hero.' },
+      { img:'assets/ptup-prod-cloud.jpg', h:'Fermented Yeast Protein',
         p:'The product proof format is your most saved post. Worth running it across the rest of the line.' }
     ]}
   };
@@ -5109,7 +5099,7 @@
   const SOURCES = [
     { id:'shopify',  name:'Shopify',           kind:'Orders, customers, products, returns', required:true,
       unlocks:'Purchase history and lifecycle. Every signal needs this one.',
-      records:'2,400 customer records · 4,118 orders · 212 products',
+      records:'2,400 customer records · 4,118 orders · 40 products',
       steps:['Importing purchase history','Matching customer records','Preparing signals'],
       icon:'<img src="assets/logo-shopify.png" alt="">' },
     { id:'klaviyo',  name:'Klaviyo',           kind:'Email reachability, consent, journeys',
@@ -5149,8 +5139,8 @@
         'Not contacted in the last 7 days, no open support issue, not already in a journey'
       ],
       msg:{
-        subject:'{{first_name}}, the Dhoti pant that goes with your {{category}}',
-        body:'Hi {{first_name}},\n\nYou picked up a {{category}} from us on {{purchase_date}}. The Dhoti pant is the piece most people reach for next: same fabric family, cut for easy movement, and it works with what you already own.\n\nWe have your size ({{size}}) in stock.',
+        subject:'{{first_name}}, the My Happy Gut that goes with your {{category}}',
+        body:'Hi {{first_name}},\n\nYou picked up a {{category}} from us on {{purchase_date}}. My Happy Gut is the one most people reach for next: same clean formula, made for daily gut support, and it works with what you already take.\n\nWe have your flavour back in stock.',
         cta:'See the pairing'
       },
       journey:[
@@ -5162,43 +5152,43 @@
       ],
       decision:[
         ['Why these people', 'One order, 14 to 60 days ago, no second order.'],
-        ['Why now', 'The pairing product is back in stock in the sizes they wear.'],
+        ['Why now', 'The pairing product is back in stock in the flavours they buy.'],
         ['Why this channel', 'Email consent covers 231 of them. WhatsApp covers 84.'],
         ['What would stop it', 'Stock falling below 20 units, or the support queue flagging a return.']
       ],
-      asset:'Outfit pairing frame, kurta worn with the Dhoti pant. The Creative director has it drafted.'
+      asset:'Pairing frame, No-Nonsense Protein shown with My Happy Gut. The Creative director has it drafted.'
     },
     { id:'loyal', life:'loyal', lifeLabel:'Loyal', when:'40 min',
-      headline:'Give your repeat customers first access to the drop.',
-      why:'The Jaipur kurta and the Made to Layer cape go live on 22 September. 311 customers have three or more orders and have already bought kurtas or fusion sets, so the launch category is one they have paid for before.',
-      objective:'Let the people who already buy most see the drop before anyone else. No discount.',
+      headline:'Give your repeat customers first access to the launch.',
+      why:'The new Fermented Yeast Protein flavour and the Made to Absorb bundle go live on 22 September. 311 customers have three or more orders and have already bought protein or superfoods, so the launch category is one they have paid for before.',
+      objective:'Let the people who already buy most see the launch before anyone else. No discount.',
       channel:'Email',
       counts:{ eligible:311, unreachable:22, noConsent:9, recent:26, support:3, inJourney:14 },
       rules:[
         'Three or more completed purchases',
         'Last order within the past 120 days',
-        'A kurta or fusion-set purchase already on file',
+        'A protein or superfood purchase already on file',
         'Launch products available on 22 September',
         'Reachable on the selected channel, with consent',
         'Not contacted in the last 7 days, no open support issue, not already in a journey'
       ],
       msg:{
         subject:'{{first_name}}, you see this first',
-        body:'Hi {{first_name}},\n\nThe Jaipur kurta and the Made to Layer cape go live on Monday. You are on the early list, so the link below works from Friday evening.\n\nNo code, no discount. Just first pick of the sizes.',
+        body:'Hi {{first_name}},\n\nThe new Fermented Yeast Protein flavour and the Made to Absorb bundle go live on Monday. You are on the early list, so the link below works from Friday evening.\n\nNo code, no discount. Just first pick of the flavours.',
         cta:'Open early access'
       },
       journey:[
         ['Entry', 'Repeat customers who pass the rules, checked the evening before.'],
         ['Send Friday', 'One email with the early link.'],
         ['Wait 2 days', 'No purchase by Sunday evening.'],
-        ['Follow up', 'A single reminder on Monday morning, as the drop goes public.'],
-        ['Exit', 'On purchase, on unsubscribe, or when the drop goes public.']
+        ['Follow up', 'A single reminder on Monday morning, as the launch goes public.'],
+        ['Exit', 'On purchase, on unsubscribe, or when the launch goes public.']
       ],
       decision:[
         ['Why these people', 'Three or more orders and a purchase in the launch category.'],
         ['Why now', 'Early access only means something before the public launch.'],
         ['Why no discount', 'These customers buy at full price. A code trains them not to.'],
-        ['What would stop it', 'The launch slipping, or fewer than 200 units across sizes.']
+        ['What would stop it', 'The launch slipping, or fewer than 200 units across flavours.']
       ],
       asset:null
     },
@@ -5217,7 +5207,7 @@
       ],
       msg:{
         subject:'',
-        body:'Hi {{first_name}}, it has been a while. You bought the {{last_product}} back in {{last_month}} and we have not heard from you since.\n\nQuick one: did it hold up?\n\nIf something went wrong we would rather fix it than sell you anything.',
+        body:'Hi {{first_name}}, it has been a while. You bought the {{last_product}} back in {{last_month}} and we have not heard from you since.\n\nQuick one: did it work for you?\n\nIf something went wrong we would rather fix it than sell you anything.',
         cta:'Reply to this message'
       },
       journey:[
@@ -5520,7 +5510,7 @@
       return out.join(' ').replace(/[-_]+/g, ' ').replace(/\b[a-z]/g, c => c.toUpperCase()).trim() || 'Your brand';
     };
 
-    let BRAND = { host:'pointtaken.in', name:'Point Taken', products:212, fresh:false };
+    let BRAND = { host:'cosmix.in', name:'Cosmix', products:40, fresh:false };
 
     const AG_ORDER = ['creative', 'performance', 'storefront', 'visibility'];
 
@@ -5720,7 +5710,7 @@
     };
 
     const begin = (host, fresh) => {
-      const clean = (host || '').replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0] || 'pointtaken.in';
+      const clean = (host || '').replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0] || 'cosmix.in';
       const r = rand(seedOf(clean));
       BRAND = { host: clean, name: fresh ? 'Your new brand' : nameFromHost(clean),
                 products: fresh ? 0 : 80 + Math.floor(r() * 260), fresh };
@@ -5752,7 +5742,7 @@
     document.getElementById('su-open').addEventListener('click', openFeed);
 
     const urlEl = $('start-url');
-    const submit = () => begin(urlEl.value.trim() || 'pointtaken.in', false);
+    const submit = () => begin(urlEl.value.trim() || 'cosmix.in', false);
     $('start-form').addEventListener('submit', (e) => { e.preventDefault(); submit(); });
     $('start-go').addEventListener('click', submit);
     $('start-fresh').addEventListener('click', () => begin('a-new-brand.com', true));
