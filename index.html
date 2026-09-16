@@ -4179,12 +4179,9 @@
   });
 
   const FEED_ORDER = [
-    POSTS[8],        // creative director
-    POSTS[9],        // AI visibility — chart + the 8 prompts
-    TEXT_POSTS[0],   // performance marketer
-    TEXT_POSTS[5],   // branded vs discovery prompts
-    POSTS[0], POSTS[2], TEXT_POSTS[1],
-    POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7]
+    POSTS[9], TEXT_POSTS[5],
+    POSTS[0], TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
+    POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7], POSTS[8]
   ];
   document.getElementById('feed').insertAdjacentHTML('beforeend',
     FEED_ORDER.map((c, i) => card(c) + (i === 2 ? connectCard('meta') : i === 5 ? connectCard('shopify') : '')).join(''));
