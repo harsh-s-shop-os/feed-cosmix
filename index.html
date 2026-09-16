@@ -533,11 +533,11 @@
   .rows{display:flex;flex-direction:column}
   .rows > div{
     display:flex;justify-content:space-between;gap:16px;
-    padding:10px 0;border-top:1px solid var(--line-soft);
+    padding:18px 0;border-top:1px solid var(--line-soft);
     font-size:14px;line-height:20px;
   }
-  .rows > div:first-child{border-top:0;padding-top:0}
-  .rows > div:last-child{padding-bottom:0}
+  .rows > div:first-child{border-top:0;padding-top:6px}
+  .rows > div:last-child{padding-bottom:6px}
   .rows .k{color:var(--fg-2);min-width:0}
   .rows .v{color:var(--fg);text-align:right;flex:0 0 auto;font-variant-numeric:tabular-nums}
   .card.is-data .card-body{padding-top:16px}
@@ -3550,7 +3550,7 @@
       cta:{ label:'Rotate creative', logo:'meta', brandColor:'#0866FF' } },
 
     { agent:'visibility', time:'50 min', badge:['Losing','bad'],
-      rows:[['Branded prompts','3 of 3 cited'],['Discovery prompts','8 of 15 uncited']],
+      rows:[['Branded prompts','3 of 3 cited'],['Discovery prompts','7 of 15 cited']],
       title:'You win the answer only when the buyer types your name',
       sub:'Hand the engines the brand name and all three answer correctly and cite cosmix.in. Ask them to describe a need instead, and the shortlist they build does not contain Cosmix.',
       cta:{ label:'See what would change it' } }
