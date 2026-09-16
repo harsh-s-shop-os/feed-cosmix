@@ -1181,8 +1181,9 @@
      Each icon moves the way its meaning moves. 180ms, nothing bouncy. */
   .act:hover svg{opacity:.72}
   .act:nth-child(1){transition:none}
-  .act-keep svg{transition:transform .22s cubic-bezier(.34,1.4,.64,1),opacity .15s}
-  /* kill: the ring tightens */
+  /* keep and kill are a mirrored pair: same timing, opposite scale */
+  .act-keep svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1),opacity .15s}
+  .act-keep:hover svg{transform:scale(1.1)}
   .act-kill svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1),opacity .15s}
   .act-kill:hover svg{transform:scale(.9)}
   /* tweak leans into the loop rather than spinning through it */
