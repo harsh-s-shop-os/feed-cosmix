@@ -945,8 +945,6 @@
     transition:stroke-dashoffset 1.25s cubic-bezier(.22,.8,.25,1);
   }
   .card.in .ring-fg{stroke-dashoffset:var(--o)}
-  .ring-tip{opacity:0;transition:opacity .3s ease 1.05s}
-  .card.in .ring-tip{opacity:1}
 
   .ring-center{
     position:absolute;inset:0;display:grid;place-content:center;
@@ -973,7 +971,6 @@
 
   @media (prefers-reduced-motion:reduce){
     .ring-fg{transition:none;stroke-dashoffset:var(--o)}
-    .ring-tip{transition:none;opacity:1}
   }
 
   /* media — data panel (AI visibility) */
@@ -3344,7 +3341,6 @@
       const rad = RADII[i];
       const circ = 2 * Math.PI * rad;
       const pct  = Math.min(ring.value / 100, 1);
-      const end  = -90 + 360 * pct;                       // degrees, 12 o'clock start
       return `
         <circle class="ring-bg" cx="${C}" cy="${C}" r="${rad}"
                 fill="none" stroke="${ring.color}" stroke-width="${W}"/>
@@ -3352,11 +3348,7 @@
                 fill="none" stroke="${ring.color}" stroke-width="${W}"
                 transform="rotate(-90 ${C} ${C})"
                 style="--c:${circ.toFixed(1)};--o:${(circ * (1 - pct)).toFixed(1)};
-                       filter:drop-shadow(0 0 7px ${ring.color}aa)"/>
-        <g class="ring-tip" transform="rotate(${end.toFixed(1)} ${C} ${C})">
-          <path d="M ${C - 3} ${C - rad - 3.6} L ${C + 3.4} ${C - rad} L ${C - 3} ${C - rad + 3.6} Z"
-                fill="#fff" opacity=".92"/>
-        </g>`;
+                       filter:drop-shadow(0 0 7px ${ring.color}aa)"/>`;
     }).join('');
 
     return `
