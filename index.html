@@ -912,6 +912,9 @@
     overflow:hidden;background:var(--surface-muted,#262626);
   }
   .track .slide img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  /* a chart riding in the carousel centres itself in the slide */
+  .track .slide-chart{display:flex;align-items:center;background:#1a1a1a}
+  .track .slide-chart .chartwrap{width:100%;background:transparent}
 
   .nav{
     position:absolute;top:50%;transform:translateY(-50%);
@@ -3265,8 +3268,9 @@
       cta:{ label:'Publish Campaign', logo:'meta', brandColor:'#0866FF' } },
 
     { agent:'visibility', time:'35 min',
+      images:['assets/cx-prompts-1.jpg','assets/cx-prompts-2.jpg'],
       chart:{
-        title:'Sources cited on the eight discovery prompts',
+        title:'Citations on the 8 discovery prompts',
         max:50,
         note:'Cited on none of the eight',
         rows:[
@@ -3389,8 +3393,19 @@
   // chart panel | single full-bleed image | snap track with a peek of the next slide
   const media = (p) => {
     if (p.rings) return ringPanel(p.rings);
-    if (p.chart) return chart(p.chart);
+    const imgs = p.images || [];
+    if (p.chart && !imgs.length) return chart(p.chart);
     const r = p.ratio ? ` data-r="${p.ratio}"` : '';
+    // a chart can carry supporting images: the chart leads, the images follow
+    if (p.chart) return `
+      <div class="media is-carousel" data-r="square">
+        <div class="track">
+          <div class="slide slide-chart">${chart(p.chart)}</div>
+          ${imgs.map(src => `<div class="slide"><img src="${src}" alt=""></div>`).join('')}
+        </div>
+        <button class="nav nav-prev" hidden aria-label="Previous slide">${svg(I.chevronLeft, 18)}</button>
+        <button class="nav nav-next" aria-label="Next slide">${svg(I.chevronRight, 18)}</button>
+      </div>`;
     return p.images.length > 1
       ? `<div class="media is-carousel"${r}>
            <div class="track">
@@ -3455,7 +3470,7 @@
             ${svg(I.wand, 21)}<span class="tip">Remix with Agent</span>
           </button>
         </div>
-        ${dots(p.images ? p.images.length : 0)}
+        ${dots((p.images ? p.images.length : 0) + (p.chart && p.images ? 1 : 0))}
         <button class="act act-jam" aria-label="Jam with team">
           ${svg(I.users, 20)}<span class="tip">Jam with team</span>
         </button>
