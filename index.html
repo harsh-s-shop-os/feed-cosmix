@@ -3567,7 +3567,17 @@
       rows:[['Branded prompts','3 of 3 cited'],['Discovery prompts','7 of 15 cited']],
       title:'You win the answer only when the buyer types your name',
       sub:'Hand the engines the brand name and all three answer correctly and cite cosmix.in. Ask them to describe a need instead, and the shortlist they build does not contain Cosmix.',
-      cta:{ label:'See what would change it' } }
+      cta:{ label:'See what would change it' } },
+
+    { agent:'visibility', time:'20 min', badge:['Sitting idle','warn'],
+      rows:[['NABL-tested manufacturing','on product pages only'],
+            ['FERMAGUT','no page explains it'],
+            ['1,579 reviews, sentiment 77','not marked up'],
+            ['Marico acquisition, ₹375 cr','no entity record'],
+            ['Named creator advocates','never asked']],
+      title:'Five things you already own that the engines cannot see',
+      sub:'None of this needs to be created. Each one needs to be moved, marked up, or declared. That is work you can approve this week, not sign off as a new claim.',
+      cta:{ label:'Start with the reviews' } }
   ];
 
   const ALL_POSTS = [...POSTS, ...TEXT_POSTS, ...DECK_ONLY];
@@ -4197,7 +4207,7 @@
     POSTS[9], POSTS[0], TEXT_POSTS[5],
     TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
     POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7],
-    POSTS[10]
+    POSTS[10], TEXT_POSTS[6]
   ];
   document.getElementById('feed').insertAdjacentHTML('beforeend',
     FEED_ORDER.map((c, i) => card(c) + (i === 5 ? connectCard('shopify') : '')).join(''));
