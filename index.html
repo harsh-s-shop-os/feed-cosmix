@@ -3201,7 +3201,7 @@
 
   const POSTS = [
     { agent:'creative', time:'12 min', ratio:'4:5',
-      images:['assets/ptup-tall-1.jpg','assets/ptup-tall-2.jpg','assets/ptup-tall-3.jpg'],
+      images:['assets/ptup-tall-1.jpg'],
       title:'Made to Absorb is holding attention longer than the product-led cuts',
       sub:'The shake reads as a daily ritual when it is poured and in hand, not when the pouch is shot flat on a table. Worth shooting the next launch the same way.',
       cta:{ label:'Publish Campaign', logo:'meta', brandColor:'#0866FF' } },
@@ -3223,7 +3223,7 @@
       cta:{ label:'Open report' } },
 
     { agent:'creative', time:'1 hr', ratio:'square',
-      images:['assets/ptup-sq-1.jpg','assets/ptup-sq-2.jpg','assets/ptup-sq-3.jpg','assets/ptup-sq-4.jpg'],
+      images:['assets/ptup-sq-1.jpg'],
       title:'Nine Made to Absorb cuts, one for every placement',
       sub:'Same line, different casting and setting, so paid, organic and retail never end up running the identical frame.',
       cta:{ label:'Start creating' } },
@@ -3460,14 +3460,6 @@
   /* ---------------- deck: one column per agent ---------------- */
   // extra cards so the columns read at the volume the deck is built for
   const DECK_ONLY = [
-    { agent:'creative', time:'22 min', ratio:'square', images:['assets/ptup-sq-2.jpg'],
-      title:'A second casting for Made to Absorb',
-      sub:'Same line, different model and setting, so paid and organic never run the identical frame.',
-      cta:{ label:'Add to campaign' } },
-    { agent:'creative', time:'3 hr', ratio:'wide', images:['assets/ptup-wide-3.jpg'],
-      title:'Label proof, pulled into a banner',
-      sub:'No-Nonsense Protein’s clean label and 27g claim, recut to sit above the fold on the category page.',
-      cta:{ label:'Send to storefront' } },
     { agent:'performance', time:'40 min', ratio:'square', images:['assets/ptup-prod-flex.jpg'],
       title:'No-Nonsense Plant Protein is carrying the account this week',
       sub:'It is taking 38% of spend and returning 51% of revenue. Worth widening the budget before the New Year reset.',
@@ -3547,9 +3539,6 @@
   };
   // catalog is its own segment: the product feed itself, mostly the creative director
   const CATALOG = new Set([
-    'Fourteen products are disapproved on Meta',
-    'Craft callouts, pulled into a banner',
-    'A second casting for Made to Absorb',
     'Show why Fermented Yeast Protein beats standard whey'
   ]);
   const sectorOf = (p) => CATALOG.has(p.title) ? 'catalog' : SECTOR_BY_AGENT[p.agent];
