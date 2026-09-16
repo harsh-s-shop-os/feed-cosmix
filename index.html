@@ -5498,8 +5498,7 @@
     const seedOf = (t) => [...t].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
     const rand = (sd) => () => (sd = (sd * 1664525 + 1013904223) >>> 0) / 4294967296;
     const WORDS = ['urban','performance','north','grade','shop','studio','supply','goods',
-                   'labs','co','works','wear','active','field','house','made','one','the',
-                   'point','taken'];
+                   'labs','works','wear','active','field','house','made','one','the'];
     const nameFromHost = (host) => {
       const stem = host.split('.')[0];
       const out = []; let i = 0;
