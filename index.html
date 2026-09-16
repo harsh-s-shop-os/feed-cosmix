@@ -3547,7 +3547,13 @@
       rows:[['Frequency above 4','3 ad sets'],['CPA drift','+18%'],['Fresh cuts ready','4']],
       title:'Three sets are burning the same frame',
       sub:'Same audience, same cut, too many times. Rotating the newer frames in should pull CPA back inside the week.',
-      cta:{ label:'Rotate creative', logo:'meta', brandColor:'#0866FF' } }
+      cta:{ label:'Rotate creative', logo:'meta', brandColor:'#0866FF' } },
+
+    { agent:'visibility', time:'50 min', badge:['Losing','bad'],
+      rows:[['Branded prompts','3 of 3 cited'],['Discovery prompts','8 of 15 uncited']],
+      title:'You win the answer only when the buyer types your name',
+      sub:'Hand the engines the brand name and all three answer correctly and cite cosmix.in. Ask them to describe a need instead, and the shortlist they build does not contain Cosmix.',
+      cta:{ label:'See what would change it' } }
   ];
 
   const ALL_POSTS = [...POSTS, ...TEXT_POSTS, ...DECK_ONLY];
@@ -4173,7 +4179,7 @@
   });
 
   const FEED_ORDER = [
-    POSTS[9],
+    POSTS[9], TEXT_POSTS[5],
     POSTS[0], TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
     POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7], POSTS[8]
   ];
