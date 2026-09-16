@@ -4166,7 +4166,7 @@
   /* ---------------- interactions ---------------- */
   const TOASTS = {
     like:  'We\u2019ll create more posts like this!',
-    keep:  'Kept. Publishing to your channels',
+    keep:  'Kept — we’ll show you more like this',
     save:  'Saved',
     copy:  'Post link copied for sharing'
   };
@@ -4237,7 +4237,7 @@
 
     // kill: the loop stops suggesting this, and the card leaves
     if (b.classList.contains('act-kill')) {
-      toast('We’ll suggest less of this');
+      toast('Killed — we’ll show you less like this');
       const card = b.closest('.card');
       card.classList.add('is-dismissed');
       card.addEventListener('animationend', () => card.remove(), { once: true });
