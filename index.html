@@ -3282,6 +3282,20 @@
       },
       title:'Eight discovery moments, owned by someone else',
       sub:'These are the prompts where a buyer with no brand in mind builds a shortlist. 5 of 8 use multivitamin queries, and Cosmix sells a multivitamin.',
+      cta:{ label:'Open report' } },
+
+    { agent:'visibility', time:'1 hr',
+      chart:{
+        title:'Visibility share, two ways of counting',
+        max:30,
+        note:'Nine brands tracked. That is the whole leaderboard.',
+        rows:[
+          { label:'Own leaderboard', value:24 },
+          { label:'All sources',     value:3, brand:true }
+        ]
+      },
+      title:'The score that puts you first is only measuring nine brands',
+      sub:'Cosmix leads its own leaderboard at 24%. Against every source the engines actually cite, the real share is closer to 3%.',
       cta:{ label:'Open report' } }
   ];
 
@@ -4182,7 +4196,8 @@
     POSTS[8],
     POSTS[9], POSTS[0], TEXT_POSTS[5],
     TEXT_POSTS[0], POSTS[1], POSTS[2], TEXT_POSTS[1],
-    POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7]
+    POSTS[3], POSTS[4], TEXT_POSTS[2], POSTS[5], POSTS[6], TEXT_POSTS[3], POSTS[7],
+    POSTS[10]
   ];
   document.getElementById('feed').insertAdjacentHTML('beforeend',
     FEED_ORDER.map((c, i) => card(c) + (i === 5 ? connectCard('shopify') : '')).join(''));
