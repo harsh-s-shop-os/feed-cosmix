@@ -1019,6 +1019,7 @@
   }
   .act svg{overflow:visible;transition:transform .18s cubic-bezier(.34,1.56,.64,1),opacity .15s}
   .act:active svg{transform:scale(.88)}
+  .act-kill:hover{color:#ff7a72}
   .act.is-pop svg{animation:pop .42s cubic-bezier(.34,1.56,.64,1)}
   @keyframes pop{
     0%{transform:scale(1)}
@@ -1180,9 +1181,11 @@
      Each icon moves the way its meaning moves. 180ms, nothing bouncy. */
   .act:hover svg{opacity:.72}
   .act:nth-child(1){transition:none}
-  .act:nth-child(1) svg{transition:transform .22s cubic-bezier(.34,1.4,.64,1),opacity .15s}
-  .act:nth-child(1):hover svg{transform:scale(1.14)}                 /* heart swells */
-  /* remix leans into the loop rather than spinning through it */
+  .act-keep svg{transition:transform .22s cubic-bezier(.34,1.4,.64,1),opacity .15s}
+  /* kill: the ring tightens */
+  .act-kill svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1),opacity .15s}
+  .act-kill:hover svg{transform:scale(.9)}
+  /* tweak leans into the loop rather than spinning through it */
   .act-remix svg{transition:transform .26s cubic-bezier(.34,1.3,.64,1),opacity .15s}
   .act-remix:hover svg{transform:rotate(-14deg) scale(1.12)}
   .act-remix:active svg{transform:rotate(-24deg) scale(.96)}
@@ -3285,6 +3288,8 @@
     wand:'<path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/><path d="M11 3H9"/>',
     trendingUp:'<path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/>',
     circleMinus:'<circle cx="12" cy="12" r="10"/><path d="M8 12h8"/>',
+    circleCheck:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+    circleX:'<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
     bellOff:'<path d="M8.7 3A6 6 0 0 1 18 8c0 2.3.4 4 .9 5.2"/><path d="M17 17H4s2-1 2-7a6 6 0 0 1 .6-2.6"/><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="m2 2 20 20"/>',
     download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>',
     clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
@@ -3426,16 +3431,19 @@
 
       <div class="card-actions">
         <div class="act-group">
-          <button class="act" data-toast="like" aria-pressed="false" aria-label="Like">
-            ${svg(I.heart)}<span class="tip">Like to see more like this</span>
+          <button class="act act-keep" data-toast="keep" aria-label="Keep and show more posts like this">
+            ${svg(I.circleCheck, 20)}<span class="tip">Keep &amp; show more posts like this</span>
           </button>
-          <button class="act act-remix" aria-label="Remix with Agent">
-            ${svg(I.wand, 21)}<span class="tip">Remix with Agent</span>
+          <button class="act act-kill" aria-label="Kill direction and don't show posts like this">
+            ${svg(I.circleX, 20)}<span class="tip">Kill direction and don’t show posts like this</span>
+          </button>
+          <button class="act act-remix" aria-label="Tweak this with agents">
+            ${svg(I.wand, 20)}<span class="tip">Tweak this with agents</span>
           </button>
         </div>
         ${dots(p.images ? p.images.length : 0)}
-        <button class="act act-jam" aria-label="Jam with team">
-          ${svg(I.users, 20)}<span class="tip">Jam with team</span>
+        <button class="act act-jam" aria-label="Jam with a team">
+          ${svg(I.users, 20)}<span class="tip">Jam with a team</span>
         </button>
       </div>
 
@@ -4157,6 +4165,7 @@
   /* ---------------- interactions ---------------- */
   const TOASTS = {
     like:  'We\u2019ll create more posts like this!',
+    keep:  'Kept. Publishing to your channels',
     save:  'Saved',
     copy:  'Post link copied for sharing'
   };
@@ -4224,6 +4233,15 @@
 
     const b = e.target.closest('.act');
     if (!b) return;
+
+    // kill: the loop stops suggesting this, and the card leaves
+    if (b.classList.contains('act-kill')) {
+      toast('We’ll suggest less of this');
+      const card = b.closest('.card');
+      card.classList.add('is-dismissed');
+      card.addEventListener('animationend', () => card.remove(), { once: true });
+      return;
+    }
 
     const toggle = b.hasAttribute('aria-pressed');
     const turningOn = !toggle || b.getAttribute('aria-pressed') === 'false';
