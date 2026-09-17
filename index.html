@@ -894,6 +894,7 @@
   .media.is-carousel[data-r="4:5"]{aspect-ratio:1/1}
   .media.is-carousel[data-r="wide"]{aspect-ratio:1/1}
   .media img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+  .media[data-fit="contain"] img{object-fit:contain;background:#dbc2b2}
 
   /* media — carousel: full-width slides, no gap */
   .media.is-carousel{overflow:hidden}
@@ -3428,7 +3429,7 @@
            <button class="nav nav-prev" hidden aria-label="Previous image">${svg(I.chevronLeft, 18)}</button>
            <button class="nav nav-next" aria-label="Next image">${svg(I.chevronRight, 18)}</button>
          </div>`
-      : `<div class="media"${r}><img src="${p.images[0]}" alt=""></div>`;
+      : `<div class="media"${r}${p.fit ? ` data-fit="${p.fit}"` : ''}><img src="${p.images[0]}" alt=""></div>`;
   };
 
   const card = (p) => {
@@ -3514,7 +3515,7 @@
       title:'Show why Fermented Yeast Protein beats standard whey',
       sub:'The FERMAGUT fermentation and clean label, marked on the pack where shoppers already look first.',
       cta:{ label:'Apply Update' } },
-    { agent:'storefront', time:'6 hr', ratio:'4:5', images:['assets/cx-nutrition-panel.jpg'],
+    { agent:'storefront', time:'6 hr', ratio:'4:5', fit:'contain', images:['assets/cx-nutrition-panel.jpg'],
       title:'Six protein listings are missing their nutrition panel',
       sub:'Every one of them is a Made to Absorb or No-Nonsense listing in the top twenty by traffic. The panel exists, it is just not attached.',
       cta:{ label:'Attach panels' } },
