@@ -888,17 +888,17 @@
   .media[data-r="square"]{aspect-ratio:1/1}
   .media[data-r="4:5"]{aspect-ratio:1/1}
   .media[data-r="wide"]{aspect-ratio:1/1}
-  /* in a carousel each slide is 86% wide, so the box is sized off the slide,
-     not the card, or cover() crops the artwork's own headline off */
-  .media.is-carousel[data-r="square"]{aspect-ratio:100/86}
-  .media.is-carousel[data-r="4:5"]{aspect-ratio:100/86}
-  .media.is-carousel[data-r="wide"]{aspect-ratio:100/86}
+  /* carousel slides are full width, edge to edge, Instagram-style —
+     no peek of the next slide and no gap while scrolling */
+  .media.is-carousel[data-r="square"]{aspect-ratio:1/1}
+  .media.is-carousel[data-r="4:5"]{aspect-ratio:1/1}
+  .media.is-carousel[data-r="wide"]{aspect-ratio:1/1}
   .media img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
 
-  /* media — carousel: current slide + peek of the next */
+  /* media — carousel: full-width slides, no gap */
   .media.is-carousel{overflow:hidden}
   .track{
-    display:flex;gap:12px;height:100%;
+    display:flex;gap:0;height:100%;
     background:var(--surface-muted,#262626);
     overflow-x:auto;overflow-y:hidden;
     scroll-snap-type:x mandatory;
@@ -907,7 +907,7 @@
   }
   .track::-webkit-scrollbar{display:none}
   .track .slide{
-    flex:0 0 86%;height:100%;
+    flex:0 0 100%;height:100%;
     scroll-snap-align:start;
     overflow:hidden;background:var(--surface-muted,#262626);
   }
@@ -4321,7 +4321,7 @@
     const prev = cardEl.querySelector('.nav-prev');
     const next = cardEl.querySelector('.nav-next');
     const pips = [...cardEl.querySelectorAll('.dots i')];
-    const step = () => track.querySelector('.slide').offsetWidth + 12;
+    const step = () => track.querySelector('.slide').offsetWidth;
 
     const sync = () => {
       const i = Math.round(track.scrollLeft / step());
