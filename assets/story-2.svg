@@ -6,8 +6,7 @@
 </filter>
 </defs>
 <g clip-path="url(#c)">
-  <rect width="100" height="100" fill="#2f4fd8"/>
-  <g filter="url(#b)"><circle cx="24" cy="30" r="50" fill="#14235c"/><circle cx="58" cy="46" r="52" fill="#3f7bf0"/><circle cx="84" cy="26" r="40" fill="#7fb0ff"/><circle cx="40" cy="84" r="46" fill="#1d2f8a"/><circle cx="88" cy="80" r="36" fill="#c9d9ff"/></g>
+  <rect width="100" height="100" fill="#5c2b23"/>
+  <g filter="url(#b)"><circle cx="24" cy="30" r="50" fill="#a75c51"/><circle cx="58" cy="46" r="52" fill="#7a3f37"/><circle cx="84" cy="26" r="40" fill="#e0b26a"/><circle cx="40" cy="84" r="46" fill="#234118"/><circle cx="88" cy="80" r="36" fill="#234118"/></g>
 </g>
-<circle cx="38" cy="53" r="13" fill="#fff"/><circle cx="62" cy="53" r="13" fill="#fff"/><circle cx="35" cy="48" r="6.5" fill="#111"/><circle cx="66" cy="59" r="6.5" fill="#111"/>
 </svg>
