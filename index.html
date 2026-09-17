@@ -3736,7 +3736,7 @@
 
   const deckEl = document.getElementById('deck');
 
-  const COL_CONNECT = { ads:'meta', storefront:'shopify', catalog:'shopify' };
+  const COL_CONNECT = { ads:'meta' };
 
   const colHTML = (k, empty) => {
     const cards = empty ? [] : byAgent(k);
@@ -3807,7 +3807,10 @@
       </button>`).join('')}
 `;
 
-  const brandMark = () => BRAND_NAME.split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  const COSMIX_MARK = '<svg viewBox="21 -1 40 31" width="20" height="20" fill="none"><path stroke-miterlimit="10" stroke-width="1.8" stroke="currentColor" d="M59.3471 16.0494C59.3471 7.8616 52.7573 1.23486 44.613 1.23486C42.6933 1.23486 40.8148 1.51532 40.8148 1.51532C37.9102 2.12842 35.9709 3.48943 34.9947 4.1895C32.6206 5.89401 31.2748 7.81159 30.7943 8.51818C30.5073 8.93996 29.7442 10.1009 29.055 11.7489C28.5832 12.8795 28.4615 13.4839 27.7766 16.0754C27.0418 18.8605 26.6743 20.2541 26.4417 20.8085C25.9482 21.9869 25.0394 23.6284 23.2349 25.3568"/><path stroke-miterlimit="10" stroke-width="1.8" stroke="currentColor" d="M59.3471 16.0494C59.3471 22.874 53.2834 28.3963 46.498 28.3963C39.7104 28.3963 33.6489 23.8023 33.6489 16.9778"/><path stroke-miterlimit="10" stroke-width="1.8" stroke="currentColor" d="M54.436 16.0494C54.436 20.1433 50.5704 23.4567 46.4983 23.4567C42.4261 23.4567 38.591 20.1607 38.8801 16.0494"/><path stroke-miterlimit="10" stroke-width="1.8" stroke="currentColor" d="M49.5242 16.0494C49.5242 17.4148 47.8545 18.5192 46.4978 18.5192C45.1412 18.5192 43.6997 17.7561 43.6997 16.3907"/><path stroke-miterlimit="10" stroke-width="1.8" stroke="currentColor" d="M54.436 16.0494C54.436 10.5902 50.042 6.17236 44.6133 6.17236C39.1845 6.17236 33.647 11.5185 33.647 16.9778"/><path stroke-miterlimit="10" stroke-width="1.8" stroke="currentColor" d="M49.5244 16.0494C49.5244 13.3208 47.3285 11.1119 44.613 11.1119C41.8976 11.1119 39.0995 13.2839 38.8799 16.0494"/></svg>';
+  const brandMark = () => BRAND_NAME.replace(/\s+/g, '').toLowerCase() === 'cosmix'
+    ? COSMIX_MARK
+    : BRAND_NAME.split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
 
   const sideHTML = () => `
     <div class="side-brand">
