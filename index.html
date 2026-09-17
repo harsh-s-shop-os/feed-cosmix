@@ -4210,7 +4210,7 @@
     POSTS[10], TEXT_POSTS[6]
   ];
   document.getElementById('feed').insertAdjacentHTML('beforeend',
-    FEED_ORDER.map((c, i) => card(c) + (i === 5 ? connectCard('shopify') : '')).join(''));
+    FEED_ORDER.map((c) => card(c)).join(''));
   paintSubbars();
 
   /* ---------------- interactions ---------------- */
