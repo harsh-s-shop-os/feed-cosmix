@@ -894,7 +894,7 @@
   .media.is-carousel[data-r="4:5"]{aspect-ratio:1/1}
   .media.is-carousel[data-r="wide"]{aspect-ratio:1/1}
   .media img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
-  .media[data-fit="contain"] img{object-fit:contain;background:#dbc2b2}
+  .media[data-fit="contain"] img{object-fit:contain;background:var(--fit-bg, var(--surface-muted,#262626))}
 
   /* media — carousel: full-width slides, no gap */
   .media.is-carousel{overflow:hidden}
@@ -3207,8 +3207,8 @@
       sub:'The flat-lay puts every hero ingredient in plain sight beside the pack, making transparency the visual argument — no asterisks, no fine print, nothing to explain away.',
       cta:{ label:'Publish Campaign', logo:'meta', brandColor:'#0866FF' } },
 
-    { agent:'performance', time:'28 min', ratio:'wide',
-      images:['assets/cx-pancake-lifestyle.jpg'],
+    { agent:'performance', time:'28 min', ratio:'wide', fit:'contain',
+      images:['assets/cx-pancake-pack.jpg'],
       title:'A proof-led campaign for No-Nonsense Plant Protein',
       sub:'27g of plant protein and a clean label, called out on the pack itself rather than buried in copy underneath it.',
       cta:{ label:'Approve concept' } },
@@ -3429,7 +3429,7 @@
            <button class="nav nav-prev" hidden aria-label="Previous image">${svg(I.chevronLeft, 18)}</button>
            <button class="nav nav-next" aria-label="Next image">${svg(I.chevronRight, 18)}</button>
          </div>`
-      : `<div class="media"${r}${p.fit ? ` data-fit="${p.fit}"` : ''}><img src="${p.images[0]}" alt=""></div>`;
+      : `<div class="media"${r}${p.fit ? ` data-fit="${p.fit}"` : ''}${p.fitBg ? ` style="--fit-bg:${p.fitBg}"` : ''}><img src="${p.images[0]}" alt=""></div>`;
   };
 
   const card = (p) => {
@@ -3515,18 +3515,10 @@
       title:'Show why Fermented Yeast Protein beats standard whey',
       sub:'The FERMAGUT fermentation and clean label, marked on the pack where shoppers already look first.',
       cta:{ label:'Apply Update' } },
-    { agent:'storefront', time:'6 hr', ratio:'4:5', fit:'contain', images:['assets/cx-nutrition-panel.jpg'],
+    { agent:'storefront', time:'6 hr', ratio:'4:5', fit:'contain', fitBg:'#dbc2b2', images:['assets/cx-nutrition-panel.jpg'],
       title:'Six protein listings are missing their nutrition panel',
       sub:'Every one of them is a Made to Absorb or No-Nonsense listing in the top twenty by traffic. The panel exists, it is just not attached.',
-      cta:{ label:'Attach panels' } },
-    { agent:'visibility', time:'2 hr', ratio:'wide', images:['assets/ptup-wide-1.jpg'],
-      title:'You are absent from plant-protein comparisons',
-      sub:'Four of five AI answers on clean plant protein name the same three brands. None of them is you.',
-      cta:{ label:'Open report' } },
-    { agent:'visibility', time:'8 hr', ratio:'square', images:['assets/ptup-sq-3.jpg'],
-      title:'A long-form piece would move the needle',
-      sub:'The engines are citing editorial, not product pages. One well-sourced guide changes what they quote.',
-      cta:{ label:'Draft the piece' } }
+      cta:{ label:'Attach panels' } }
   ];
 
   // short, data-led posts: a badge, a small table, then the decision
