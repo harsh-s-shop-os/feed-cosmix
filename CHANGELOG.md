@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Intro card always leads the feed
+
+Dropped the first-visit-only gate. The intro card ("This is your feed") is now always the first card in the feed, every load — no localStorage flag, no `?intro` needed to bring it back.
+
 ## 2026-09-18 — Reverted: agent avatar accents
 
 The small looping accent added to each agent avatar (spark, arrow, glint, ping, dot, halo) is reverted — misread the brief. All six avatars are back to exactly their prior static SVGs.

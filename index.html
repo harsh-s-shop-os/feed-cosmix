@@ -4457,32 +4457,11 @@
       </div>
     </article>`;
   };
-  // first visit only: the flag is written once the card has actually been on
-  // screen, not when it is rendered, so a run that never reaches the feed does
-  // not spend it. ?intro on the URL shows it regardless (for demos and review)
-  const INTRO_KEY = 'cx-feed-intro-seen';
-  const introWanted = (() => {
-    try { return new URLSearchParams(location.search).has('intro') || !localStorage.getItem(INTRO_KEY); }
-    catch (e) { return true; }
-  })();
+  // always the first card in the feed — no first-visit gate, no localStorage
+  const introWanted = true;
   const wireIntro = () => {
     const el = document.querySelector('[data-intro-card]');
     if (!el) return;
-    // "on screen" has to mean the feed itself is showing: the start screen and
-    // the setup run sit over the feed, and an intersection observer cannot see
-    // an overlay, so check the flow state as well and re-check when it changes
-    let inView = false, done = false;
-    const feedShowing = () => !document.body.classList.contains('setup') && !document.getElementById('start');
-    const markSeen = () => {
-      if (done || !inView || !feedShowing()) return;
-      done = true;
-      try { localStorage.setItem(INTRO_KEY, String(Date.now())); } catch (e) {}
-      seen.disconnect(); flow.disconnect();
-    };
-    const seen = new IntersectionObserver(es => { inView = es.some(e => e.isIntersecting); markSeen(); }, { threshold: 0.5 });
-    const flow = new MutationObserver(markSeen);
-    seen.observe(el);
-    flow.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     // the headline replays each time its slide is the one in view
     const track = el.querySelector('.track');
     const slideIO = new IntersectionObserver(es => es.forEach(e =>
