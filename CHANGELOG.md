@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Intro card: all three slides illustrated
+
+Slide 3 ("Remix with an agent. Jam with the team.") gets `assets/intro-3.jpg`: one card with a typing indicator above it, two dotted paths out of it, one to a ring (the agent) and one to a solid square (the team). Slides 1 and 2 were also re-cut this morning to the same card vocabulary (3:2 post shape, one tone). The carousel is now complete: rings drop work into a stack, one card is approved and leaves, one card is talked back to.
+
 ## 2026-09-19 — Intro card: slide 2 gets its image
 
 Slide 2 ("Approve it, and it ships.") now carries `assets/intro-2.jpg`: the approved card, its ring filled, leaving the stack to the right with a trail behind it. Slide 3 is the last one still on the colour wash.
