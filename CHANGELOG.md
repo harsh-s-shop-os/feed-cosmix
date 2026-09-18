@@ -2,6 +2,17 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Feed intro card: the feed explains itself, once
+
+The first card in the feed, the first time the feed opens, is a card from ShopOS about the feed itself. (Its code landed in the previous commit, "Feed | Chat tabs", by accident of timing; this entry describes it.)
+
+- **Three square slides, no photos.** Each is a single brand colour (green, terracotta, cream) as a soft, drifting wash, the same treatment the text-only story slides use. The three slides drift differently: a slow sway, a slow breath, a slow glide. All of it is subtle and slow enough that it reads as alive, not as motion.
+- **One headline per slide, revealed word by word** as the slide comes into view, and again every time you come back to it: "Your agents work. This is where it lands." / "Remix any post with the agent that made it." / "Jam with the team when it needs a person."
+- **Title and description under the dots**: "This is your feed", then one paragraph on what posts here and the three things you can do with a card (like, remix, jam).
+- **Shown once per browser.** The card is only marked as seen once the feed itself is on screen, not while the start screen or the setup run is still covering it. Add `?intro` to the URL to bring it back for a demo or a review.
+- It is not a post: it stays out of the Pro deck, the agent chips only show it under "All", and it carries no like / remix / jam row of its own.
+- On the cream slide the carousel arrows flip to dark so they stay visible.
+
 ## 2026-09-18 — Feed | Chat tabs: more room around the labels
 
 The two tabs in the top bar sat tight against the edge of their pill. Both now carry 18px of space on each side instead of 12px, on desktop and on a phone. The sliding block behind the active tab measures itself off the tab, so it grew with them.
