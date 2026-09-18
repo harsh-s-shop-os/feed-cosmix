@@ -3846,6 +3846,35 @@
     orchestrator: { name: 'ShopOS',               avatar: 'assets/agent-orchestrator.svg'  }
   };
 
+  // Every number on an AI Visibility card comes from here and nowhere else.
+  // Source: "AI Visibility Report · September 2026" (Lalith, GEO audit):
+  // 15 prompts x 3 engines (ChatGPT, Perplexity, Google AI Overviews), 42 checks, India.
+  // A new report version is an edit to this object; the cards template from it.
+  const GEO = {
+    score: 41, band: 'Poor',
+    prompts: 15, engines: 3, checks: 42, silent: 28,      // silent = checks with no mention, no citation
+    // seven weighted dimensions, heaviest first; weight is % of the composite
+    dims: [
+      { label:'Citation Performance', short:'Citations',  value:28,  weight:25 },
+      { label:'Page Citability',      short:'Citability', value:26,  weight:19 },
+      { label:'E-E-A-T',              short:'E-E-A-T',    value:24,  weight:15 },
+      { label:'Brand Mentions',       short:'Mentions',   value:48,  weight:15 },
+      { label:'Crawler Access',       short:'Crawlers',   value:100, weight:11 },
+      { label:'Structured Data',      short:'Markup',     value:65,  weight:8  },
+      { label:'Platform Readiness',   short:'Platforms',  value:35,  weight:7  }
+    ],
+    branded:     { cited:3, of:3 },
+    discovery:   { cited:0, of:8, multivitamin:5 },
+    leaderboard: { share:24, rank:1, of:9 },              // share of voice across the 9 tracked brands
+    ledger:      { cosmix:11, others:313, share:3 },      // citations across every source the engines read
+    sources: [ ['healthkart.com',16], ['amazon.in',16], ['1mg.com',12], ['nutrabay.com',8], ['fssai.gov.in',7] ],
+    post: { title:'What to Actually Look For on a Multivitamin Label', path:'/blogs/nutrition',
+            answers:'five multivitamin questions', citedToday:'healthkart, guardian.in, amazon.in' }
+  };
+  // the three lowest scores are the three heaviest: their combined weight
+  GEO.lowThree = GEO.dims.slice(0, 3);
+  GEO.lowWeight = GEO.lowThree.reduce((n, d) => n + d.weight, 0);
+
   const POSTS = [
     { agent:'creative', time:'12 min', ratio:'4:5', campaign:'Ingredient Story',
       images:['assets/cx-creative-2.jpg'],
@@ -3860,13 +3889,12 @@
       cta:{ label:'Approve concept' } },
 
     { agent:'visibility', time:'45 min',
-      rings:{ score:41, rings:[
-        { label:'Coverage',   value:47, color:'#ff375f' },
-        { label:'Citations',  value:3,  color:'#a8ff2e' },
-        { label:'SEO health', value:68, color:'#22d3ee' }
-      ]},
-      title:'Cosmix is visible to buyers who know the brand, and close to absent for everyone else',
-      sub:'A GEO score of 41 lands in the Poor band: only 7 of 15 prompts surface Cosmix on any engine, and competitor pages take 313 citations to its 11. Strong content and trust signals sitting on a weak structural base.',
+      // the rings are the three lowest dimensions, which are also the three heaviest
+      rings:{ score:GEO.score, rings:GEO.lowThree.map((d, i) => ({
+        label:d.short, full:`${d.label} · ${d.weight}% of the score`, value:d.value,
+        color:['#ff375f','#a8ff2e','#22d3ee'][i] })) },
+      title:'Cosmix wins the answer when the buyer knows the brand, and disappears when they search a need',
+      sub:`A score of ${GEO.score} lands in the ${GEO.band} band. The three lowest dimensions carry ${GEO.lowWeight}% of the weight, and they are the three that on-site work moves fastest.`,
       cta:{ label:'Open report' } },
 
     { agent:'creative', time:'1 hr', ratio:'square', campaign:'Morning Ritual',
@@ -3880,22 +3908,6 @@
       title:'The My Happy Gut description reads like an ingredient list',
       sub:'Rewritten around how it makes you feel rather than what is in it. Fourteen listings are in the same state.',
       cta:{ label:'Apply Update' } },
-
-    { agent:'visibility', time:'1 hr',
-      chart:{
-        title:'Clean plant protein recommendation',
-        max:50,
-        note:'Underrepresented in gut-health and plant-protein prompts',
-        rows:[
-          { label:'The Whole Truth',   value:45 },
-          { label:'OZiva',             value:38 },
-          { label:'Kapiva',            value:27 },
-          { label:'Cosmix',            value:15, brand:true }
-        ]
-      },
-      title:'Improve visibility for clean plant protein searches',
-      sub:'Recommendations to help Cosmix surface when shoppers ask AI for clean, plant-based protein and gut health.',
-      cta:{ label:'Open report' } },
 
     { agent:'creative', time:'2 hr', campaign:'Editorial Pour',
       title:'Shoot it like fashion, not like health food',
@@ -3913,36 +3925,19 @@
       sub:'The cloche lift and single amber spotlight do what a banner headline can’t — they make the product feel like an event, not an announcement.',
       cta:{ label:'Publish Campaign', logo:'meta', brandColor:'#0866FF' } },
 
-    { agent:'visibility', time:'35 min',
-      images:['assets/cx-prompts-1.jpg','assets/cx-prompts-2.jpg'],
-      chart:{
-        title:'Citations on the 8 discovery prompts',
-        max:50,
-        note:'Cited on none of the eight',
-        rows:[
-          { label:'healthkart.com', value:38 },
-          { label:'nutrabay.com',   value:25 },
-          { label:'reviehub.in',    value:25 },
-          { label:'Cosmix',         value:0, brand:true }
-        ]
-      },
-      title:'Eight discovery moments, owned by someone else',
-      sub:'These are the prompts where a buyer with no brand in mind builds a shortlist. 5 of 8 use multivitamin queries, and Cosmix sells a multivitamin.',
-      cta:{ label:'Open report' } },
-
     { agent:'visibility', time:'1 hr',
       chart:{
         title:'Visibility share, two ways of counting',
         max:30,
-        note:'Nine brands tracked. That is the whole leaderboard.',
+        note:`${GEO.leaderboard.of} brands tracked. That is the whole leaderboard.`,
         rows:[
-          { label:'Own leaderboard', value:24 },
-          { label:'All sources',     value:3, brand:true }
+          { label:'Own leaderboard', value:GEO.leaderboard.share },
+          { label:'All sources',     value:GEO.ledger.share, brand:true }
         ]
       },
-      title:'The score that puts you first is only measuring nine brands',
-      sub:'Cosmix leads its own leaderboard at 24%. Against every source the engines actually cite, the real share is closer to 3%.',
-      cta:{ label:'Open report' } }
+      title:`The score that puts you first is only measuring ${GEO.leaderboard.of} brands`,
+      sub:`Cosmix leads its own leaderboard at ${GEO.leaderboard.share}%. Against every source the engines actually cite, the real share is closer to ${GEO.ledger.share}%.`,
+      cta:{ label:'See who holds the shelf' } }
   ];
 
 
@@ -4006,7 +4001,7 @@
             <span class="bar-label">${r.label}</span>
             <div class="bar-track">
               <div class="bar-fill" style="width:${(r.value / c.max * 100).toFixed(1)}%"></div>
-              <span class="bar-value" style="left:${(r.value / c.max * 100).toFixed(1)}%">${r.value}%</span>
+              <span class="bar-value" style="left:${(r.value / c.max * 100).toFixed(1)}%">${r.value}${c.unit ?? '%'}</span>
             </div>
             ${r.brand && c.note ? `<span class="bar-note">${c.note}</span>` : ''}
           </div>`).join('')}
@@ -4046,7 +4041,7 @@
         </div>
         <div class="stat-row">
           ${r.rings.map(x => `
-            <div class="stat">
+            <div class="stat"${x.full ? ` title="${x.full}"` : ''}>
               <p class="k">${x.label}</p>
               <p class="v" style="color:${x.color}">${x.value}<span style="color:var(--fg-3);font-weight:400">/100</span></p>
             </div>`).join('')}
@@ -4266,7 +4261,22 @@
     { agent:'storefront', time:'6 hr', ratio:'4:5', fit:'contain', fitBg:'#dbc2b2', images:['assets/cx-nutrition-panel.jpg'],
       title:'Six protein listings are missing their nutrition panel',
       sub:'Every one of them is a Made to Absorb or No-Nonsense listing in the top twenty by traffic. The panel exists, it is just not attached.',
-      cta:{ label:'Attach panels' } }
+      cta:{ label:'Attach panels' } },
+
+    // deckOnly: the single feed already carries five visibility cards; this one
+    // is the deep cut behind "two ways of counting" and lives in the Pro column
+    { agent:'visibility', time:'1 hr', deckOnly:true,
+      chart:{
+        title:'Citations across the audited prompts',
+        max:20, unit:'',
+        note:'The only brand on the shelf',
+        rows:[...GEO.sources.map(([label, value]) => ({ label, value })),
+              { label:'cosmix.in', value:GEO.ledger.cosmix, brand:true }]
+          .sort((a, b) => b.value - a.value)
+      },
+      title:'The category shelf is held by retailers, which means it is still open',
+      sub:`cosmix.in holds ${GEO.ledger.cosmix} of the ${GEO.ledger.cosmix + GEO.ledger.others} citations the engines returned, about ${GEO.ledger.share}%. Everything above it is a retailer, a marketplace or a listicle. Not a single D2C brand.`,
+      cta:{ label:'Start with the multivitamin post' } }
   ];
 
   // short, data-led posts: a badge, a small table, then the decision
@@ -4291,13 +4301,6 @@
       sub:'They all leaned on the same empty phrase. Rewritten around how it makes you feel. Nothing is live until you approve.',
       cta:{ label:'Approve all' } },
 
-    { agent:'visibility', time:'5 hr', badge:['Losing','bad'],
-      rows:[['Models asked','4'],['Named a competitor','3'],['Named you','0'],
-            ['Prompt','best clean plant protein in India']],
-      title:'You are absent from the plant-protein answer',
-      sub:'Three of four models name the same competitor. The engines are quoting editorial, not product pages.',
-      cta:{ label:'See what would change it' } },
-
     { agent:'performance', time:'7 hr', badge:['Watching','info'],
       rows:[['Frequency above 4','3 ad sets'],['CPA drift','+18%'],['Fresh cuts ready','4']],
       title:'Three sets are burning the same frame',
@@ -4305,20 +4308,33 @@
       cta:{ label:'Rotate creative', logo:'meta', brandColor:'#0866FF' } },
 
     { agent:'visibility', time:'50 min', badge:['Losing','bad'],
-      rows:[['Branded prompts','3 of 3 cited'],['Discovery prompts','7 of 15 cited']],
-      title:'You win the answer only when the buyer types your name',
-      sub:'Hand the engines the brand name and all three answer correctly and cite cosmix.in. Ask them to describe a need instead, and the shortlist they build does not contain Cosmix.',
-      cta:{ label:'See what would change it' } },
+      rows:[['Branded prompts', `${GEO.branded.cited} of ${GEO.branded.of} cited`],
+            ['Discovery prompts', `${GEO.discovery.cited} of ${GEO.discovery.of} cited`],
+            ['Checks with no mention', `${GEO.silent} of ${GEO.checks}`],
+            ['Multivitamin questions', `${GEO.discovery.multivitamin} of the ${GEO.discovery.of}`]],
+      title:'You are the answer only when they already know the name',
+      sub:'Hand the engines the brand name and all three cite cosmix.in. Describe a need instead and the shortlist they build does not contain Cosmix. Five of those eight are multivitamin questions, and Cosmix sells a multivitamin.',
+      cta:{ label:'Draft the multivitamin post' } },
 
     { agent:'visibility', time:'20 min', badge:['Sitting idle','warn'],
-      rows:[['NABL-tested manufacturing','on product pages only'],
-            ['FERMAGUT','no page explains it'],
-            ['1,579 reviews, sentiment 77','not marked up'],
-            ['Marico acquisition, ₹375 cr','no entity record'],
-            ['Named creator advocates','never asked']],
-      title:'Five things you already own that the engines cannot see',
-      sub:'None of this needs to be created. Each one needs to be moved, marked up, or declared. That is work you can approve this week, not sign off as a new claim.',
-      cta:{ label:'Start with the reviews' } }
+      rows:[['In-house manufacturing','not on the homepage'],
+            ['NABL testing, every batch','product pages only'],
+            ['FSSAI, GMP, HACCP, USFDA','not marked up'],
+            ['Founder story rooted in PCOS','no page tells it'],
+            ['FERMAGUT','no page explains it']],
+      title:'The proof already exists. It is sitting on the wrong pages.',
+      sub:`The homepage tells an engine "holistic, begins from within" and nothing it can lift and stand behind. Page citability ${GEO.dims[1].value}, E-E-A-T ${GEO.dims[2].value}, while crawler access is already ${GEO.dims[4].value}: the bots get in and find nothing to quote.`,
+      cta:{ label:'Move it to the homepage' } },
+
+    // the one piece of work in the report: a post the agent has drafted, not a finding
+    { agent:'visibility', time:'12 min', badge:['Draft ready','ok'],
+      rows:[['Answers', GEO.post.answers],
+            ['Cited there today', GEO.post.citedToday],
+            ['Goes to', GEO.post.path],
+            ['Still needs', 'FAQ block + FAQPage markup']],
+      title:`Drafted: ${GEO.post.title}`,
+      sub:'A plain-language label breakdown: forms, bioavailability, fillers, dosage. Cosmix\'s own NABL testing is the proof, not the pitch. Every one of the five questions it answers returns zero Cosmix citations today.',
+      cta:{ label:'Review draft' } }
   ];
 
   const ALL_POSTS = [...POSTS, ...TEXT_POSTS, ...DECK_ONLY];
@@ -5123,7 +5139,7 @@
     }
     return order;
   };
-  const FEED_ORDER = interleave(POSTS, TEXT_POSTS, DECK_ONLY);
+  const FEED_ORDER = interleave(POSTS, TEXT_POSTS, DECK_ONLY.filter(p => !p.deckOnly));
   // anchored to specific cards rather than fixed indexes, so the two connect
   // prompts land after the same posts no matter how interleave() orders the rest
   // matched by title, not array position -- POSTS gets edited (cards added,

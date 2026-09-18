@@ -2,6 +2,20 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — AI Visibility cards rebuilt against the September GEO report
+
+The seven visibility cards had drifted from Lalith's report: invented competitor rankings (The Whole Truth), wrong source counts, "7 of 15" where the report says 0 of 8, and "4 models" where it audits 3 engines. Now six cards, every number traceable to a slide.
+
+- **Score rings** — still 41 / Poor, but the three rings are now the report's three lowest (and heaviest) dimensions: Citation Performance 28, Page Citability 26, E-E-A-T 24, together 59% of the score. Hover a label for the full name and weight.
+- **Branded vs discovery** — fixed to 3 of 3 branded cited, **0 of 8** discovery cited, 28 of 42 checks silent, 5 of the 8 are multivitamin questions. CTA now points at the draft below.
+- **Two ways of counting** — unchanged (24% vs 3%); CTA points at the shelf card.
+- **New: who holds the other 97%** — the real citation ledger: healthkart 16, amazon 16, 1mg 12, cosmix.in 11, nutrabay 8, fssai 7. Pro column only; the single feed already carries five visibility cards.
+- **New: the proof is on the wrong pages** — replaces "Five things you already own" with the report's five: in-house manufacturing, NABL, the four certifications, the PCOS founder story, FERMAGUT — each with where it sits today.
+- **New: a drafted post** — "What to Actually Look For on a Multivitamin Label", answering five zero-citation questions, headed for /blogs/nutrition. The first visibility card that is work rather than a finding; three other cards' CTAs funnel to it.
+- **Removed**: "Clean plant protein recommendation" (ranking not in the report and contradicting it), "Eight discovery moments" (wrong sources), "Absent from the plant-protein answer" (4 models, prompt not audited).
+
+Under the hood: one `GEO` object now holds every figure and the cards read from it, so the next report version is a one-object edit. Bar charts can show counts as well as percentages. A card can be marked deck-only.
+
 ## 2026-09-19 — Intro card: headline overlaps the graphic
 
 Each slide image now dissolves toward the bottom of the frame (full strength to ~40%, gone by the bottom edge), and the headline sits a little higher, so the copy reads over the lower part of the graphic instead of under it. Slide order is now feed → jam → approve, and the three headlines are the locked lines. Slide images are due to be re-cut to fill the frame.
