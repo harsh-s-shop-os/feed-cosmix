@@ -2,6 +2,14 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — More air between tabs, stories and posts; stories centred
+
+Feedback on a screenshot: the tab row, the stories row and the first feed card were stacked with almost no room between them.
+
+- **Space above and below the stories row is up from 24px to 34px on desktop** (16/20px to 24/28px on a phone), so it reads as its own row instead of crowding the tabs above it and the feed below it.
+- **Space between feed cards is up from 24px to 32px on desktop** (16px to 22px on a phone).
+- **The 4 stories now sit centred** in their row instead of pinned to the left — there are only ever 4 today, nowhere near enough to need the scroll room the row was built for.
+
 ## 2026-09-18 — Fixed: the Feed | Chat pill stretched across the phone topbar
 
 On a phone the dark capsule behind Feed/Chat was stretching almost edge to edge, with the two tabs floating centred inside a much wider bar than they needed. The pill background lives on the same element that was also set to fill the space between the menu button and the right-side controls (`flex:1`) — so the background painted that whole span, not just the tabs. Fixed by giving that spacer its own wrapper: the wrapper stretches and centers, the pill now sizes to just Feed and Chat. Desktop is unaffected.
