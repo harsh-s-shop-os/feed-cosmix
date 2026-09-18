@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Data cards: the table never touches the CTA
+
+The key-value table on data cards (e.g. "Five products are disapproved on Meta") sat flush against the CTA bar below it. It now keeps the same air on every side — 12px side insets, 14px above and 14px below — as a written rule in the stylesheet, so it holds wherever the table appears (feed, deck, setup columns) and whatever follows it.
+
 ## 2026-09-18 — Mobile setup: polish pass
 
 Phone only; nothing changes on a laptop.
