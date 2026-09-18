@@ -124,11 +124,28 @@
   }
   .rail-badge .ini{
     width:36px;height:36px;flex:0 0 auto;border-radius:10px;
-    background:#1f1f1f;color:var(--fg);
-    display:grid;place-items:center;font-size:14px;font-weight:600;
+    overflow:hidden;display:block;
   }
+  .rail-badge .ini img{width:100%;height:100%;object-fit:cover;display:block}
   .rail-badge:hover{background:#1a1a1a;color:var(--fg)}
   .rail.open .rail-badge{width:100%}
+
+  /* The utilities the top bar used to carry on its right: the view toggle,
+     notifications and theme. They live at the foot of the rail so the top bar
+     is the same set of controls at every width — tabs centred, credits right. */
+  .rail-foot{
+    flex:0 0 auto;width:100%;
+    display:flex;flex-direction:column;gap:4px;
+    padding-top:8px;margin-top:8px;
+    border-top:1px solid var(--line-soft);
+  }
+  .rail-btn.has-dot{position:relative}
+  .rail-dot{
+    position:absolute;top:6px;left:24px;
+    width:7px;height:7px;border-radius:50%;
+    background:#ff3b30;border:1.5px solid var(--bg);
+  }
+  .rail.open .rail-dot{border-color:#0f0f0f}
 
   /* ---------- rail hover: tooltips and fly-outs, both outside the rail ---------- */
   .rail-tip,.rail-fly{
@@ -331,15 +348,6 @@
     border:0;border-radius:var(--r-ctl);background:transparent;color:var(--fg-2);cursor:pointer;
   }
   .tb-menu:hover{background:#171717;color:var(--fg)}
-  .tb-back{
-    display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px 0 9px;
-    border:0;border-radius:999px;background:transparent;color:var(--fg-2);
-    font:inherit;font-size:13.5px;cursor:pointer;
-    transition:background .15s,color .15s;
-  }
-  .tb-back:hover{background:#1c1c1c;color:var(--fg)}
-  .tb-back svg{transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
-  .tb-back:hover svg{transform:translateX(-3px)}
   .icon-btn{
     width:36px;height:36px;border:0;background:transparent;color:var(--fg-2);
     display:grid;place-items:center;border-radius:var(--r-ctl);cursor:pointer;
@@ -377,25 +385,6 @@
   .tab:hover svg{transform:scale(1.12)}
 
   .topbar-right{display:flex;align-items:center;gap:12px;margin-left:auto}
-  .chip{
-    position:relative;width:36px;height:36px;flex:0 0 auto;
-    display:grid;place-items:center;border-radius:var(--r-ctl);
-    background:#171717;border:0;color:var(--fg);cursor:pointer;
-    transition:background .15s;
-  }
-  .chip svg{transition:transform .25s cubic-bezier(.34,1.4,.64,1)}
-  .chip:hover{background:#232323}
-  .chip[aria-label="Light mode"]:hover svg{transform:rotate(52deg)}
-  .chip[aria-label="Notifications"]:hover svg{animation:ring .5s ease-in-out}
-  @keyframes ring{
-    20%{transform:rotate(-12deg)} 45%{transform:rotate(9deg)}
-    70%{transform:rotate(-5deg)}  100%{transform:rotate(0)}
-  }
-  .chip .dot{
-    position:absolute;top:6px;right:7px;
-    width:7px;height:7px;border-radius:50%;
-    background:#ff3b30;border:1.5px solid var(--bg);
-  }
   .credits{
     display:flex;align-items:center;gap:8px;
     height:36px;padding:8px 14px;border-radius:var(--r-ctl);
@@ -734,57 +723,8 @@
   .fdrop-pop button.muted img{filter:grayscale(1)}
   .fdrop-pop .stack img{border-color:#181818}
 
-  .layout-switch{
-    flex:0 0 auto;display:flex;gap:2px;padding:3px;overflow:visible;
-    border-radius:10px;background:#171717;
-  }
-  /* not a view you switch to, an offer you take */
-  body:not(.is-pro) .layout-switch{background:transparent;padding:0}
-  .pro-cta{
-    display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;
-    border:0;border-radius:var(--r-ctl);background:#171717;
-    color:var(--fg);font:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;
-    transition:background .15s;
-  }
-  .pro-cta svg{color:var(--fg-2);transition:color .15s}
-  .pro-cta:hover{background:#232323}
-  .pro-cta:hover svg{color:var(--fg)}
-  /* on a narrow top bar the label would run into the tabs */
-  @media (max-width:1180px){ .pro-cta span{display:none} .pro-cta{padding:0 11px} }
-  .ls-btn{
-    width:34px;height:28px;border:0;border-radius:7px;background:transparent;
-    color:var(--fg-3);display:grid;place-items:center;cursor:pointer;position:relative;
-    transition:background .15s,color .15s;
-  }
-  .ls-btn:hover{color:var(--fg-2)}
-  /* each half says what it is on hover */
-  .ls-btn::after{
-    content:attr(data-tip);
-    position:absolute;top:calc(100% + 9px);left:50%;transform:translateX(-50%) translateY(-3px);
-    padding:5px 9px;border-radius:7px;background:#fafafa;color:#0a0a0a;
-    font-size:11.5px;line-height:1;white-space:nowrap;pointer-events:none;
-    opacity:0;transition:opacity .14s,transform .18s cubic-bezier(.34,1.4,.64,1);
-    z-index:60;
-  }
-  .ls-btn:hover::after{opacity:1;transform:translateX(-50%)}
   /* a clean demo with no Pro anywhere: shift + D */
-  body.no-deck .layout-switch{display:none}
-  .ls-btn.on{background:#2e2e2e;color:var(--fg)}
-  .ls-btn .lock{
-    position:absolute;right:-4px;top:-3px;width:17px;height:17px;border-radius:50%;
-    background:linear-gradient(180deg,#ffffff,#d9d9d9);color:#0a0a0a;
-    display:grid;place-items:center;
-    border:2px solid #171717;box-shadow:0 2px 6px rgba(0,0,0,.55);
-    animation:lockpop 3.6s ease-in-out infinite;
-  }
-  .ls-btn .lock svg{width:9px;height:9px}
-  @keyframes lockpop{
-    0%,88%,100%{transform:scale(1)}
-    92%{transform:scale(1.18)}
-    96%{transform:scale(.96)}
-  }
-  .ls-btn:hover .lock{background:#fff}
-  @media (prefers-reduced-motion:reduce){ .ls-btn .lock{animation:none} }
+  body.no-deck #layout-switch{display:none}
 
   /* ---------- deck ---------- */
   .deck-wrap{display:flex;height:calc(100vh - 64px)}
@@ -1306,7 +1246,6 @@
   .act.bookmark:focus-visible .tip{transform:translate(0,0)}
   .act.bookmark .tip::after{left:auto;right:12px;transform:none}
   .tip-below::after{top:auto;bottom:100%;border-top-color:transparent;border-bottom-color:#fafafa}
-  .chip:hover .tip,.chip:focus-visible .tip{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
 
   /* overflow menu */
@@ -2201,7 +2140,7 @@
     .hero.out{animation:none;opacity:0}
     body.revealing .topbar,body.revealing .rail,body.revealing .dock{animation:none}
     .sk::after{animation:none}
-    .act svg,.icon-btn svg,.chip svg,.credits svg,.tab svg,
+    .act svg,.icon-btn svg,.credits svg,.tab svg,
     .nav svg,.btn svg,.pill svg,.menu button svg,.modal-close svg{
       transition:none;animation:none;transform:none!important;
     }
@@ -2209,7 +2148,7 @@
 
   /* touch: a tap leaves :hover behind, so hover tooltips would stick — none on touch screens */
   @media (hover:none){
-    .ls-btn::after,.act .tip,.rail-tip{display:none}
+    .act .tip,.rail-tip{display:none}
   }
 
   /* ================= phone: the whole flow, one column wide ================= */
@@ -2234,13 +2173,16 @@
     /* top bar: menu, tabs, layout switch, credits — theme and bell move off the bar */
     .topbar{height:60px;padding:10px 12px;gap:8px}
     .topbar-right{gap:6px}
-    .chip{width:32px;height:32px}
-    .chip[aria-label="Light mode"],.chip[aria-label="Notifications"]{display:none}
     .credits{height:32px;padding:0 10px;gap:6px}
-    /* position:relative, not static — .seg-pill is absolutely positioned
-       against it; static would hand that off to the next positioned
-       ancestor up the tree and detach the pill from its tab (the glitch) */
-    .seg{position:relative;transform:none;margin:0 auto}
+    /* the row is menu | tabs | credits sharing the full width, not the desktop's
+       absolute-centred tabs floating over whatever the side groups happen to be.
+       position:relative (not static) is what .seg-pill needs to anchor to .seg
+       itself, rather than handing that off to the next positioned ancestor up
+       the tree and detaching the pill from its tab. */
+    .topbar-left{flex:0 0 auto}
+    .seg{position:relative;left:auto;transform:none;flex:1;min-width:0;
+         display:flex;justify-content:center;margin:0}
+    .topbar-right{flex:0 0 auto;margin-left:0}
     .tab{padding:0 12px}
     .view.is-out{left:0}
     .composer-dock{left:50%;width:calc(100% - 24px);bottom:12px}
@@ -2267,14 +2209,19 @@
        (or the chevron) and the rail folds back to a quarter. */
     body.setup-run .deck-wrap{flex-direction:column;height:100vh;height:100dvh}
     body.setup-run .deck-side{
-      display:flex;flex:0 0 auto;height:25vh;height:25dvh;min-height:176px;position:relative;
-      overflow-y:auto;scrollbar-width:none;
+      /* collapsed by default: only the agent + chevron strip shows. The store row
+         and the running commentary live behind the chevron, opened on demand. */
+      display:flex;flex:0 0 auto;height:auto;position:relative;
+      overflow:hidden;scrollbar-width:none;
       border-right:0;border-bottom:1px solid var(--line-soft);
-      padding:10px 16px 0;gap:0;
+      padding:0 16px;gap:0;
       transition:height .38s cubic-bezier(.32,.72,0,1);
     }
     body.setup-run .deck-side::-webkit-scrollbar{display:none}
-    body.setup-run.su-expanded .deck-side{flex:1 1 auto;height:auto;min-height:0}
+    /* collapsed: nothing above the agent row */
+    body.setup-run:not(.su-expanded) .su-site,
+    body.setup-run:not(.su-expanded) .su-stream{display:none}
+    body.setup-run.su-expanded .deck-side{flex:1 1 auto;height:auto;overflow-y:auto;padding:10px 16px 0}
     body.setup-run.su-expanded .deck-main{flex:0 0 auto}
     body.setup-run.su-expanded .deck{flex:0 0 0px;height:0;min-height:0;overflow:hidden}
     /* the columns as tabs: one on screen, the row names them all */
@@ -2284,15 +2231,19 @@
     }
     .deck-tabs::-webkit-scrollbar{display:none}
     .dtab{
-      flex:0 0 auto;height:32px;padding:0 12px;border:0;border-radius:999px;background:transparent;
-      color:var(--fg-3);font:inherit;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;
+      /* sized to read clearly, not to all fit on screen at once — the row scrolls,
+         which is fine now that it's an obvious tab strip */
+      flex:0 0 auto;height:36px;padding:0 14px;border:0;border-radius:999px;background:transparent;
+      color:var(--fg-3);font:inherit;font-size:15px;font-weight:500;white-space:nowrap;cursor:pointer;
       transition:background .15s,color .15s,opacity .3s;
     }
     .dtab.on{background:#2b2b2b;color:var(--fg)}
     .dtab.wait{opacity:.5}
     .col-head h2{display:none}
-    .col-head{padding:10px 16px 0}
-    .col-head hr{margin:10px -16px 0}
+    /* the tab row above already draws the divider; a second one from col-head
+       would double it up with a gap in between, so col-head goes flush and quiet */
+    .col-head{padding:0}
+    .col-head hr{display:none}
 
     /* overlays: sheets and full-width panels */
     .scrim{padding:0;align-items:end}
@@ -2383,6 +2334,19 @@
   }
   .oclear.on{display:grid}
   .oclear:hover{background:#242424;color:var(--fg)}
+
+  /* ---- invalid store URL: the field carries the state, the message sits under it ---- */
+  .ofield.invalid{border-color:rgba(255,122,114,.55);background:#181414}
+  .ofield.invalid:hover,.ofield.invalid:focus-within{border-color:rgba(255,122,114,.75);background:#191414}
+  .ofield.invalid .oic,.ofield.invalid:hover .oic,.ofield.invalid:focus-within .oic{color:#ff7a72}
+  .ferr{
+    display:none;align-items:center;gap:8px;margin:-4px 0 0;padding:0 16px;
+    color:#ff7a72;font-size:14px;line-height:20px;letter-spacing:-.005em;
+  }
+  .ferr.on{display:flex;animation:ferrin .22s cubic-bezier(.32,.72,0,1)}
+  .ferr svg{flex:0 0 auto}
+  @keyframes ferrin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){ .ferr.on{animation:none} }
   .orow{
     display:flex;align-items:center;gap:15px;width:100%;padding:12px 16px;
     border:0;border-radius:12px;background:transparent;color:var(--fg-2);
@@ -2626,7 +2590,14 @@
     .su-foot{
       position:sticky;bottom:0;margin-top:auto;
       flex-direction:row;align-items:center;gap:0;padding:8px 0 10px;
-      background:var(--bg);box-shadow:0 -10px 14px -6px var(--bg);
+      background:transparent;
+    }
+    /* when expanded, the commentary fades out before it reaches the agents rather than
+       being cut off by a solid block — the footer carries no background of its own */
+    body.su-expanded .su-foot::before{
+      content:'';position:absolute;left:0;right:0;bottom:100%;height:52px;
+      background:linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events:none;
     }
     .su-head{display:none}
     .su-agents{flex:1;flex-direction:row;align-items:center;gap:10px}
@@ -2643,7 +2614,7 @@
     .su-ag.named .who{opacity:1;visibility:visible;transform:none}
     .su-expand{
       display:grid;place-items:center;flex:0 0 auto;margin-left:auto;
-      width:32px;height:32px;border:0;border-radius:8px;background:#171717;color:var(--fg-2);cursor:pointer;
+      width:32px;height:32px;border:0;border-radius:8px;background:transparent;color:var(--fg-2);cursor:pointer;
     }
     .su-expand svg{transition:transform .3s cubic-bezier(.32,.72,0,1)}
     body.su-expanded .su-expand svg{transform:rotate(180deg)}
@@ -3175,8 +3146,36 @@
     </div>
   </nav>
 
+  <div class="rail-foot">
+    <div class="rail-item" id="layout-switch" data-item="layout"></div>
+    <div class="rail-item" data-item="alerts">
+      <button class="rail-btn has-dot" data-nav="alerts" aria-label="Notifications">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
+          <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
+        </svg>
+        <span class="rail-label">Notifications</span>
+        <span class="rail-dot"></span>
+      </button>
+      <span class="rail-tip">Notifications</span>
+    </div>
+    <div class="rail-item" data-item="theme">
+      <button class="rail-btn" data-nav="theme" aria-label="Light mode">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2"/><path d="M12 20v2"/>
+          <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
+          <path d="M2 12h2"/><path d="M20 12h2"/>
+          <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+        </svg>
+        <span class="rail-label">Light mode</span>
+      </button>
+      <span class="rail-tip">Light mode</span>
+    </div>
+  </div>
+
   <button class="rail-badge" aria-label="Cosmix workspace">
-    <span class="ini">C</span>
+    <span class="ini"><img src="assets/brand-mark.jpg" alt="" width="36" height="36"></span>
     <span class="rail-label">Cosmix</span>
   </button>
 </aside>
@@ -3209,12 +3208,16 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </button>
       </form>
+      <p class="ferr" id="start-err" role="alert">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <span id="start-err-t"></span>
+      </p>
 
     </div>
 
     <div class="orows">
       <button class="orow" type="button" id="start-nobrand">
-        <span class="oic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span>
+        <span class="oic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
         I don’t have a Brand
       </button>
     </div>
@@ -3251,10 +3254,6 @@
     <button class="tb-menu" id="tb-menu" type="button" aria-label="Open navigation" aria-controls="rail">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
     </button>
-    <button class="tb-back" id="tb-back" hidden>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Back
-    </button>
   </div>
 
   <nav class="seg" role="tablist" aria-label="Primary">
@@ -3275,24 +3274,6 @@
   </nav>
 
   <div class="topbar-right">
-    <div class="layout-switch" id="layout-switch" role="group" aria-label="Feed layout"></div>
-
-    <button class="chip" aria-label="Light mode">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="4"/>
-        <path d="M12 2v2"/><path d="M12 20v2"/>
-        <path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/>
-        <path d="M2 12h2"/><path d="M20 12h2"/>
-        <path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
-      </svg>
-    </button>
-    <button class="chip" aria-label="Notifications">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
-        <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>
-      </svg>
-      <span class="dot"></span>
-    </button>
     <button class="credits">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
         <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
@@ -4280,8 +4261,6 @@
         <img class="avatar" src="${a.avatar}" alt="">
         <span class="identity">
           <span class="agent-name">${a.name}</span>
-          <span class="meta">•</span>
-          <span class="meta">needs access</span>
         </span>
         <span class="badge warn">Not connected</span>
       </div>
@@ -4339,8 +4318,7 @@
   COL_ORDER.forEach(k => colState[k] = { hidden:false });
   colState.about = { hidden:false };
 
-  const I_ROWS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>';
-  const I_COLS = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="5.5" height="16" rx="1.4"/><rect x="9.25" y="4" width="5.5" height="16" rx="1.4"/><rect x="15.5" y="4" width="5.5" height="16" rx="1.4"/></svg>';
+  const I_COLS = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="5.5" height="16" rx="1.4"/><rect x="9.25" y="4" width="5.5" height="16" rx="1.4"/><rect x="15.5" y="4" width="5.5" height="16" rx="1.4"/></svg>';
   const I_CHEV = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
 
   // the single feed has no columns, so its one filter is the agent who posted
@@ -4350,16 +4328,15 @@
   const subbarHTML = () => '';
 
   const switchEl = document.getElementById('layout-switch');
-  const backEl   = document.getElementById('tb-back');
   const subbarFeed = document.getElementById('subbar-feed');
   const paintSubbars = () => {
     subbarFeed.innerHTML = subbarHTML();
     // before upgrading there is no second view to switch to, only an invitation
     switchEl.innerHTML = pro ? `
-      <button class="ls-btn${layout === 'feed' ? ' on' : ''}" data-layout="feed" data-tip="Feed" aria-label="Single feed">${I_ROWS}</button>
-      <button class="ls-btn${layout === 'deck' ? ' on' : ''}" data-layout="deck" data-tip="Pro deck" aria-label="Deck view">${I_COLS}</button>`
-      : `<button class="pro-cta" id="pro-cta">${I_COLS}<span>Check out Pro mode</span></button>`;
-    backEl.hidden = layout !== 'deck';
+      <button class="rail-btn${layout === 'deck' ? ' is-on' : ''}" data-layout="${layout === 'deck' ? 'feed' : 'deck'}" aria-label="${layout === 'deck' ? 'Standard deck' : 'Pro deck'}">${I_COLS}<span class="rail-label">${layout === 'deck' ? 'Standard deck' : 'Pro deck'}</span></button>
+      <span class="rail-tip">${layout === 'deck' ? 'Standard deck' : 'Pro deck'}</span>`
+      : `<button class="rail-btn" id="pro-cta" aria-label="Check out Pro mode">${I_COLS}<span class="rail-label">Check out Pro mode</span></button>
+      <span class="rail-tip">Check out Pro mode</span>`;
     if (deckBuilt) paintNav();
   };
 
@@ -4523,7 +4500,6 @@
     if (col) deckEl.scrollTo({ left: deckEl.scrollLeft + col.getBoundingClientRect().left - deckEl.getBoundingClientRect().left, behavior:'smooth' });
   });
 
-  backEl.addEventListener('click', () => setLayout('feed'));
 
   // a demo mode that hides Pro entirely, for showing the free product on its own
   const setNoDeck = (on) => {
@@ -6920,8 +6896,48 @@ const aboutCard = (p) => `
     });
     document.getElementById('su-open').addEventListener('click', openFeed);
 
-    const urlEl = $('start-url');
-    const submit = () => begin(urlEl.value.trim() || 'cosmix.in', false);
+    const urlEl  = $('start-url');
+    const errEl  = $('start-err');
+    const errTEl = $('start-err-t');
+    const fieldEl = $('start-form');
+
+    // the error is set on submit/blur, never per keystroke: reward early, punish late.
+    // once it is showing, typing re-validates live so it clears the moment the URL is good.
+    const clearErr = () => {
+      if (!errEl.classList.contains('on')) return;
+      errEl.classList.remove('on');
+      errTEl.textContent = '';
+      fieldEl.classList.remove('invalid');
+      urlEl.removeAttribute('aria-invalid');
+      urlEl.removeAttribute('aria-describedby');
+    };
+    const showErr = (msg, refocus) => {
+      fieldEl.classList.add('invalid');
+      urlEl.setAttribute('aria-invalid', 'true');
+      urlEl.setAttribute('aria-describedby', 'start-err');
+      errTEl.textContent = msg;          // set text inside role="alert" so it is announced
+      errEl.classList.add('on');
+      // focus returns to the field only on a failed submit; never on blur,
+      // which would swallow the click the user was in the middle of making
+      if (refocus) urlEl.focus();
+    };
+
+    const submit = () => {
+      const v = urlEl.value.trim();
+      // an empty field still runs the demo brand: that shortcut stays
+      if (v && !looksLikeUrl(v)) { showErr('Enter a valid URL', true); return; }
+      clearErr();
+      begin(v || 'cosmix.in', false);
+    };
+
+    // leaving a field with something unusable in it is the other honest moment to say so
+    urlEl.addEventListener('blur', (e) => {
+      // leaving for Clear or for "I don't have a Brand" is not a failed attempt
+      const to = e.relatedTarget;
+      if (to && (to.id === 'start-clear' || to.id === 'start-nobrand')) return;
+      const v = urlEl.value.trim();
+      if (v && !looksLikeUrl(v)) showErr('Enter a valid URL');
+    });
     $('start-form').addEventListener('submit', (e) => { e.preventDefault(); submit(); });
 
     // clicking anywhere in an .ofield (padding, icon) focuses its input, not just the input's own box
@@ -7028,7 +7044,7 @@ const aboutCard = (p) => `
     });
     $('nobrand-back').addEventListener('click', () => goNoProduct(false));
     const urlCharRe = /[^A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]/g;
-    const looksLikeUrl = (v) => /^(https?:\/\/)?([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}([:/?#].*)?$/i.test(v.trim());
+    function looksLikeUrl(v){ return /^(https?:\/\/)?([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}([:/?#].*)?$/i.test(v.trim()); }
     const orowsEl = document.querySelector('.orows');
     urlEl.addEventListener('input', () => {
       const cleaned = urlEl.value.replace(urlCharRe, '');
@@ -7039,9 +7055,10 @@ const aboutCard = (p) => `
       }
       $('start-clear').classList.toggle('on', !!urlEl.value);
       if (orowsEl) orowsEl.classList.toggle('hidden', looksLikeUrl(urlEl.value));
+      if (looksLikeUrl(urlEl.value) || !urlEl.value.trim()) clearErr();
     });
     $('start-clear').addEventListener('click', () => {
-      urlEl.value = ''; $('start-clear').classList.remove('on'); urlEl.focus();
+      urlEl.value = ''; $('start-clear').classList.remove('on'); clearErr(); urlEl.focus();
       if (orowsEl) orowsEl.classList.remove('hidden');
     });
 

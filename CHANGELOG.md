@@ -2,6 +2,19 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Mobile setup: polish pass
+
+Phone only; nothing changes on a laptop.
+
+- **One divider, not two** under the column tab row — the leftover per-column rule under the old titles is gone.
+- **Bigger tab labels**, sized to be tapped comfortably; the row scrolls sideways if the tabs don't all fit.
+- **The expand chevron has no button background** — just the icon, rotating on expand/collapse.
+- **The commentary now fades out smoothly** as it nears the agent row, instead of being cut off by a hard edge.
+- **Collapsed by default shows only the agent row and the chevron** — the store URL and the running commentary are hidden until you expand.
+- **"Connect Meta Ads" / "Connect Shopify" cards drop the "needs access" line** — just the agent name now.
+- **The workspace badge (bottom of the rail) shows the Cosmix mark**, not a plain "C".
+- **The "I don't have a Brand" row uses a question-mark icon**, not a plus.
+
 ## 2026-09-18 — Mobile setup: two accordions, columns as tabs
 
 Phone only; nothing changes on a laptop.
