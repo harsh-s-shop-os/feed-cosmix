@@ -2,6 +2,23 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Creative director outputs open in an edit view, not in chat
+
+Clicking the image on any Creative director card (feed, deck or the loading columns) now opens that creative full-screen in its own editor overlay instead of the chat. The overlay: campaign name and zoom control (−/+, 25% steps, 25–200%) top left; View input, Add annotations, version history, download and close top right; the creative in the middle at 75%, with a thumbnail strip under it; the Split Layers / Upscale / Remove BG / Resize Image / More Actions toolbar and the "Describe your edits" box at the bottom. A card with several images shows all of them as thumbnails with previous/next arrows beside the image (keyboard ← → also work); it opens on whichever slide the card was showing. Esc or × closes. Only Creative director cards open this way — other agents' images do nothing on click, as before. Remix with Agent still goes to chat.
+
+- Each Creative director post now carries a campaign name for the editor title: Ingredient Story, Morning Ritual, Editorial Pour, The Transformation, Launch Reveal (shown as "Campaign: Cosmix").
+- The toolbar and header actions show a confirmation toast in this prototype; nothing is generated yet.
+
+## 2026-09-18 — Finish screen copy
+
+The onboarding finish screen now reads "Cosmix, welcome to your feed". The button under it is unchanged (still "Get started").
+
+## 2026-09-18 — Stories in Cosmix colours, slowly moving
+
+- The four story rings above the feed are repainted from the Cosmix palette (green, terracotta, cream), as soft blurred washes rather than hard gradients; the googly eyes are gone.
+- Opening a story: each of its three slides takes one of the three colours from its ring (same order), as a blurred, slowly drifting wash behind the text. The movement runs continuously on the ring and inside the story; it stops for anyone with reduced motion turned on.
+- Text over the cream slide sits on a slightly stronger dark scrim so the title and close button stay readable.
+
 ## 2026-09-18 — Cosmix build: the current prototype, filled with Cosmix
 
 This fork now runs on the same code as the main (Urban Performance) prototype, with every piece of brand content swapped for Cosmix. Nothing in the flow, the layout or the interactions differs from main; only what the cards, stories and setup say.
