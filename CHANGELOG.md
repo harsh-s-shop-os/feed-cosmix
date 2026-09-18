@@ -2,6 +2,20 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Mobile: the whole flow now works on a phone (branch `mobile`, first draft)
+
+Below 700px wide the prototype re-lays itself out for a phone. Nothing changes on a laptop; this is the same file, responding to the screen it is on.
+
+- **First screen**: the headline wraps instead of running off the edge, the URL field and "Build My Team" fill the width, and the "I don't have a Brand" wizard stacks the same way.
+- **Setup**: the setup rail (store URL, the running commentary, the agents waking up) sits *above* the columns instead of beside them, capped at about 40% of the screen and scrollable. Each column below fills the screen; swipe sideways to move between Brand Memory, Creatives, Ads and the rest. The columns still reveal themselves left to right as they fill.
+- **Navigation**: the left rail is gone from the page and becomes a drawer. A menu button at the top left opens it (same contents: Home, Search, Library, Agents, Skills, Memory, History, workspace badge); tap the dark area to close. The top bar keeps Feed | Chat, the layout switch (or the Pro invitation) and credits; the theme and notifications chips are hidden on phones for now.
+- **Feed**: one column, edge to edge with a 12px gutter. Tune Feed and Jam with Team sit centred along the bottom instead of stacked over the cards.
+- **Pro deck**: one agent column per screen, snapping as you swipe. Column edges can't be dragged on a phone (there is nothing to resize).
+- **Overlays**: Upgrade to Pro, Jam with team, Tune, Upload and Out-of-credits open as bottom sheets; the CRM drawer, History and the Agents page go full width; the creative editor keeps the image, thumbnails, toolbar (scrolls sideways) and the edit box, and drops the zoom control and the View input / Add annotations buttons for now.
+- Hover tooltips (column-switch labels, card action tips) are switched off on touch screens, where a tap would otherwise leave them stuck open.
+
+**Known gaps in this draft**: the theme toggle and notifications have no home on the phone top bar yet; the deck sidebar (Cosmix summary, column filters, dashboard card) is not reachable on a phone; the setup rail does not auto-scroll to its latest line; nothing has been checked on a real device, only in a phone-sized browser.
+
 ## 2026-09-18 — Creative director outputs open in an edit view, not in chat
 
 Clicking "Remix with Agent" on any Creative director card (feed, deck or the loading columns) now opens that creative full-screen in its own editor overlay, in place of the chat flow that Remix normally opens. Clicking the image itself does nothing, as before. Jam with Team, and Remix on every other agent, are unchanged and still go to chat. The overlay: campaign name and zoom control (−/+, 25% steps, 25–200%) top left; View input, Add annotations, version history, download and close top right; the creative in the middle at 75%, with a thumbnail strip under it; the Split Layers / Upscale / Remove BG / Resize Image / More Actions toolbar and the "Describe your edits" box at the bottom. A card with several images shows all of them as thumbnails with previous/next arrows beside the image (keyboard ← → also work); it opens on whichever slide the card was showing. Esc or × closes.

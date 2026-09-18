@@ -298,9 +298,10 @@
   }
   .spot-foot b{font-weight:500;color:var(--fg-2)}
 
-  @media (max-width:600px){
-    .hist{left:62px;right:12px;width:auto}
-    .spot{top:8vh}
+  @media (max-width:700px){
+    .hist{left:12px;right:12px;width:auto;top:12px;bottom:12px}
+    .spot{top:6vh}
+    .spot-foot{display:none}
   }
   @media (prefers-reduced-motion:reduce){
     .hist,.spot,.spot-scrim{transition:none}
@@ -324,6 +325,12 @@
     height:64px;padding:12px 24px;gap:16px;
   }
   .topbar-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+  /* phone only: opens the rail as a drawer */
+  .tb-menu{
+    display:none;width:36px;height:36px;flex:0 0 auto;place-items:center;
+    border:0;border-radius:var(--r-ctl);background:transparent;color:var(--fg-2);cursor:pointer;
+  }
+  .tb-menu:hover{background:#171717;color:var(--fg)}
   .tb-back{
     display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px 0 9px;
     border:0;border-radius:999px;background:transparent;color:var(--fg-2);
@@ -2015,8 +2022,7 @@
   .sugg .ar{color:#929292;transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
   .sugg:hover .ar{transform:translateX(3px);color:var(--fg-2)}
 
-  @media (max-width:600px){
-    .rail.open{width:min(280px,86vw)}
+  @media (max-width:700px){
     .chat{padding:48px 16px 64px}
     .greeting{font-size:22px;line-height:30px;margin-bottom:28px}
     .modes{gap:8px}
@@ -2200,21 +2206,99 @@
     }
   }
 
-  @media (max-width:600px){
+  /* touch: a tap leaves :hover behind, so hover tooltips would stick — none on touch screens */
+  @media (hover:none){
+    .ls-btn::after,.act .tip,.rail-tip{display:none}
+  }
+
+  /* ================= phone: the whole flow, one column wide ================= */
+  @media (max-width:700px){
     :root{--feed-w:100%}
-    body{padding-bottom:100px;padding-left:52px}
-    .rail{width:52px;padding:8px}
-    .topbar{padding:12px 10px;gap:8px}
+    body{padding-left:0;padding-bottom:96px}
+
+    /* the rail is a drawer; the menu button in the top bar opens it */
+    .rail{
+      width:min(280px,86vw);padding:12px;background:#0f0f0f;
+      transform:translateX(-100%);box-shadow:none;
+      transition:transform .34s cubic-bezier(.32,.72,0,1);
+    }
+    .rail.open{width:min(280px,86vw);transform:none;box-shadow:26px 0 60px rgba(0,0,0,.55)}
+    .rail .rail-logo{width:100%;padding:0 6px}
+    .rail .rail-word{opacity:1}
+    .rail .rail-btn,.rail .rail-badge{width:100%}
+    .rail .rail-label{opacity:1}
+    .rail-tip{display:none}
+    .tb-menu{display:grid}
+
+    /* top bar: menu, tabs, layout switch, credits — theme and bell move off the bar */
+    .topbar{height:60px;padding:10px 12px;gap:8px}
     .topbar-right{gap:6px}
     .chip{width:32px;height:32px}
+    .chip[aria-label="Light mode"],.chip[aria-label="Notifications"]{display:none}
     .credits{height:32px;padding:0 10px;gap:6px}
-    .tab{padding:0 12px}
-    .view.is-out{left:52px}
-    .composer-dock{left:calc(50% + 26px)}
     .seg{position:static;transform:none;margin:0 auto}
-    .feed{padding-left:16px;padding-right:16px}
+    .tab{padding:0 12px}
+    .view.is-out{left:0}
+    .composer-dock{left:50%;width:calc(100% - 24px);bottom:12px}
+
+    /* stories and feed run edge to edge with a phone gutter */
+    .stories{padding:16px 16px 20px;gap:14px}
+    .feed{padding-left:12px;padding-right:12px;gap:16px}
     .card{border-radius:16px}
-    .dock{right:16px;bottom:16px}
+    .feed-end{padding:40px 20px}
+
+    /* the dock sits centred along the bottom instead of over the cards */
+    .dock{left:0;right:0;bottom:14px;flex-direction:row;justify-content:center;align-items:center;gap:8px;padding:0 12px}
+    .pill{height:40px;padding:0 14px;font-size:13px}
+
+    /* deck: one column fills the screen, swipe between columns */
+    .deck-wrap{height:calc(100vh - 60px);height:calc(100dvh - 60px)}
+    .deck{scroll-snap-type:x mandatory}
+    .col{flex:0 0 100vw;width:100vw;border-right:0}
+    .col-head{padding:18px 16px 0}
+    .col-head hr{margin:14px -16px 0}
+    .col-body{padding:16px 12px 40px;gap:16px}
+    .grab{display:none}
+
+    /* setup: the rail stacks above the columns instead of beside them */
+    body.setup-run .deck-wrap{flex-direction:column;height:100vh;height:100dvh}
+    body.setup-run .deck-side{
+      display:flex;flex:0 0 auto;max-height:42vh;overflow-y:auto;
+      border-right:0;border-bottom:1px solid var(--line-soft);
+      padding:12px 16px 14px;gap:12px;
+    }
+    .su-site{height:46px}
+    .su-stream{margin-top:12px;min-height:0;gap:8px;font-size:13.5px;line-height:19px}
+    .su-foot{margin-top:4px;gap:10px}
+    .su-agents{flex-direction:row;flex-wrap:wrap;gap:8px 18px}
+    .su-ag{gap:8px}
+    .su-ag img{width:26px;height:26px}
+    .su-done{height:34%;padding:0 20px 28px}
+    .su-done h2{font-size:24px;line-height:32px}
+
+    /* overlays: sheets and full-width panels */
+    .scrim{padding:0;align-items:end}
+    .modal,.modal.jam{width:100%;border-radius:24px 24px 0 0}
+    .modal-actions .btn{flex:1}
+    .dw{width:100%;border-left:0}
+    .agents-page{padding:72px 20px 40px;align-content:start}
+    .agents-page h1{font-size:28px;line-height:36px}
+    .ap-sub{font-size:15px;line-height:23px}
+    .ap-close{top:14px;right:14px}
+
+    /* creative editor */
+    .ed-head{height:56px;padding:0 12px 0 16px;gap:8px}
+    .ed-title{font-size:15px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+    .ed-zoom,.ed-btn{display:none}
+    .ed-stage{top:56px;bottom:150px}
+    .ed-frame{height:auto;width:calc(100vw - 32px);max-height:100%}
+    .ed-frame img{width:100%;height:auto;max-width:none;max-height:calc(100dvh - 206px - 76px)}
+    .ed-nav-prev{left:6px}.ed-nav-next{right:6px}
+    .ed-thumbs{top:auto;bottom:4px}
+    .ed-tools{bottom:78px;width:calc(100vw - 24px);justify-content:flex-start;gap:4px;overflow-x:auto;scrollbar-width:none}
+    .ed-tools::-webkit-scrollbar{display:none}
+    .ed-tool{padding:0 10px;font-size:13px}
+    .ed-input{bottom:14px;height:48px;width:calc(100vw - 24px)}
   }
 
   /* ================= onboarding: point us at a store, watch the feed build ================= */
@@ -2380,6 +2464,21 @@
   .pfield-row .ofield{flex:1;padding-left:35px}
   .qrow.in{animation:risein .34s cubic-bezier(.32,.72,0,1) both}
   @media (prefers-reduced-motion:reduce){.qrow.in{animation-duration:.01s}}
+
+  /* phone: the first screen wraps and stacks (after the rules above so it wins the cascade) */
+  @media (max-width:700px){
+    /* first screen */
+    .start{padding:64px 20px 24px}
+    .start h1{white-space:normal;font-size:28px;line-height:36px;margin-bottom:56px}
+    .start h1 span{font-size:20px;line-height:28px;margin-top:6px}
+    .orows{margin-bottom:56px}
+    .orows.hidden{margin:0 0 48px}
+    .start.on-noproduct h1{margin-bottom:32px}
+    .qrow:last-child{margin-bottom:56px}
+    .cta-row{width:100%;grid-auto-columns:1fr}
+    .cta-go{width:100%;justify-content:center}
+    .cta-go .cta-chev{margin-left:auto}
+  }
 
   .start.out{pointer-events:none}
 
@@ -3098,6 +3197,9 @@
 
 <header class="topbar">
   <div class="topbar-left">
+    <button class="tb-menu" id="tb-menu" type="button" aria-label="Open navigation" aria-controls="rail">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+    </button>
     <button class="tb-back" id="tb-back" hidden>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       Back
@@ -4366,7 +4468,7 @@
     }
     if (k === 'jam') return openModal('jam-scrim');
     const col = deckEl.querySelector(`.col[data-col="${k}"]`);
-    if (col) col.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'start' });
+    if (col) deckEl.scrollTo({ left: deckEl.scrollLeft + col.getBoundingClientRect().left - deckEl.getBoundingClientRect().left, behavior:'smooth' });
   });
 
   backEl.addEventListener('click', () => setLayout('feed'));
@@ -5363,6 +5465,10 @@
   document.getElementById('rail-logo').addEventListener('click', () =>
     setRail(!rail.classList.contains('open')));
   railScrim.addEventListener('click', () => setRail(false));
+  // on a phone the rail is a drawer; the menu button in the top bar opens it
+  document.getElementById('tb-menu')?.addEventListener('click', () => setRail(true));
+  // the drawer never stays open across a breakpoint change
+  window.matchMedia('(max-width:700px)').addEventListener('change', () => setRail(false));
 
   const NAV_SOON = {
     library: 'Library is not built in this prototype yet',
@@ -6547,7 +6653,8 @@ const aboutCard = (p) => `
       const col = deckEl.querySelector(`.col[data-col="${k}"]`);
       const body = col.querySelector('.col-body');
       col.classList.remove('waiting');
-      at(200, () => col.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'end' }));
+      // sideways only: scrollIntoView would also scroll the page and, on a phone, push the setup rail off the top
+      at(200, () => deckEl.scrollTo({ left: deckEl.scrollLeft + col.getBoundingClientRect().right - deckEl.getBoundingClientRect().right, behavior:'smooth' }));
       byAgent(k).forEach((p2, i) => {
         const slot = document.createElement('div');
         slot.innerHTML = skeleton();
