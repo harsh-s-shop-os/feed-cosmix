@@ -21,9 +21,9 @@ The first card in the feed, the first time the feed opens, is a card from ShopOS
 - It is not a post: it stays out of the Pro deck, the agent chips only show it under "All", and it carries no like / remix / jam row of its own.
 - On the cream slide the carousel arrows flip to dark so they stay visible.
 
-## 2026-09-18 — Feed | Chat tabs: more room around the labels
+## 2026-09-18 — Feed | Chat tabs: even more room around the labels
 
-The two tabs in the top bar sat tight against the edge of their pill. Both now carry 18px of space on each side instead of 12px, on desktop and on a phone. The sliding block behind the active tab measures itself off the tab, so it grew with them.
+Widened again, per feedback that the first pass was still tight — 26px a side on desktop, 20px on a phone (up from 18px/18px, originally 12px/12px). The sliding block behind the active tab measures itself off the tab, so it grows with them.
 
 ## 2026-09-18 — Setup columns: the intro card gives way to a status line
 
