@@ -4495,7 +4495,11 @@
       </div>
     </article>`;
   };
-  // always the first card in the feed — no first-visit gate, no localStorage
+  // the first card on every load, and shown exactly once per load: the moment it
+  // has been seen and then left — scrolled fully past, or the feed hidden behind
+  // Chat, the deck, or any other page — it is removed while out of sight, so it
+  // is simply gone when the user comes back. Nothing is persisted; a reload
+  // starts over, which is what a prototype under review wants.
   const introWanted = true;
   const wireIntro = () => {
     const el = document.querySelector('[data-intro-card]');
@@ -4505,6 +4509,37 @@
     const slideIO = new IntersectionObserver(es => es.forEach(e =>
       e.target.classList.toggle('on', e.isIntersecting)), { root: track, threshold: 0.6 });
     el.querySelectorAll('.intro-slide').forEach(s => slideIO.observe(s));
+
+    // "seen" means at least half of it on screen while the feed itself is showing;
+    // the start screen and the setup run sit over the feed and do not count
+    const feedShowing = () => !document.body.classList.contains('setup') && !document.getElementById('start');
+    let seen = false, spent = false;
+    const retire = () => {
+      if (spent) return;
+      spent = true;
+      const r = el.getBoundingClientRect();
+      const above = r.height > 0 && r.bottom <= 0;
+      // exactly how far the card after it will move up: its top minus ours
+      const next = el.nextElementSibling;
+      const shift = next ? next.getBoundingClientRect().top - r.top : el.offsetHeight;
+      // Chrome and Firefox would hold the page themselves (scroll anchoring);
+      // Safari would not. Turn anchoring off for this one removal and do it by
+      // hand, so every browser ends up in the same place
+      const root = document.documentElement;
+      root.style.overflowAnchor = 'none';
+      el.remove();
+      // if it left through the top, pull the page up by the same amount so the
+      // card the user is looking at stays exactly where it is
+      if (above) window.scrollBy(0, -shift);
+      requestAnimationFrame(() => { root.style.overflowAnchor = ''; });
+      seenIO.disconnect(); slideIO.disconnect();
+    };
+    const seenIO = new IntersectionObserver(es => {
+      const e = es[es.length - 1];
+      if (e.isIntersecting && e.intersectionRatio >= .5 && feedShowing()) seen = true;
+      else if (seen && !e.isIntersecting) retire();
+    }, { threshold: [0, .5] });
+    seenIO.observe(el);
   };
 
   // two agents are mid-run and say what they are on; two are not running

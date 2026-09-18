@@ -2,6 +2,12 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Intro card shows once, then gets out of the way
+
+The intro card is still the first card on every load, but now it appears exactly once per load. Once at least half of it has been on screen with the feed showing, the first time you leave it, it is gone: scroll past it to the bottom and back up, and the feed starts at the first real post; switch to Chat, the deck or any other page and come back, same thing. It is removed while it is out of sight, and the page is pulled up by exactly its height, so whatever card you were looking at does not move. Peeking at it partially and scrolling back does not spend it. Nothing is stored; a reload starts fresh.
+
+Also this morning: all three slides now sit on one dark green, so the colour that shows through under the headline matches slide 1 (the purple and rust bleed on slides 2 and 3 is gone). Slides 1 and 2 have their full-frame images.
+
 ## 2026-09-19 — AI Visibility cards rebuilt against the September GEO report
 
 The seven visibility cards had drifted from Lalith's report: invented competitor rankings (The Whole Truth), wrong source counts, "7 of 15" where the report says 0 of 8, and "4 models" where it audits 3 engines. Now six cards, every number traceable to a slide.
