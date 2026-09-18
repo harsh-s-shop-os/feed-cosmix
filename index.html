@@ -2335,48 +2335,16 @@
   @media (prefers-reduced-motion:reduce){
     .cta-ags,.cta-ags img{transition:none}
   }
-  /* ---------- step 2: pick a brand to watch ShopOS work on ---------- */
   .start .ostep{width:100%}
   /* the headline block never moves between steps: the back row takes part of its gap */
-  .start.on-brand h1{margin-bottom:72px}
   .start.on-noproduct h1{margin-bottom:66px}
   .backrow{margin-bottom:8px}
   #step-noproduct .backrow{margin-bottom:12px}
 
-  .bgrid{display:flex;flex-wrap:wrap;gap:8px;width:100%;margin-bottom:128px}
-  .bcard{
-    display:flex;align-items:center;gap:16px;height:72px;padding:0 32px;
-    border:1px solid #262626;border-radius:12px;background:transparent;
-    color:var(--fg);font:inherit;font-size:16px;line-height:24px;text-align:left;cursor:pointer;
-    transition:background .16s,border-color .16s;
-  }
-  .bcard:hover{background:#171717;border-color:#333333}
-  .bcard.on{background:#262626;border-color:#404040}
-  .bradio{
-    position:relative;flex:0 0 auto;width:20px;height:20px;
-    border-radius:50%;border:1.5px solid #404040;background:#171717;
-  }
-  .bradio::after{
-    content:"";position:absolute;inset:0;margin:auto;width:14px;height:14px;
-    border-radius:50%;border:2px solid var(--fg);
-    opacity:0;transform:scale(.55);
-    transition:opacity .16s ease,transform .24s cubic-bezier(.34,1.5,.5,1);
-  }
-  .bcard.on .bradio::after{opacity:1;transform:none}
-
-  /* the two footer buttons share one grid so they come out the same width */
+  /* the two footer buttons share one grid so they come out the same width
+     (currently only one is ever shown, since the demo-brand step that used
+     the second slot is removed for now) */
   .cta-row{display:grid;grid-auto-flow:column;grid-auto-columns:max-content;gap:16px;width:max-content}
-  .cta-alt{
-    display:inline-flex;align-items:center;justify-content:center;gap:9px;height:48px;padding:0 16px;
-    border:0;border-radius:14px;background:#262626;color:#d4d4d4;overflow:hidden;
-    font:inherit;font-size:16px;font-weight:550;white-space:nowrap;cursor:pointer;
-    transition:background .15s,color .15s;
-  }
-  .cta-alt:hover{background:#2e2e2e;color:var(--fg)}
-  .cta-alt svg{flex:0 0 auto;transition:transform .2s cubic-bezier(.34,1.4,.64,1)}
-  .cta-alt:hover svg{transform:translateX(-2px)}
-  .cta-alt.in{animation:altin .34s cubic-bezier(.32,.72,0,1) both}
-  @keyframes altin{from{opacity:0;transform:translateX(-10px)}}
 
   /* only what changes moves: the label crossfades, the logo and line 1 sit still */
   #start-sub,.cta-label{transition:opacity .16s ease,transform .22s cubic-bezier(.32,.72,0,1)}
@@ -2386,7 +2354,7 @@
   .ostep.entering > *{opacity:0;transform:translateY(10px);animation:risein .38s cubic-bezier(.32,.72,0,1) forwards}
   .ostep.entering > *:nth-child(2){animation-delay:.06s}
   @media (prefers-reduced-motion:reduce){
-    .ostep.leaving,.ostep.entering > *,.cta-alt.in{animation-duration:.01s}
+    .ostep.leaving,.ostep.entering > *{animation-duration:.01s}
   }
 
   /* ---------- step 1b: no brand yet — a short, one-question-at-a-time wizard ---------- */
@@ -3095,23 +3063,11 @@
     </div>
 
     <div class="orows">
-      <button class="orow" type="button" id="start-demo">
-        <span class="oic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
-        See ShopOS in action
-      </button>
       <button class="orow" type="button" id="start-nobrand">
         <span class="oic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg></span>
         I don’t have a Brand
       </button>
     </div>
-    </div>
-
-    <div class="ostep" id="step-brand" hidden>
-      <button class="orow backrow" type="button" id="brand-back">
-        <span class="oic"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg></span>
-        See ShopOS in action
-      </button>
-      <div class="bgrid" id="bgrid"></div>
     </div>
 
     <div class="ostep" id="step-noproduct" hidden>
@@ -3125,10 +3081,6 @@
     </div>
 
     <div class="cta-row" id="cta-row">
-    <button class="cta-alt" type="button" id="start-own" hidden>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      <span class="alt-label">Try your own Brand</span>
-    </button>
     <span class="cta-wrap">
       <button class="cta-go" id="start-go" type="button"><span class="cta-label">Build My Team</span>
         <span class="cta-ags" aria-hidden="true">
@@ -6768,100 +6720,12 @@ const aboutCard = (p) => `
       field.querySelector('input')?.focus();
     });
 
-    /* ---- "See ShopOS in action": pick a brand, then the same setup runs on it ---- */
-    const DEMO_BRANDS = ['Dunder Mifflin', 'Los Pollos Hermanos', 'Chocolate Frogs',
-                         'Fishwife', 'Miu Miu', 'Vacation Inc.', 'Dorsey'];
-    const SUB_URL   = 'Enter a Brand URL &amp; we\u2019ll set everything up!';
-    const SUB_BRAND = 'Select a Brand and we\u2019ll show what we can do!';
-    let demoPick = 0, onBrand = false;
+    // the "See ShopOS in action" demo-brand picker is removed for now: the first
+    // screen goes straight from the URL field to Build My Team
+    const ctaRow = $('cta-row');
+    const stepUrl = $('step-url');
 
-    const subEl = $('start-sub'), ctaRow = $('cta-row'), altBtn = $('start-own');
-    const ctaLabel = document.querySelector('.cta-label');
-    const ctaWrap = document.querySelector('.cta-wrap');
-    const stepUrl = $('step-url'), stepBrand = $('step-brand');
-
-    $('bgrid').innerHTML = DEMO_BRANDS.map((n, i) =>
-      `<button class="bcard${i === 0 ? ' on' : ''}" type="button" data-i="${i}"><span class="bradio"></span>${n}</button>`
-    ).join('');
-
-    // swap a line of text without moving anything around it
-    const swapText = (el, html) => {
-      if (!el) return;
-      el.classList.add('swap');
-      at(170, () => { el.innerHTML = html; el.classList.remove('swap'); });
-    };
-    // the row is width:max-content, so a longer brand name would snap it wider: ease it instead
-    const sizeRow = (animate) => {
-      const from = ctaRow.getBoundingClientRect().width;
-      ctaRow.style.transition = 'none'; ctaRow.style.width = 'max-content';
-      const to = ctaRow.getBoundingClientRect().width;
-      if (!animate || Math.abs(to - from) < 1) { ctaRow.style.width = ''; return; }
-      ctaRow.style.width = from + 'px';
-      requestAnimationFrame(() => {
-        ctaRow.style.transition = 'width .34s cubic-bezier(.32,.72,0,1)';
-        ctaRow.style.width = to + 'px';
-      });
-      at(380, () => { ctaRow.style.transition = ''; ctaRow.style.width = ''; });
-    };
-    // the primary button keeps its identity across the step: it slides to its new slot
-    const slideCta = (mutate) => {
-      const before = ctaWrap.getBoundingClientRect().left;
-      mutate();
-      const dx = before - ctaWrap.getBoundingClientRect().left;
-      if (Math.abs(dx) < 1) return;
-      ctaWrap.style.transition = 'none';
-      ctaWrap.style.transform = `translateX(${dx}px)`;
-      requestAnimationFrame(() => {
-        ctaWrap.style.transition = 'transform .42s cubic-bezier(.32,.72,0,1)';
-        ctaWrap.style.transform = '';
-      });
-      at(460, () => { ctaWrap.style.transition = ''; ctaWrap.style.transform = ''; });
-    };
-
-    const goStep = (toBrand) => {
-      if (onBrand === toBrand) return;
-      onBrand = toBrand;
-      const leaving = toBrand ? stepUrl : stepBrand;
-      const arriving = toBrand ? stepBrand : stepUrl;
-
-      swapText(subEl, toBrand ? SUB_BRAND : SUB_URL);
-      swapText(ctaLabel, toBrand ? `Build for ${DEMO_BRANDS[demoPick]}` : 'Build My Team');
-
-      // the layout only changes once the outgoing body is already invisible, so nothing
-      // above it ever shifts: the logo and headline sit perfectly still through the swap
-      leaving.classList.add('leaving');
-      at(180, () => {
-        slideCta(() => {
-          leaving.classList.remove('leaving');
-          leaving.hidden = true;
-          arriving.hidden = false;
-          startEl.classList.toggle('on-brand', toBrand);
-          altBtn.hidden = !toBrand;
-        });
-        arriving.classList.remove('entering'); void arriving.offsetWidth;
-        arriving.classList.add('entering');
-        at(460, () => arriving.classList.remove('entering'));
-        if (toBrand) { altBtn.classList.remove('in'); void altBtn.offsetWidth; altBtn.classList.add('in'); }
-      });
-    };
-
-    $('start-demo').addEventListener('click', () => goStep(true));
-    $('brand-back').addEventListener('click', () => goStep(false));
-    altBtn.addEventListener('click', () => goStep(false));
-    $('bgrid').addEventListener('click', (e) => {
-      const card = e.target.closest('.bcard'); if (!card) return;
-      demoPick = +card.dataset.i;
-      $('bgrid').querySelectorAll('.bcard').forEach(c => c.classList.toggle('on', c === card));
-      swapText(ctaLabel, `Build for ${DEMO_BRANDS[demoPick]}`);
-      at(170, () => sizeRow(true));
-    });
-
-    // a demo brand is not a real store, so name it outright instead of reading it off a host
-    const beginBrand = (name) => {
-      begin(name.toLowerCase().replace(/[^a-z0-9]+/g, '') + '.com', false);
-      BRAND.name = name;
-    };
-    $('start-go').addEventListener('click', () => onBrand ? beginBrand(DEMO_BRANDS[demoPick]) : submit());
+    $('start-go').addEventListener('click', submit);
 
     /* ---- "I don't have a Brand": a 3-question wizard, one open question at a time ---- */
     const stepNoProduct = $('step-noproduct');
