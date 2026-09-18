@@ -4317,11 +4317,12 @@
       cta:{ label:'Draft the multivitamin post' } },
 
     { agent:'visibility', time:'20 min', badge:['Sitting idle','warn'],
+      // right column is one shape throughout: "not <where it should be>"
       rows:[['In-house manufacturing','not on the homepage'],
-            ['NABL testing, every batch','product pages only'],
+            ['NABL testing, every batch','not on the homepage'],
             ['FSSAI, GMP, HACCP, USFDA','not marked up'],
-            ['Founder story rooted in PCOS','no page tells it'],
-            ['FERMAGUT','no page explains it']],
+            ['Founder story rooted in PCOS','not on any page'],
+            ['FERMAGUT','not on any page']],
       title:'The proof already exists. It is sitting on the wrong pages.',
       sub:`The homepage tells an engine "holistic, begins from within" and nothing it can lift and stand behind. Page citability ${GEO.dims[1].value}, E-E-A-T ${GEO.dims[2].value}, while crawler access is already ${GEO.dims[4].value}: the bots get in and find nothing to quote.`,
       cta:{ label:'Move it to the homepage' } },
