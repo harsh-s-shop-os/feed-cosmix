@@ -324,6 +324,30 @@
     .hist,.spot,.spot-scrim{transition:none}
   }
 
+  /* Collapsed, the strip carries three destinations: Home, Search, Agents.
+     Everything else (Library, Skills, Memory, History, the foot, the workspace
+     badge) folds to zero height and comes back as the rail widens, so the
+     three icons do not jump when the rest arrives. On a phone the rail is a
+     drawer that is only ever seen open, so none of this applies there. */
+  .rail-item,.rail-foot,.rail-badge{
+    transition:max-height .34s cubic-bezier(.32,.72,0,1),opacity .2s ease,
+               margin .34s cubic-bezier(.32,.72,0,1),padding .34s cubic-bezier(.32,.72,0,1),
+               width .34s cubic-bezier(.32,.72,0,1),background .15s;
+  }
+  .rail-item{max-height:36px}
+  .rail-foot{max-height:260px}
+  .rail-badge{max-height:36px}
+  @media (min-width:701px){
+    .rail:not(.open) .rail-nav .rail-item:not([data-item="home"]):not([data-item="search"]):not([data-item="agents"]),
+    .rail:not(.open) .rail-foot,
+    .rail:not(.open) .rail-badge{
+      max-height:0;opacity:0;overflow:hidden;pointer-events:none;
+      margin-top:-4px;   /* swallow the nav's 4px gap so the three icons stay adjacent */
+    }
+    .rail:not(.open) .rail-foot{padding-top:0;margin-top:0;border-top-color:transparent}
+    .rail:not(.open) .rail-badge{margin-top:0}
+  }
+
   .rail-scrim{
     position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.45);
     opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
@@ -5809,15 +5833,34 @@
   railScrim.className = 'rail-scrim';
   document.body.appendChild(railScrim);
 
-  const setRail = (open) => {
+  // pinned = opened by a click (logo or the phone menu button); it dims the page
+  // and stays. Hover-opened is quieter: no scrim, and it folds when the pointer leaves.
+  let railPinned = false;
+  const setRail = (open, { pin = open } = {}) => {
+    railPinned = open && pin;
     rail.classList.toggle('open', open);
-    railScrim.classList.toggle('on', open);
+    railScrim.classList.toggle('on', railPinned);
     document.getElementById('rail-logo').setAttribute('aria-expanded', String(open));
   };
 
   document.getElementById('rail-logo').addEventListener('click', () =>
-    setRail(!rail.classList.contains('open')));
+    setRail(!railPinned));
   railScrim.addEventListener('click', () => setRail(false));
+
+  // Desktop only, pointer only. Resting on the strip itself opens the rail;
+  // resting on one of the three visible icons (or the logo) does not, so
+  // their tooltips get to do their job. Once open it stays open until the
+  // pointer leaves the rail altogether.
+  const railHover = window.matchMedia('(min-width:701px) and (hover:hover)');
+  rail.addEventListener('mousemove', (e) => {
+    if (!railHover.matches || railPinned || rail.classList.contains('open')) return;
+    if (e.target.closest('.rail-item, .rail-logo')) return;
+    setRail(true, { pin:false });
+  });
+  rail.addEventListener('mouseleave', () => {
+    if (railPinned || !rail.classList.contains('open')) return;
+    setRail(false);
+  });
   // on a phone the rail is a drawer; the menu button in the top bar opens it
   document.getElementById('tb-menu')?.addEventListener('click', () => setRail(true));
   // the drawer never stays open across a breakpoint change

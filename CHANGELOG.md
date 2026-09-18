@@ -2,6 +2,15 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Left rail: three icons collapsed, opens on hover
+
+Desktop only; the phone drawer is unchanged.
+
+- **Collapsed, the strip shows Home, Search and Agents** under the logo. Library, Skills, Memory, History, the foot (notifications, theme, credits, the layout switch) and the Cosmix workspace badge are folded away until the rail opens — they grow back in as it widens, so the three icons never jump.
+- **Rest the pointer anywhere on the strip and the rail opens by itself**, full labels showing. Move off it and it folds. No page dimming for a hover-open.
+- **Rest on one of the three icons instead and you get its tooltip**, not the open rail. The hidden items have no tooltips to lose: by the time you could reach them the rail is already open and their names are printed.
+- **Clicking the logo still pins the rail open** with the page dimmed behind it, as before; click again to close.
+
 ## 2026-09-19 — Intro card shows once, then gets out of the way
 
 The intro card is still the first card on every load, but now it appears exactly once per load. Once at least half of it has been on screen with the feed showing, the first time you leave it, it is gone: scroll past it to the bottom and back up, and the feed starts at the first real post; switch to Chat, the deck or any other page and come back, same thing. It is removed while it is out of sight, and the page is pulled up by exactly its height, so whatever card you were looking at does not move. Peeking at it partially and scrolling back does not spend it. Nothing is stored; a reload starts fresh.
