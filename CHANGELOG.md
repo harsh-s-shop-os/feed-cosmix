@@ -2,6 +2,12 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Intro card: new copy, slide 1 gets its final image
+
+The carousel now tells one story in three lines: "Six agents. One feed. New work every day." / "Approve it, and it ships." / "Remix with an agent. Jam with the team." Title "This is your feed"; the description covers what posts here, that each card is finished work, and the three actions (approve, remix, jam).
+
+Slide 1 is a finished illustration (`assets/intro-1.jpg`, four rings dropping into a stack of bars) with the headline revealing word by word over it. Slides 2 and 3 keep the colour wash until their images arrive. The in-code SVG illustration attempts are removed.
+
 ## 2026-09-18 — Fixed: the Feed | Chat pill sat lower than the logo and the Pro button
 
 On desktop the top bar's three landmarks — the logo, the Feed/Chat pill, and the button on the right — weren't vertically aligned: the pill sat noticeably lower. Root cause: the pill is absolutely positioned to centre itself horizontally, but had no `top` set, so it fell back to a static position that isn't reliably the container's vertical centre. Now pinned on both axes off its own centre, matching the other two.
