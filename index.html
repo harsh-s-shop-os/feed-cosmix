@@ -2667,10 +2667,9 @@
   }
   body.setup-run .col-status{display:block}
   .col-status .cs-head{display:flex;align-items:flex-start;gap:8px}
-  .col-status .mx{
-    width:20px;height:20px;margin-top:2px;
-    grid-template-columns:repeat(4,3px);gap:2.5px;
-  }
+  /* same matrix size as everywhere else it stands in for a status light
+     (the column header's own .col-dp) — this one just carries a title, not text */
+  .col-status .mx{margin-top:2px}
   .col-status h3{
     margin:0;flex:1 1 auto;min-width:0;
     font-size:16px;font-weight:400;line-height:24px;letter-spacing:-.005em;color:var(--fg);
