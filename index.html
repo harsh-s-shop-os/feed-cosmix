@@ -2827,6 +2827,36 @@
     font-size:41px;line-height:46px;font-weight:500;letter-spacing:-.028em;
     color:var(--ink);text-wrap:balance;
   }
+  /* the illustration sits in the upper half, above the art, under the copy */
+  .intro-il{position:absolute;left:0;top:5%;width:100%;height:60%;z-index:1;pointer-events:none;overflow:visible}
+  .il-card{fill:rgba(255,255,255,.07);stroke:rgba(255,255,255,.55);stroke-width:1.5}
+  .il-img{fill:rgba(255,255,255,.22)}
+  .il-line{fill:rgba(255,255,255,.4)}
+  .il-frame{fill:rgba(255,255,255,.04);stroke:rgba(255,255,255,.45);stroke-width:1.5;stroke-dasharray:4 5}
+  .il-slot{fill:rgba(255,255,255,.14)}
+  .il-arrow{fill:none;stroke:rgba(255,255,255,.6);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+  .il-dash{stroke-dasharray:3 5}
+  .il-person circle,.il-person path{fill:none;stroke:rgba(255,255,255,.85);stroke-width:1.75;stroke-linecap:round}
+  .il-bub{fill:rgba(255,255,255,.1);stroke:rgba(255,255,255,.55);stroke-width:1.5}
+  .il-bubble circle{fill:rgba(255,255,255,.85)}
+  .il-spark{fill:#fff}
+  /* slide 1: each card leaves its agent, falls into the feed, fades as it lands */
+  .il-drop{animation:ilDrop 5.4s cubic-bezier(.4,0,.2,1) infinite;animation-delay:var(--d)}
+  @keyframes ilDrop{0%{transform:translate(0,0);opacity:0}12%{opacity:1}70%{transform:translate(var(--tx),128px);opacity:1}88%,100%{transform:translate(var(--tx),128px);opacity:0}}
+  /* slide 2: the three variants fan out from behind the agent, hold, come back */
+  .il-fan{transform-box:fill-box;transform-origin:50% 100%;animation:ilFan 7s ease-in-out infinite alternate}
+  @keyframes ilFan{0%,20%{transform:translateX(0) rotate(0)}60%,100%{transform:translateX(var(--tx)) rotate(var(--r))}}
+  .il-spark{transform-box:fill-box;transform-origin:center;animation:ilSpark 3.5s ease-in-out infinite}
+  @keyframes ilSpark{0%,60%,100%{opacity:0;transform:scale(.5)}75%{opacity:1;transform:scale(1)}}
+  /* slide 3: the reply bubble arrives, sits, goes */
+  .il-bubble{transform-box:fill-box;transform-origin:50% 100%;animation:ilBubble 6s ease-in-out infinite}
+  @keyframes ilBubble{0%,15%{opacity:0;transform:translateY(6px) scale(.92)}28%,78%{opacity:1;transform:none}90%,100%{opacity:0;transform:translateY(-4px)}}
+  @media (prefers-reduced-motion:reduce){
+    .il-drop,.il-fan,.il-spark,.il-bubble{animation:none}
+    .il-drop{opacity:0}
+    .il-bubble{opacity:1}
+    .il-fan{transform:translateX(var(--tx)) rotate(var(--r))}
+  }
   .intro-word{display:inline-block;opacity:0;white-space:pre}
   .card.in .intro-slide.on .intro-word{
     animation:introWord .72s cubic-bezier(.32,.72,0,1) both;
@@ -4422,6 +4452,56 @@
       { c:'#241035', c2:'#8b3fb0', h:'Jam with the team when it needs a person.' }
     ]
   };
+  // one illustration per slide, in the empty upper half. The agent characters
+  // are the real avatar files, never redrawn, and never move; only the props
+  // around them do, slowly, in the same tempo as the gradient behind them.
+  const AG = (k, x, y, w = 44) => `<image href="${AGENTS[k].avatar}" x="${x - w/2}" y="${y - w/2}" width="${w}" height="${w}"/>`;
+  const CARD = (x, y, w, h, cls = '') => `
+    <g class="${cls}">
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${Math.min(w,h) * .14}" class="il-card"/>
+      <rect x="${x + w*.14}" y="${y + h*.14}" width="${w*.72}" height="${h*.42}" rx="3" class="il-img"/>
+      <rect x="${x + w*.14}" y="${y + h*.66}" width="${w*.72}" height="${h*.07}" rx="1.5" class="il-line"/>
+      <rect x="${x + w*.14}" y="${y + h*.79}" width="${w*.46}" height="${h*.07}" rx="1.5" class="il-line"/>
+    </g>`;
+  const INTRO_ART = [
+    // 1 — four agents up top, each dropping a card into the feed frame below
+    `<svg class="intro-il" viewBox="0 0 500 290" aria-hidden="true">
+      ${['creative','performance','storefront','visibility'].map((k, i) => AG(k, 140 + i*74, 46)).join('')}
+      ${[0,1,2,3].map(i => `<g class="il-drop" style="--d:${i*1.35}s;--tx:${250 - (140 + i*74)}px">${CARD(140 + i*74 - 15, 82, 30, 22)}</g>`).join('')}
+      <g class="il-feed">
+        <rect x="178" y="196" width="144" height="82" rx="12" class="il-frame"/>
+        <rect x="194" y="212" width="112" height="14" rx="4" class="il-slot"/>
+        <rect x="194" y="232" width="112" height="14" rx="4" class="il-slot"/>
+        <rect x="194" y="252" width="72" height="14" rx="4" class="il-slot"/>
+      </g>
+    </svg>`,
+    // 2 — one post, the agent that made it, three variants fanning out behind it
+    `<svg class="intro-il" viewBox="0 0 500 290" aria-hidden="true">
+      ${CARD(118, 92, 74, 96)}
+      <path d="M204 140 h30" class="il-arrow"/><path d="M228 133 l7 7 -7 7" class="il-arrow"/>
+      ${AG('creative', 268, 140, 52)}
+      <g class="il-fan" style="--r:-14deg;--tx:-14px">${CARD(328, 96, 52, 68, 'il-fan-card')}</g>
+      <g class="il-fan" style="--r:0deg;--tx:0px">${CARD(328, 96, 52, 68, 'il-fan-card')}</g>
+      <g class="il-fan" style="--r:14deg;--tx:14px">${CARD(328, 96, 52, 68, 'il-fan-card')}</g>
+      <path class="il-spark" d="M296 96 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z"/>
+    </svg>`,
+    // 3 — the post, the agent, and a person joining the thread
+    `<svg class="intro-il" viewBox="0 0 500 290" aria-hidden="true">
+      ${CARD(104, 92, 74, 96)}
+      <path d="M190 140 h36" class="il-arrow il-dash"/>
+      ${AG('performance', 258, 140, 52)}
+      <path d="M296 140 h36" class="il-arrow il-dash"/>
+      <g class="il-person">
+        <circle cx="366" cy="122" r="15"/>
+        <path d="M338 176 c0 -18 12 -30 28 -30 s28 12 28 30"/>
+      </g>
+      <g class="il-bubble">
+        <rect x="318" y="66" width="70" height="30" rx="15" class="il-bub"/>
+        <circle cx="340" cy="81" r="3.5"/><circle cx="353" cy="81" r="3.5"/><circle cx="366" cy="81" r="3.5"/>
+      </g>
+    </svg>`
+  ];
+
   const introCard = () => {
     const a = AGENTS.orchestrator;
     const words = (h) => h.split(' ').map((w, i) =>
@@ -4440,6 +4520,7 @@
           ${INTRO.slides.map((s, i) => `
           <div class="slide intro-slide" data-i="${i}" style="--c:${s.c};--c2:${s.c2}">
             <div class="intro-art"></div>
+            ${INTRO_ART[i]}
             <p class="intro-copy">${words(s.h)}</p>
           </div>`).join('')}
         </div>

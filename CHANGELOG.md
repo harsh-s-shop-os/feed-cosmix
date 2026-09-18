@@ -2,6 +2,16 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Intro card: an illustration on each slide
+
+The empty upper half of each intro slide now carries a small line illustration, built from the real agent avatars (unchanged, static) and simple card shapes. Only the props move, slowly, at the tempo of the gradient behind them.
+
+- **Slide 1, "Your agents work. This is where it lands."** — the four agents in a row; each drops a small card that falls into a dashed feed frame below and fades as it lands.
+- **Slide 2, "Remix any post with the agent that made it."** — a post, an arrow, the Creative director, and three variant cards fanning out behind it, with a spark.
+- **Slide 3, "Jam with the team when it needs a person."** — a post, the agent, and a person, joined by dashed lines; a reply bubble arrives above the person, sits, and goes.
+
+Illustrations are inline SVG in the card; reduced-motion users get the resting frame.
+
 ## 2026-09-18 — Intro card always leads the feed
 
 Dropped the first-visit-only gate. The intro card ("This is your feed") is now always the first card in the feed, every load — no localStorage flag, no `?intro` needed to bring it back.
