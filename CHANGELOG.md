@@ -7,8 +7,7 @@ Human-readable log of what changed in the onboarding prototype, for product revi
 Desktop only; the phone drawer is unchanged.
 
 - **Collapsed, the strip shows Home, Search and Agents** under the logo. Library, Skills, Memory, History, the foot (notifications, theme, credits, the layout switch) and the Cosmix workspace badge are folded away until the rail opens — they grow back in as it widens, so the three icons never jump.
-- **Rest the pointer anywhere on the strip and the rail opens by itself**, full labels showing. Move off it and it folds. No page dimming for a hover-open.
-- **Rest on one of the three icons instead and you get its tooltip**, not the open rail. The hidden items have no tooltips to lose: by the time you could reach them the rail is already open and their names are printed.
+- **Rest the pointer anywhere on the rail — icons included — and it opens by itself**, full labels showing. Move off it and it folds. No page dimming for a hover-open. The old hover tooltips are gone: the open rail's labels do that job now.
 - **Clicking the logo still pins the rail open** with the page dimmed behind it, as before; click again to close.
 
 ## 2026-09-19 — Intro card shows once, then gets out of the way
