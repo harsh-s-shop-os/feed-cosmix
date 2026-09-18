@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Launch Reveal card: new creative
+
+The "Position the launch as an occasion, not a product drop" post now uses the final cloche-lift photography (pancake mix pouch + shake glass under the lifted glass cloche, warm amber spotlight) instead of the placeholder image.
+
 ## 2026-09-19 — Left rail: three icons collapsed, opens on hover
 
 Desktop only; the phone drawer is unchanged.
