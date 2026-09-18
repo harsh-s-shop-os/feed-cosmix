@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Intro card: new slide 3 illustration
+
+Slide 3 ("Approve and publish to your platforms.") now uses a new illustration: a phone radiating light with a card/photo held at its center. Replaces the previous card-leaving-the-stack composition.
+
 ## 2026-09-19 — Launch Reveal card: new creative
 
 The "Position the launch as an occasion, not a product drop" post now uses the final cloche-lift photography (pancake mix pouch + shake glass under the lifted glass cloche, warm amber spotlight) instead of the placeholder image.
