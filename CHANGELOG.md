@@ -2,6 +2,19 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Each agent's face carries one small, looping idea
+
+(Its code landed already, folded into an unrelated tab-padding commit by timing; this entry describes it.) The six agent avatars — top-left of every card, and everywhere else the avatar appears — stay static: no blinking, no breathing. But each now carries one tiny animated detail, conceptually tied to what that agent does:
+
+- **Creative director** — a small spark twinkles near the top of the blob, on and off, like an idea catching.
+- **Performance marketer** — a small arrow at the corner nudges upward and settles, a metric climbing.
+- **Storefront manager** — a thin glint sweeps once across the shape, clipped to it, like light off a shop window.
+- **AI visibility** — a ring pulses outward from the centre and fades, a signal reaching further.
+- **CRM specialist** — a small dot at the corner breathes, a live connection.
+- **ShopOS (orchestrator)** — a soft halo breathes around the shape, one calm pulse coordinating the rest.
+
+Each loop is small, slow, and self-contained in the SVG, so it plays wherever the avatar is used without any code changes elsewhere. All six drop the accent under `prefers-reduced-motion: reduce`.
+
 ## 2026-09-18 — Intro card goes dark, and one creative card loses its photo
 
 **The intro card's three slides are darker and punchier.** Each slide is now a deep base colour with one saturated accent burning through it, instead of a single brand colour washed light: deep green with a live green, deep rust with an ember orange, and the aubergine of the editorial creative with a violet. The accent sits in a different part of the frame on each slide (top left, top right, upper centre) so the three read as three pictures rather than one picture recoloured. The cream slide is gone, so every slide is dark and the headline is white throughout.
