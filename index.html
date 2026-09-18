@@ -2770,6 +2770,12 @@
   .card.is-connect .cn-list svg{flex:0 0 auto;color:var(--fg-3)}
   .card.is-connect .btn-bar{border-radius:0 0 var(--r-card) var(--r-card)}
 
+  /* a text-only card: the copy is the whole card, so the actions sit tight
+     under the header and the CTA closes the card off at the bottom */
+  .card.is-text .card-actions{padding:14px 16px 10px}
+  .card.is-text .card-body{padding:0 16px 16px}
+  .card.is-text .btn-bar{border-radius:0 0 var(--r-card) var(--r-card)}
+
   /* ---------- intro card: the one card that explains the feed ----------
      Shown once, the first time the feed opens (localStorage flag; ?intro on
      the URL brings it back). Three square slides, each a single brand colour
@@ -2784,17 +2790,17 @@
   .intro-art{
     position:absolute;inset:-25%;z-index:0;
     background:
-      radial-gradient(closest-side at 28% 24%, color-mix(in srgb, var(--c) 86%, #fff) 0%, transparent 72%),
-      radial-gradient(closest-side at 74% 72%, color-mix(in srgb, var(--c) 72%, #000) 0%, transparent 72%),
+      radial-gradient(closest-side at var(--ax,26%) var(--ay,20%), var(--c2) 0%, transparent 76%),
+      radial-gradient(closest-side at var(--bx,78%) var(--by,76%), color-mix(in srgb, var(--c) 55%, #000) 0%, transparent 74%),
       var(--c);
-    filter:blur(52px) saturate(1.12);
+    filter:blur(46px) saturate(1.5);
     transform-origin:50% 50%;
     will-change:transform;
   }
   /* three slides, three drifts: a slow sway, a slow breath, a slow slide */
-  .intro-slide[data-i="0"] .intro-art{animation:introSway 38s ease-in-out infinite alternate}
-  .intro-slide[data-i="1"] .intro-art{animation:introBreathe 44s ease-in-out infinite alternate}
-  .intro-slide[data-i="2"] .intro-art{animation:introGlide 40s ease-in-out infinite alternate}
+  .intro-slide[data-i="0"] .intro-art{--ax:24%;--ay:18%;--bx:80%;--by:78%;animation:introSway 38s ease-in-out infinite alternate}
+  .intro-slide[data-i="1"] .intro-art{--ax:76%;--ay:24%;--bx:20%;--by:80%;animation:introBreathe 44s ease-in-out infinite alternate}
+  .intro-slide[data-i="2"] .intro-art{--ax:58%;--ay:30%;--bx:16%;--by:86%;animation:introGlide 40s ease-in-out infinite alternate}
   @keyframes introSway{
     0%{transform:translate(0,0) rotate(0deg) scale(1)}
     50%{transform:translate(-3%,3%) rotate(5deg) scale(1.08)}
@@ -2810,18 +2816,15 @@
     50%{transform:translate(2%,-3%) scale(1)}
     100%{transform:translate(4%,3%) scale(1.1)}
   }
-  /* the light brand colour flips to dark ink so the headline still carries */
-  .intro-slide.is-light{--ink:#1c2e12}
+  /* every slide is dark, so the headline is always white; the scrim under it
+     is deeper than the story one because the type is larger and sits lower */
   .intro-slide::after{
     content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-    background:linear-gradient(rgba(0,0,0,0) 45%,rgba(0,0,0,.22) 100%);
+    background:linear-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,.34) 100%);
   }
-  .intro-slide.is-light::after{background:linear-gradient(rgba(0,0,0,0) 55%,rgba(28,46,18,.10) 100%)}
-  .media.on-light .nav{background:rgba(28,46,18,.16);color:#1c2e12}
-  .media.on-light .nav:hover{background:rgba(28,46,18,.26)}
   .intro-copy{
-    position:relative;z-index:2;margin:0;padding:28px 28px 30px;
-    font-size:32px;line-height:38px;font-weight:500;letter-spacing:-.022em;
+    position:relative;z-index:2;margin:0;padding:30px 28px 32px;
+    font-size:41px;line-height:46px;font-weight:500;letter-spacing:-.028em;
     color:var(--ink);text-wrap:balance;
   }
   .intro-word{display:inline-block;opacity:0;white-space:pre}
@@ -2835,7 +2838,7 @@
     .intro-word{opacity:1}
     .card.in .intro-slide.on .intro-word{animation:none}
   }
-  @media (max-width:520px){ .intro-copy{font-size:27px;line-height:32px;padding:22px 22px 24px} }
+  @media (max-width:520px){ .intro-copy{font-size:33px;line-height:38px;padding:24px 22px 26px} }
 
   .col.waiting{opacity:.34}
   /* the status card is the one thing a column shows before its own work starts */
@@ -3874,8 +3877,7 @@
       sub:'Recommendations to help Cosmix surface when shoppers ask AI for clean, plant-based protein and gut health.',
       cta:{ label:'Open report' } },
 
-    { agent:'creative', time:'2 hr', ratio:'4:5', campaign:'Editorial Pour',
-      images:['assets/cx-creative-4.jpg'],
+    { agent:'creative', time:'2 hr', campaign:'Editorial Pour',
       title:'Shoot it like fashion, not like health food',
       sub:'An aubergine editorial grade and chocolate mid-pour reframe the pouch as an object of desire — trading the category’s clinical baggage for something the audience actually wants on their feed.',
       cta:{ label:'Generate versions' } },
@@ -4150,6 +4152,17 @@
       </div>
     </div>`;
 
+  // a card with nothing above the copy: no media, no data table, no brand kit.
+  // its CTA moves under the copy, because there is nothing above it to act on
+  const isText = (p) => !p.about && !p.rows && !(p.images || p.chart || p.rings || p.dial);
+  const ctaBar = (c) => `<button class="btn btn-primary btn-bar">
+        <span class="lead">
+          ${c.logo ? svg(I[c.logo], 18, c.brandColor || 'currentColor') : ''}
+          ${c.label}
+        </span>
+        ${svg(I.chevronRight, 18)}
+      </button>`;
+
   const card = (p) => {
     // take the index BEFORE cloning: the clone is not in ALL_POSTS, so indexOf
     // on it returns -1 and every card ends up claiming post -1
@@ -4157,7 +4170,7 @@
     p = { ...p, badge: null };
     const a = AGENTS[p.agent];
     return `
-    <article class="card${p.rows ? ' is-data' : ''}" data-post="${idx}" data-agent="${p.agent}">
+    <article class="card${p.rows ? ' is-data' : ''}${isText(p) ? ' is-text' : ''}" data-post="${idx}" data-agent="${p.agent}">
       <div class="card-head">
         <img class="avatar" src="${a.avatar}" alt="">
         <span class="identity">
@@ -4175,7 +4188,7 @@
             <button role="menuitem" data-act="fewer">${svg(I.bellOff, 17)} Show fewer from this agent</button>
             <button role="menuitem" data-act="snooze">${svg(I.clock, 17)} Snooze this agent for 7 days</button>
             <hr>
-            ${p.rows || p.about ? '' : `<button role="menuitem" data-act="download">${svg(I.download, 17)} Download assets</button>
+            ${p.rows || p.about || isText(p) ? '' : `<button role="menuitem" data-act="download">${svg(I.download, 17)} Download assets</button>
             <hr>`}
             <button role="menuitem" class="danger" data-act="report">${svg(I.flag, 17)} Report a problem</button>
           </div>
@@ -4185,15 +4198,9 @@
       ${p.about ? (p.brandkit ? kitStrip(p.brandkit) : '')
         : p.rows ? `<div class="panel"><div class="rows">${p.rows.map(([k, v]) =>
           `<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join('')}</div></div>`
-        : media(p)}
+        : isText(p) ? '' : media(p)}
 
-      ${p.cta ? `<button class="btn btn-primary btn-bar">
-        <span class="lead">
-          ${p.cta.logo ? svg(I[p.cta.logo], 18, p.cta.brandColor || 'currentColor') : ''}
-          ${p.cta.label}
-        </span>
-        ${svg(I.chevronRight, 18)}
-      </button>` : ''}
+      ${p.cta && !isText(p) ? ctaBar(p.cta) : ''}
 
       <div class="card-actions">
         <div class="act-group">
@@ -4214,6 +4221,8 @@
         <h2 class="card-title">${p.title}</h2>
         <p class="card-sub">${p.sub}</p>
       </div>` : ''}
+
+      ${p.cta && isText(p) ? ctaBar(p.cta) : ''}
 
     </article>`;
   };
@@ -4406,9 +4415,11 @@
     title:'This is your feed',
     sub:'Your agents post their work here as it is ready: creatives, ad moves, listing fixes, visibility reports. Every card is something you can act on. Like it to see more of it, remix it with the agent that made it, or jam with the team when it needs a person.',
     slides:[
-      { c:'#234118', h:'Your agents work. This is where it lands.' },
-      { c:'#a75c51', h:'Remix any post with the agent that made it.' },
-      { c:'#f7eedb', h:'Jam with the team when it needs a person.', light:true }
+      // deep base, one saturated accent burning through it — brand green,
+      // brand terracotta pushed to ember, then the aubergine of the editorial work
+      { c:'#10250b', c2:'#57b32a', h:'Your agents work. This is where it lands.' },
+      { c:'#4a1d13', c2:'#e0572b', h:'Remix any post with the agent that made it.' },
+      { c:'#241035', c2:'#8b3fb0', h:'Jam with the team when it needs a person.' }
     ]
   };
   const introCard = () => {
@@ -4427,7 +4438,7 @@
       <div class="media is-carousel" data-r="square">
         <div class="track">
           ${INTRO.slides.map((s, i) => `
-          <div class="slide intro-slide${s.light ? ' is-light' : ''}" data-i="${i}" style="--c:${s.c}">
+          <div class="slide intro-slide" data-i="${i}" style="--c:${s.c};--c2:${s.c2}">
             <div class="intro-art"></div>
             <p class="intro-copy">${words(s.h)}</p>
           </div>`).join('')}
@@ -4474,11 +4485,8 @@
     flow.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     // the headline replays each time its slide is the one in view
     const track = el.querySelector('.track');
-    const slideIO = new IntersectionObserver(es => es.forEach(e => {
-      e.target.classList.toggle('on', e.isIntersecting);
-      // the arrows are white glass; over the cream slide they flip to dark
-      if (e.isIntersecting) track.parentElement.classList.toggle('on-light', e.target.classList.contains('is-light'));
-    }), { root: track, threshold: 0.6 });
+    const slideIO = new IntersectionObserver(es => es.forEach(e =>
+      e.target.classList.toggle('on', e.isIntersecting)), { root: track, threshold: 0.6 });
     el.querySelectorAll('.intro-slide').forEach(s => slideIO.observe(s));
   };
 

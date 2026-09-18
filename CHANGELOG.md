@@ -2,6 +2,14 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Intro card goes dark, and one creative card loses its photo
+
+**The intro card's three slides are darker and punchier.** Each slide is now a deep base colour with one saturated accent burning through it, instead of a single brand colour washed light: deep green with a live green, deep rust with an ember orange, and the aubergine of the editorial creative with a violet. The accent sits in a different part of the frame on each slide (top left, top right, upper centre) so the three read as three pictures rather than one picture recoloured. The cream slide is gone, so every slide is dark and the headline is white throughout.
+
+**The headline is larger**, 41px instead of 32px (33px on a phone), still revealing word by word as its slide comes into view.
+
+**"Shoot it like fashion, not like health food" is now a text-only card.** The chocolate pour photo is off it; the card is the agent, the copy, and the action. Because there is no longer anything above the copy to act on, the "Generate versions" button moved from the top of the card to the bottom, under the description, where it closes the card off. The like / remix / jam row sits directly under the header. This is a general rule now, not a one-off: any card with no image, chart or table gets the same treatment, and its menu drops "Download assets" since there is nothing to download.
+
 ## 2026-09-18 — Feed intro card: the feed explains itself, once
 
 The first card in the feed, the first time the feed opens, is a card from ShopOS about the feed itself. (Its code landed in the previous commit, "Feed | Chat tabs", by accident of timing; this entry describes it.)
