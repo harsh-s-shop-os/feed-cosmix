@@ -2,6 +2,15 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Intro slide 1: one geometric image instead of a scene
+
+The previous illustrations (agent characters, little cards, arrows) are gone. Slide 1 now carries one flat, geometric image in the Laws-of-UX register — cream shapes on the slide's own green, no outlines, no characters:
+
+- Six hollow rings across the top are the agents.
+- A solid dot drops out of each ring in turn, falls with weight, and settles into a row; two dimmer rows beneath it are what has already landed. The row fills left to right, then the cycle repeats.
+
+Slides 2 and 3 are deliberately empty above the headline until this direction is approved.
+
 ## 2026-09-18 — More air between tabs, stories and posts; stories centred
 
 Feedback on a screenshot: the tab row, the stories row and the first feed card were stacked with almost no room between them.
