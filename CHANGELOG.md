@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Intro card: dots move to the header row
+
+The slide dots now sit in the card header, next to the ShopOS byline, instead of floating over the image.
+
 ## 2026-09-19 — Intro card: new slide 3 illustration
 
 Slide 3 ("Approve and publish to your platforms.") now uses a new illustration: a phone radiating light with a card/photo held at its center. Replaces the previous card-leaving-the-stack composition.

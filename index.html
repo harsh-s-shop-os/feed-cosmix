@@ -2815,9 +2815,7 @@
      reveals word by word every time the slide comes into view. */
   /* the slide dots ride in the empty top-right of the image, not in an actions
      row of their own; the copy follows the image directly */
-  .card.is-intro .media .dots{left:auto;top:18px;right:18px;transform:none;z-index:3}
-  .card.is-intro .media .dots i{background:rgba(255,255,255,.35)}
-  .card.is-intro .media .dots i.on{background:#fff}
+  .card.is-intro .card-head .dots{position:static;transform:none;margin-left:auto;pointer-events:auto}
   .card.is-intro .card-body{padding-top:16px}
   .intro-slide{
     position:relative;isolation:isolate;overflow:hidden;
@@ -4499,6 +4497,7 @@
         <span class="identity">
           <span class="agent-name">${a.name}</span>
         </span>
+        ${dots(INTRO.slides.length)}
       </div>
 
       <div class="media is-carousel" data-r="square">
@@ -4511,7 +4510,6 @@
         </div>
         <button class="nav nav-prev" hidden aria-label="Previous slide">${svg(I.chevronLeft, 18)}</button>
         <button class="nav nav-next" aria-label="Next slide">${svg(I.chevronRight, 18)}</button>
-        ${dots(INTRO.slides.length)}
       </div>
 
       <div class="card-body">
