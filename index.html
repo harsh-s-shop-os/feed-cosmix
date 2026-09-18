@@ -872,7 +872,7 @@
      deck carries no shimmering status next to a column title */
   .col-now{min-width:0;display:none;justify-content:flex-end;overflow:hidden}
   .col-now .col-live,.col-now .col-off{font-size:12.5px;line-height:18px;flex:0 1 auto;min-width:0}
-  /* the shimmer status is no longer beside the title; it sits in .col-sub below it */
+  /* the live status is no longer beside the title; it sits in the .col-status card */
   .col-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
   .col-fill{flex:1}
   .col-head h2{
@@ -2646,21 +2646,36 @@
   .card.is-connect .btn-bar{border-radius:0 0 var(--r-card) var(--r-card)}
 
   .col.waiting{opacity:.34}
-  .col.waiting .col-body{opacity:0}
+  /* the status card is the one thing a column shows before its own work starts */
+  .col.waiting .col-body > *:not(.col-status){opacity:0}
 
   /* while the feed is being built a column shows its name and that it is working */
   .col-dp{display:none;align-items:center;flex:0 0 auto;margin-left:auto;order:9}
   body.setup-run .col-dot,
   body.setup-run .col-menu,
   body.setup-run .col-meta{display:none}
-  body.setup-run .col-head hr{margin-top:16px}
-  .col-sub{display:none;margin:7px 0 0}
-  body.setup-run .col-sub{display:flex}
-  .col-sub .col-live{display:inline-flex;align-items:center;gap:7px;flex:1;min-width:0}
-  .col-sub .what{font-size:13.5px;line-height:19px;letter-spacing:-.003em}
-  /* a smaller matrix, sized to sit on the copy's line rather than the title's */
-  .col-sub .mx{width:13px;height:13px;grid-template-columns:repeat(4,2px);gap:1.5px}
-  .col-sub .mx i{width:2px;height:2px}
+
+  /* What a column is doing now rides in its own card at the top of that column,
+     not as a byline under the title. The matrix sits where a card's mark would
+     sit, one line in the card title size, and a longer line under it. Nothing
+     shimmers here: the matrix is the only thing moving. */
+  /* deliberately not a .card: it never takes part in the scroll-reveal that
+     real cards do, so it is up the moment its column is */
+  .col-status{
+    display:none;padding:14px 16px 16px;
+    background:var(--card);border-radius:var(--r-card);
+  }
+  body.setup-run .col-status{display:block}
+  .col-status .cs-head{display:flex;align-items:flex-start;gap:8px}
+  .col-status .mx{
+    width:20px;height:20px;margin-top:2px;
+    grid-template-columns:repeat(4,3px);gap:2.5px;
+  }
+  .col-status h3{
+    margin:0;flex:1 1 auto;min-width:0;
+    font-size:16px;font-weight:400;line-height:24px;letter-spacing:-.005em;color:var(--fg);
+  }
+  .col-status p{margin:6px 0 0;font-size:14px;font-weight:400;line-height:20px;color:var(--fg-2)}
 
 
   /* ================= Signals: the customer column ================= */
@@ -4087,20 +4102,42 @@
     // setup-only column: not in COL_ORDER, so it never joins the built deck or the nav
     about:      { name:'Brand', dot:'#c0c0c0' }
   };
-  // one line under each column title while the feed is being built: what that
-  // column is collecting, said the way a CMO would want it said
-  const COL_SUB = {
-    about:      'Reading your brand into memory every agent will use.',
-    creatives:  'Reading your creative direction from what already works.',
-    ads:        'Going through your last 30 days of spend for what deserves more.',
-    storefront: 'Walking your store end-to-end like your average customer.',
-    visibility: 'Asking the AI assistants what they say when your category comes up.'
+  // the card that sits at the top of each column while the feed is being built:
+  // a short line saying what the column is doing, and a longer one saying what
+  // that actually means, said the way a CMO would want it said
+  const COL_STATUS = {
+    about: {
+      title: 'Reading your brand into memory',
+      sub:   'Everything your store already says about who you are \u2014 the voice, the claims, the palette, the way you name things \u2014 read once and written into a single memory that every agent works from.'
+    },
+    creatives: {
+      title: 'Reading your creative direction',
+      sub:   'The frames, hooks and edits that already hold attention on your channels, ranked by what actually landed, so the next brief starts from your best work instead of a blank page.'
+    },
+    ads: {
+      title: 'Going through 30 days of spend',
+      sub:   'Every set from the last month read line by line \u2014 frequency, cost per sale, and the audiences seeing you too often \u2014 to separate what deserves more budget from what is quietly burning it.'
+    },
+    storefront: {
+      title: 'Walking your store end-to-end',
+      sub:   'The whole path your average customer takes, from landing on a collection to finishing checkout, clicked through the way they would \u2014 noting what is slow, what is missing, and what is sitting in drafts.'
+    },
+    visibility: {
+      title: 'Asking the AI assistants about you',
+      sub:   'What the assistants say back when someone asks about your category rather than your name, whether you appear in that answer at all, and which of your competitors they reach for instead.'
+    }
   };
-  // the shimmering status that sits under a column title during setup: a small
-  // matrix and the one line that says what the column is doing, from COL_SUB
-  const colSubHTML = (k) => COL_SUB[k]
-    ? `<div class="col-sub"><span class="col-live">${MATRIX}<span class="what" style="--sh:2.8s">${COL_SUB[k]}</span></span></div>`
-    : '';
+  // one card per column, at the top of the column body: the matrix where a
+  // card's mark would be, the title line, and the longer line under it
+  const colStatusHTML = (k) => {
+    const c = COL_STATUS[k];
+    if (!c) return '';
+    return `
+      <article class="col-status">
+        <div class="cs-head">${MATRIX}<h3>${c.title}</h3></div>
+        <p>${c.sub}</p>
+      </article>`;
+  };
 
   const SECTOR_BY_AGENT = {
     creative:'creatives', performance:'ads', storefront:'storefront', visibility:'visibility'
@@ -4279,10 +4316,10 @@
               </div>
             </span>
           </div>
-          ${colSubHTML(k)}
           <hr>
         </div>
         <div class="col-body">
+          ${colStatusHTML(k)}
           ${k === 'signals' ? '<div class="sig-body" id="sig-body"></div>' : ''}
           ${cards.map((c, i) => card(c) + (COL_CONNECT[k] && i === 1 ? connectCard(COL_CONNECT[k]) : '')).join('')}
           <p class="col-end"${(empty || k === 'signals') ? ' hidden' : ''}>You are caught up on ${SECTORS[k].name.toLowerCase()}.</p>
@@ -6511,10 +6548,9 @@ const aboutCard = (p) => `
               </div>
             </span>
           </div>
-          ${colSubHTML('about')}
           <hr>
         </div>
-        <div class="col-body"></div>
+        <div class="col-body">${colStatusHTML('about')}</div>
         <span class="grab" role="separator" aria-orientation="vertical" aria-label="Column width"></span>
       </section>`;
 
