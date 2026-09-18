@@ -1884,16 +1884,20 @@
   }
 
   /* ---------- entrance ---------- */
-  /* in normal scrolling: just enough to register, not enough to notice */
+  /* in normal scrolling: just enough to register, not enough to notice.
+     The resting state is 20%, not invisible, so the next card peeking at the
+     bottom of the viewport reads as "there is more below" on a fresh load. */
   .card,.feed-end{
-    opacity:0;transform:translateY(5px);
+    opacity:.2;transform:translateY(5px);
     transition:opacity .4s ease,transform .4s ease;
   }
   .card.in,.feed-end.in{opacity:1;transform:none}
 
-  /* first reveal after onboarding: everything rises in from below */
+  /* first reveal after onboarding: everything rises in from below, and that one
+     starts from nothing — the peek cue is for ordinary scrolling, not for this */
   body.revealing .card,
   body.revealing .feed-end{
+    opacity:0;
     transform:translateY(46px);
     transition:opacity .85s cubic-bezier(.19,.86,.28,1),transform .85s cubic-bezier(.19,.86,.28,1);
   }

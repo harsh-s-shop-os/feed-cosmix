@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Cards peek instead of disappearing
+
+Cards that have not been scrolled to yet now rest at 20% opacity instead of fully invisible, so on a fresh load the next card is visible at the bottom edge and it is obvious there is more feed below. They still come up to full opacity as you reach them. The first reveal after onboarding is unchanged — that one still rises in from nothing.
+
 ## 2026-09-19 — Intro card: dots move to the header row
 
 The slide dots now sit in the card header, next to the ShopOS byline, instead of floating over the image.
