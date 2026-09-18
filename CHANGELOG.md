@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Fixed: the Feed | Chat pill sat lower than the logo and the Pro button
+
+On desktop the top bar's three landmarks — the logo, the Feed/Chat pill, and the button on the right — weren't vertically aligned: the pill sat noticeably lower. Root cause: the pill is absolutely positioned to centre itself horizontally, but had no `top` set, so it fell back to a static position that isn't reliably the container's vertical centre. Now pinned on both axes off its own centre, matching the other two.
+
 ## 2026-09-18 — Removed: the "Cosmix is set up" toast when the feed opens
 
 Setup used to hand off to the finished feed with a toast — "Cosmix is set up. This is your feed." — popping over the top of it. Gone. The feed already opens on its own always-first card ("Your agents work. This is where it lands."), so the toast was saying the same thing twice, and worse: a transient popup instead of something that stays on screen long enough to read.

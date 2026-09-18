@@ -359,8 +359,11 @@
   .menu-btn:hover svg{transform:scale(1.2)}
   .wordmark{font-size:18px;font-weight:600;letter-spacing:-.01em}
 
+  /* top:auto on an abspos flex item resolves to a static position that isn't
+     reliably the container's vertical centre, so it sat ~18px lower than the
+     logo and the right-side button — pin both axes off the pill's own centre */
   .seg{
-    position:absolute;left:50%;transform:translateX(-50%);
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     display:flex;align-items:center;
     background:#171717;border-radius:999px;
   }
