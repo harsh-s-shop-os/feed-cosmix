@@ -2,6 +2,14 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Setup columns: the intro card gives way to a status line
+
+- **Each column opens with its intro card already there** — the title ("Reading your brand into memory", "Going through 30 days of spend"…) and the one-paragraph explanation of what that column does. No skeleton, no delay: it is up the instant the setup screen is.
+- **The moment the first real card lands in any column, every intro card folds away at once.** The card shrinks closed, the gap under it closes with it, and the column's real cards take the space.
+- **The intro title moves up under the column heading** as a single shimmering line with the dot-matrix mark in front — the same live-status treatment used before. Only the title moves; the explanation is gone for good, so the information stays on screen without taking any real estate.
+- The old per-step status lines that used to be written beside the title ("Reading your store", "Waiting on the brand", "Posting to your feed") are dropped — the line under each title is the intro title and nothing else.
+- On a phone the status line sits at the top of the column, under the tab row, with its own inset.
+
 ## 2026-09-18 — Data cards: the table never touches the CTA
 
 The key-value table on data cards (e.g. "Five products are disapproved on Meta") sat flush against the CTA bar below it. It now keeps the same air on every side — 12px side insets, 14px above and 14px below — as a written rule in the stylesheet, so it holds wherever the table appears (feed, deck, setup columns) and whatever follows it.
