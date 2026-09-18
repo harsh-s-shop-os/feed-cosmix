@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Intro card: headline overlaps the graphic
+
+Each slide image now dissolves toward the bottom of the frame (full strength to ~40%, gone by the bottom edge), and the headline sits a little higher, so the copy reads over the lower part of the graphic instead of under it. Slide order is now feed → jam → approve, and the three headlines are the locked lines. Slide images are due to be re-cut to fill the frame.
+
 ## 2026-09-19 — Intro card: all three slides illustrated
 
 Slide 3 ("Remix with an agent. Jam with the team.") gets `assets/intro-3.jpg`: one card with a typing indicator above it, two dotted paths out of it, one to a ring (the agent) and one to a solid square (the team). Slides 1 and 2 were also re-cut this morning to the same card vocabulary (3:2 post shape, one tone). The carousel is now complete: rings drop work into a stack, one card is approved and leaves, one card is talked back to.
