@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Feed | Chat tabs: more room around the labels
+
+The two tabs in the top bar sat tight against the edge of their pill. Both now carry 18px of space on each side instead of 12px, on desktop and on a phone. The sliding block behind the active tab measures itself off the tab, so it grew with them.
+
 ## 2026-09-18 — Setup columns: the intro card gives way to a status line
 
 - **Each column opens with its intro card already there** — the title ("Reading your brand into memory", "Going through 30 days of spend"…) and the one-paragraph explanation of what that column does. No skeleton, no delay: it is up the instant the setup screen is.

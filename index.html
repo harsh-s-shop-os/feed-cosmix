@@ -373,7 +373,7 @@
   }
   .tab{
     display:flex;align-items:center;gap:8px;
-    height:36px;padding:8px 12px;border-radius:999px;
+    height:36px;padding:8px 18px;border-radius:999px;
     font:inherit;font-size:12px;font-weight:500;line-height:20px;
     color:var(--fg-3);background:transparent;border:0;cursor:pointer;
     transition:background .15s,color .15s;white-space:nowrap;
@@ -2218,7 +2218,7 @@
     .seg{position:relative;left:auto;transform:none;flex:1;min-width:0;
          display:flex;justify-content:center;margin:0}
     .topbar-right{flex:0 0 auto;margin-left:0}
-    .tab{padding:0 12px}
+    .tab{padding:0 18px}
     .view.is-out{left:0}
     .composer-dock{left:50%;width:calc(100% - 24px);bottom:12px}
 
@@ -2769,6 +2769,73 @@
   }
   .card.is-connect .cn-list svg{flex:0 0 auto;color:var(--fg-3)}
   .card.is-connect .btn-bar{border-radius:0 0 var(--r-card) var(--r-card)}
+
+  /* ---------- intro card: the one card that explains the feed ----------
+     Shown once, the first time the feed opens (localStorage flag; ?intro on
+     the URL brings it back). Three square slides, each a single brand colour
+     washed and drifting the way the story slides do, with one headline that
+     reveals word by word every time the slide comes into view. */
+  .card.is-intro .card-actions{height:52px}
+  .intro-slide{
+    position:relative;isolation:isolate;overflow:hidden;
+    --ink:#fff;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  .intro-art{
+    position:absolute;inset:-25%;z-index:0;
+    background:
+      radial-gradient(closest-side at 28% 24%, color-mix(in srgb, var(--c) 86%, #fff) 0%, transparent 72%),
+      radial-gradient(closest-side at 74% 72%, color-mix(in srgb, var(--c) 72%, #000) 0%, transparent 72%),
+      var(--c);
+    filter:blur(52px) saturate(1.12);
+    transform-origin:50% 50%;
+    will-change:transform;
+  }
+  /* three slides, three drifts: a slow sway, a slow breath, a slow slide */
+  .intro-slide[data-i="0"] .intro-art{animation:introSway 38s ease-in-out infinite alternate}
+  .intro-slide[data-i="1"] .intro-art{animation:introBreathe 44s ease-in-out infinite alternate}
+  .intro-slide[data-i="2"] .intro-art{animation:introGlide 40s ease-in-out infinite alternate}
+  @keyframes introSway{
+    0%{transform:translate(0,0) rotate(0deg) scale(1)}
+    50%{transform:translate(-3%,3%) rotate(5deg) scale(1.08)}
+    100%{transform:translate(3%,-2%) rotate(-4deg) scale(1.02)}
+  }
+  @keyframes introBreathe{
+    0%{transform:scale(1) rotate(0deg)}
+    50%{transform:scale(1.14) rotate(-3deg) translate(2%,-2%)}
+    100%{transform:scale(1.04) rotate(3deg) translate(-2%,2%)}
+  }
+  @keyframes introGlide{
+    0%{transform:translate(-4%,2%) scale(1.06)}
+    50%{transform:translate(2%,-3%) scale(1)}
+    100%{transform:translate(4%,3%) scale(1.1)}
+  }
+  /* the light brand colour flips to dark ink so the headline still carries */
+  .intro-slide.is-light{--ink:#1c2e12}
+  .intro-slide::after{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(rgba(0,0,0,0) 45%,rgba(0,0,0,.22) 100%);
+  }
+  .intro-slide.is-light::after{background:linear-gradient(rgba(0,0,0,0) 55%,rgba(28,46,18,.10) 100%)}
+  .media.on-light .nav{background:rgba(28,46,18,.16);color:#1c2e12}
+  .media.on-light .nav:hover{background:rgba(28,46,18,.26)}
+  .intro-copy{
+    position:relative;z-index:2;margin:0;padding:28px 28px 30px;
+    font-size:32px;line-height:38px;font-weight:500;letter-spacing:-.022em;
+    color:var(--ink);text-wrap:balance;
+  }
+  .intro-word{display:inline-block;opacity:0;white-space:pre}
+  .card.in .intro-slide.on .intro-word{
+    animation:introWord .72s cubic-bezier(.32,.72,0,1) both;
+    animation-delay:calc(var(--i) * 95ms + 180ms);
+  }
+  @keyframes introWord{from{opacity:0;transform:translateY(14px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+  @media (prefers-reduced-motion:reduce){
+    .intro-art{animation:none!important}
+    .intro-word{opacity:1}
+    .card.in .intro-slide.on .intro-word{animation:none}
+  }
+  @media (max-width:520px){ .intro-copy{font-size:27px;line-height:32px;padding:22px 22px 24px} }
 
   .col.waiting{opacity:.34}
   /* the status card is the one thing a column shows before its own work starts */
@@ -4332,6 +4399,89 @@
     </article>`;
   };
 
+
+  // the intro card: what the feed is and the three things you do with it.
+  // Not a post (not in ALL_POSTS), so it never enters the deck or the agent chips
+  const INTRO = {
+    title:'This is your feed',
+    sub:'Your agents post their work here as it is ready: creatives, ad moves, listing fixes, visibility reports. Every card is something you can act on. Like it to see more of it, remix it with the agent that made it, or jam with the team when it needs a person.',
+    slides:[
+      { c:'#234118', h:'Your agents work. This is where it lands.' },
+      { c:'#a75c51', h:'Remix any post with the agent that made it.' },
+      { c:'#f7eedb', h:'Jam with the team when it needs a person.', light:true }
+    ]
+  };
+  const introCard = () => {
+    const a = AGENTS.orchestrator;
+    const words = (h) => h.split(' ').map((w, i) =>
+      `<span class="intro-word" style="--i:${i}">${w}${i < h.split(' ').length - 1 ? ' ' : ''}</span>`).join('');
+    return `
+    <article class="card is-intro" data-intro-card>
+      <div class="card-head">
+        <img class="avatar" src="${a.avatar}" alt="">
+        <span class="identity">
+          <span class="agent-name">${a.name}</span>
+        </span>
+      </div>
+
+      <div class="media is-carousel" data-r="square">
+        <div class="track">
+          ${INTRO.slides.map((s, i) => `
+          <div class="slide intro-slide${s.light ? ' is-light' : ''}" data-i="${i}" style="--c:${s.c}">
+            <div class="intro-art"></div>
+            <p class="intro-copy">${words(s.h)}</p>
+          </div>`).join('')}
+        </div>
+        <button class="nav nav-prev" hidden aria-label="Previous slide">${svg(I.chevronLeft, 18)}</button>
+        <button class="nav nav-next" aria-label="Next slide">${svg(I.chevronRight, 18)}</button>
+      </div>
+
+      <div class="card-actions">
+        ${dots(INTRO.slides.length)}
+      </div>
+
+      <div class="card-body">
+        <h2 class="card-title">${INTRO.title}</h2>
+        <p class="card-sub">${INTRO.sub}</p>
+      </div>
+    </article>`;
+  };
+  // first visit only: the flag is written once the card has actually been on
+  // screen, not when it is rendered, so a run that never reaches the feed does
+  // not spend it. ?intro on the URL shows it regardless (for demos and review)
+  const INTRO_KEY = 'cx-feed-intro-seen';
+  const introWanted = (() => {
+    try { return new URLSearchParams(location.search).has('intro') || !localStorage.getItem(INTRO_KEY); }
+    catch (e) { return true; }
+  })();
+  const wireIntro = () => {
+    const el = document.querySelector('[data-intro-card]');
+    if (!el) return;
+    // "on screen" has to mean the feed itself is showing: the start screen and
+    // the setup run sit over the feed, and an intersection observer cannot see
+    // an overlay, so check the flow state as well and re-check when it changes
+    let inView = false, done = false;
+    const feedShowing = () => !document.body.classList.contains('setup') && !document.getElementById('start');
+    const markSeen = () => {
+      if (done || !inView || !feedShowing()) return;
+      done = true;
+      try { localStorage.setItem(INTRO_KEY, String(Date.now())); } catch (e) {}
+      seen.disconnect(); flow.disconnect();
+    };
+    const seen = new IntersectionObserver(es => { inView = es.some(e => e.isIntersecting); markSeen(); }, { threshold: 0.5 });
+    const flow = new MutationObserver(markSeen);
+    seen.observe(el);
+    flow.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    // the headline replays each time its slide is the one in view
+    const track = el.querySelector('.track');
+    const slideIO = new IntersectionObserver(es => es.forEach(e => {
+      e.target.classList.toggle('on', e.isIntersecting);
+      // the arrows are white glass; over the cream slide they flip to dark
+      if (e.isIntersecting) track.parentElement.classList.toggle('on-light', e.target.classList.contains('is-light'));
+    }), { root: track, threshold: 0.6 });
+    el.querySelectorAll('.intro-slide').forEach(s => slideIO.observe(s));
+  };
+
   // two agents are mid-run and say what they are on; two are not running
   // the sector's face is whoever wrote most of its cards, so nothing is hardcoded
   const SECTOR_LEAD = { signals:'crm', catalog:'storefront', creatives:'creative',
@@ -4978,10 +5128,12 @@
     shopify: POSTS.find(p => p.title === 'The My Happy Gut description reads like an ingredient list')
   };
   document.getElementById('feed').insertAdjacentHTML('beforeend',
+    (introWanted ? introCard() : '') +
     FEED_ORDER.map(c => card(c) +
       (c === FEED_CONNECT_AFTER.meta ? connectCard('meta') :
        c === FEED_CONNECT_AFTER.shopify ? connectCard('shopify') : '')).join(''));
   paintSubbars();
+  wireIntro();
 
   /* ---------------- interactions ---------------- */
   const TOASTS = {
