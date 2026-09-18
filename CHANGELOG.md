@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Removed: the "Cosmix is set up" toast when the feed opens
+
+Setup used to hand off to the finished feed with a toast — "Cosmix is set up. This is your feed." — popping over the top of it. Gone. The feed already opens on its own always-first card ("Your agents work. This is where it lands."), so the toast was saying the same thing twice, and worse: a transient popup instead of something that stays on screen long enough to read.
+
 ## 2026-09-18 — Intro slide 1: one geometric image instead of a scene
 
 The previous illustrations (agent characters, little cards, arrows) are gone. Slide 1 now carries one flat, geometric image in the Laws-of-UX register — cream shapes on the slide's own green, no outlines, no characters:

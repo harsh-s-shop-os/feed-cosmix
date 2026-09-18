@@ -7127,7 +7127,9 @@ const aboutCard = (p) => `
       window.scrollTo(0, 0);
       document.body.classList.add('feed-in');
       setTimeout(() => document.body.classList.remove('feed-in'), 800);
-      toast(`${BRAND.name} is set up. This is your feed.`);
+      // no toast here — the always-first intro card already tells this story
+      // ("Your agents work. This is where it lands."), so a transient popup on
+      // top of it was saying the same thing twice, worse
     };
 
     const begin = (host, fresh) => {
