@@ -2,6 +2,15 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Mobile setup: two accordions, columns as tabs
+
+Phone only; nothing changes on a laptop.
+
+- **The setup rail is a quarter of the screen**, not 40%. The store URL row stays pinned at the top; the commentary underneath scrolls itself to whatever line is being written, so the newest thing is always in view. The agents no longer show names — they sit as a row of small avatars pinned at the bottom of the rail (tap one and its name pops up for a moment).
+- **A chevron at the bottom right of the rail expands it** to the full screen, folding the columns down to just their tab row. Tap the chevron again, or anywhere on the tab row, and the rail folds back to its quarter and the columns return. Two accordions: opening one closes the other; the rail never closes below its quarter.
+- **The columns are tabs.** Instead of each column carrying its own large title, a single row above the columns names all of them — Brand, Creatives, Ads, Storefront, Visibility — with the one on screen highlighted. Tap a tab to jump to that column; swiping the columns moves the highlight. Columns still waiting on the brand show dimmed in the row. The same tab row runs above the Pro deck on a phone (Signals, Catalog, Creatives…), where the deck sidebar is not available.
+- Carried in an uncommitted local fix: the Feed | Chat pill stays attached to its tab on phones (`.seg` position:relative).
+
 ## 2026-09-18 — Mobile: the whole flow now works on a phone (branch `mobile`, first draft)
 
 Below 700px wide the prototype re-lays itself out for a phone. Nothing changes on a laptop; this is the same file, responding to the screen it is on.

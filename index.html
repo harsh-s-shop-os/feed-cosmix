@@ -788,6 +788,7 @@
 
   /* ---------- deck ---------- */
   .deck-wrap{display:flex;height:calc(100vh - 64px)}
+  .deck-tabs,.su-expand{display:none}
   .deck-main{flex:1;min-width:0;display:flex;flex-direction:column}
   .deck-side{
     flex:0 0 330px;border-right:1px solid var(--line-soft);
@@ -2236,7 +2237,10 @@
     .chip{width:32px;height:32px}
     .chip[aria-label="Light mode"],.chip[aria-label="Notifications"]{display:none}
     .credits{height:32px;padding:0 10px;gap:6px}
-    .seg{position:static;transform:none;margin:0 auto}
+    /* position:relative, not static — .seg-pill is absolutely positioned
+       against it; static would hand that off to the next positioned
+       ancestor up the tree and detach the pill from its tab (the glitch) */
+    .seg{position:relative;transform:none;margin:0 auto}
     .tab{padding:0 12px}
     .view.is-out{left:0}
     .composer-dock{left:50%;width:calc(100% - 24px);bottom:12px}
@@ -2255,26 +2259,40 @@
     .deck-wrap{height:calc(100vh - 60px);height:calc(100dvh - 60px)}
     .deck{scroll-snap-type:x mandatory}
     .col{flex:0 0 100vw;width:100vw;border-right:0}
-    .col-head{padding:18px 16px 0}
-    .col-head hr{margin:14px -16px 0}
     .col-body{padding:16px 12px 40px;gap:16px}
     .grab{display:none}
 
-    /* setup: the rail stacks above the columns instead of beside them */
+    /* setup: two accordions. The rail sits above at a quarter of the screen; the columns
+       below are tabs. Expand the rail and the columns fold to their tab row; tap that row
+       (or the chevron) and the rail folds back to a quarter. */
     body.setup-run .deck-wrap{flex-direction:column;height:100vh;height:100dvh}
     body.setup-run .deck-side{
-      display:flex;flex:0 0 auto;max-height:42vh;overflow-y:auto;
+      display:flex;flex:0 0 auto;height:25vh;height:25dvh;min-height:176px;position:relative;
+      overflow-y:auto;scrollbar-width:none;
       border-right:0;border-bottom:1px solid var(--line-soft);
-      padding:12px 16px 14px;gap:12px;
+      padding:10px 16px 0;gap:0;
+      transition:height .38s cubic-bezier(.32,.72,0,1);
     }
-    .su-site{height:46px}
-    .su-stream{margin-top:12px;min-height:0;gap:8px;font-size:13.5px;line-height:19px}
-    .su-foot{margin-top:4px;gap:10px}
-    .su-agents{flex-direction:row;flex-wrap:wrap;gap:8px 18px}
-    .su-ag{gap:8px}
-    .su-ag img{width:26px;height:26px}
-    .su-done{height:34%;padding:0 20px 28px}
-    .su-done h2{font-size:24px;line-height:32px}
+    body.setup-run .deck-side::-webkit-scrollbar{display:none}
+    body.setup-run.su-expanded .deck-side{flex:1 1 auto;height:auto;min-height:0}
+    body.setup-run.su-expanded .deck-main{flex:0 0 auto}
+    body.setup-run.su-expanded .deck{flex:0 0 0px;height:0;min-height:0;overflow:hidden}
+    /* the columns as tabs: one on screen, the row names them all */
+    .deck-tabs{
+      display:flex;position:relative;flex:0 0 auto;gap:4px;padding:8px 12px;
+      overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line-soft);background:var(--bg);
+    }
+    .deck-tabs::-webkit-scrollbar{display:none}
+    .dtab{
+      flex:0 0 auto;height:32px;padding:0 12px;border:0;border-radius:999px;background:transparent;
+      color:var(--fg-3);font:inherit;font-size:13px;font-weight:500;white-space:nowrap;cursor:pointer;
+      transition:background .15s,color .15s,opacity .3s;
+    }
+    .dtab.on{background:#2b2b2b;color:var(--fg)}
+    .dtab.wait{opacity:.5}
+    .col-head h2{display:none}
+    .col-head{padding:10px 16px 0}
+    .col-head hr{margin:10px -16px 0}
 
     /* overlays: sheets and full-width panels */
     .scrim{padding:0;align-items:end}
@@ -2600,6 +2618,39 @@
   .dp i{width:4px;height:4px;border-radius:50%;background:var(--fg-3);animation:dpb 1.25s ease-in-out infinite}
   .dp i:nth-child(2){animation-delay:.16s}
   .dp i:nth-child(3){animation-delay:.32s}
+
+  /* phone: the setup rail as the top accordion (after the rules above so it wins the cascade) */
+  @media (max-width:700px){
+    .su-site{height:46px;flex:0 0 auto;position:sticky;top:0;z-index:2;box-shadow:0 -12px 0 8px var(--bg)}
+    .su-stream{margin-top:12px;min-height:0;gap:8px;padding-bottom:10px;font-size:13.5px;line-height:19px}
+    .su-foot{
+      position:sticky;bottom:0;margin-top:auto;
+      flex-direction:row;align-items:center;gap:0;padding:8px 0 10px;
+      background:var(--bg);box-shadow:0 -10px 14px -6px var(--bg);
+    }
+    .su-head{display:none}
+    .su-agents{flex:1;flex-direction:row;align-items:center;gap:10px}
+    .su-ag{position:relative;gap:0;padding:0}
+    .su-ag img{width:28px;height:28px}
+    .su-ag .dp{display:none}
+    .su-ag .who{
+      position:absolute;left:-6px;bottom:calc(100% + 8px);transform:translateY(4px);
+      padding:5px 9px;border-radius:7px;background:#fafafa;color:#0a0a0a;
+      opacity:0;visibility:hidden;pointer-events:none;white-space:nowrap;
+      transition:opacity .14s,transform .18s cubic-bezier(.34,1.4,.64,1),visibility .14s;
+    }
+    .su-ag .who b{font-size:11.5px;line-height:1;color:inherit}
+    .su-ag.named .who{opacity:1;visibility:visible;transform:none}
+    .su-expand{
+      display:grid;place-items:center;flex:0 0 auto;margin-left:auto;
+      width:32px;height:32px;border:0;border-radius:8px;background:#171717;color:var(--fg-2);cursor:pointer;
+    }
+    .su-expand svg{transition:transform .3s cubic-bezier(.32,.72,0,1)}
+    body.su-expanded .su-expand svg{transform:rotate(180deg)}
+
+    .su-done{height:34%;padding:0 20px 28px}
+    .su-done h2{font-size:24px;line-height:32px}
+  }
   @keyframes dpb{
     0%,72%,100%{opacity:.28;transform:translateY(0)}
     28%{opacity:1;transform:translateY(-3px)}
@@ -3301,6 +3352,7 @@
   <div class="deck-wrap">
     <aside class="deck-side" id="deck-side"></aside>
     <div class="deck-main">
+      <div class="deck-tabs" id="deck-tabs" role="tablist" aria-label="Columns"></div>
       <div class="deck" id="deck"></div>
     </div>
   </div>
@@ -4487,6 +4539,49 @@
   });
 
   let deckBuilt = false;
+  // ---- phone: the columns double as a tab row (one column on screen at a time)
+  const tabsEl = document.getElementById('deck-tabs');
+  const deckCols = () => [...deckEl.querySelectorAll('.col')];
+  const markDeckTab = () => {
+    const cols = deckCols(); if (!cols.length) return;
+    const dr = deckEl.getBoundingClientRect(), mid = dr.left + deckEl.clientWidth / 2;
+    let i = cols.findIndex(c => { const r = c.getBoundingClientRect(); return r.left <= mid && r.right > mid; });
+    if (i < 0) i = deckEl.scrollLeft <= 0 ? 0 : cols.length - 1;
+    tabsEl.querySelectorAll('.dtab').forEach((t, j) => {
+      t.classList.toggle('on', j === i);
+      t.setAttribute('aria-selected', String(j === i));
+      t.classList.toggle('wait', cols[j].classList.contains('waiting'));
+    });
+    const on = tabsEl.querySelector('.dtab.on');
+    if (on) tabsEl.scrollTo({ left: on.offsetLeft - (tabsEl.clientWidth - on.offsetWidth) / 2, behavior: 'smooth' });
+  };
+  const paintDeckTabs = () => {
+    tabsEl.innerHTML = deckCols().map((c, i) =>
+      `<button class="dtab" role="tab" data-i="${i}">${c.querySelector('.col-head h2')?.textContent || ''}</button>`).join('');
+    markDeckTab();
+  };
+  window.__paintDeckTabs = paintDeckTabs;
+  deckEl.addEventListener('scroll', () => requestAnimationFrame(markDeckTab), { passive: true });
+  tabsEl.addEventListener('click', (e) => {
+    // the tab row is the collapsed half of the setup accordion: any tap on it brings the columns back
+    document.body.classList.remove('su-expanded');
+    document.getElementById('su-expand')?.setAttribute('aria-expanded', 'false');
+    const t = e.target.closest('.dtab'); if (!t) return;
+    const col = deckCols()[+t.dataset.i]; if (!col) return;
+    deckEl.scrollTo({ left: deckEl.scrollLeft + col.getBoundingClientRect().left - deckEl.getBoundingClientRect().left, behavior: 'smooth' });
+  });
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('#su-expand'); if (!b) return;
+    const on = document.body.classList.toggle('su-expanded');
+    b.setAttribute('aria-expanded', String(on));
+  });
+  // agent avatars carry no name on a phone: a tap shows it for a moment
+  document.addEventListener('click', (e) => {
+    const ag = e.target.closest('.su-ag'); if (!ag || !window.matchMedia('(max-width:700px)').matches) return;
+    ag.classList.add('named');
+    clearTimeout(ag._tipT); ag._tipT = setTimeout(() => ag.classList.remove('named'), 1800);
+  });
+
   const buildDeck = (empty) => {
     // a rebuild replaces every column, which would otherwise throw the reader
     // back to the first one — so hold the scroll across it
@@ -4495,6 +4590,7 @@
     // one frame it takes to put the scroll back where the reader left it
     document.body.classList.add('col-dragging');
     deckEl.innerHTML = COL_ORDER.map(k => colHTML(k, empty)).join('');
+    paintDeckTabs();
     // the deck is dense, so its cards arrive already settled
     deckEl.querySelectorAll('.card').forEach(el => el.classList.add('in'));
     if (!empty) {
@@ -6324,6 +6420,9 @@
               <span class="dp" data-dp="${k}" hidden><i></i><i></i><i></i></span>
             </div>`).join('')}
         </div>
+        <button class="su-expand" id="su-expand" type="button" aria-label="Expand" aria-expanded="false">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
       </div>`;
 
     const timers = [];
@@ -6354,6 +6453,9 @@
       const span = document.createElement('p');
       span.className = 'run';
       el.appendChild(span);
+      // the rail scrolls to the line being written, so a short panel still shows the newest thing
+      const side = document.getElementById('deck-side');
+      if (side) side.scrollTop = side.scrollHeight;
       let i = 0;
       const tick = () => {
         // write a few characters a frame, the way a model streams
@@ -6653,6 +6755,7 @@ const aboutCard = (p) => `
       const col = deckEl.querySelector(`.col[data-col="${k}"]`);
       const body = col.querySelector('.col-body');
       col.classList.remove('waiting');
+      window.__paintDeckTabs();
       // sideways only: scrollIntoView would also scroll the page and, on a phone, push the setup rail off the top
       at(200, () => deckEl.scrollTo({ left: deckEl.scrollLeft + col.getBoundingClientRect().right - deckEl.getBoundingClientRect().right, behavior:'smooth' }));
       byAgent(k).forEach((p2, i) => {
@@ -6762,7 +6865,7 @@ const aboutCard = (p) => `
 
     const reallyOpenFeed = () => {
       document.body.classList.remove('setup-out');
-      document.body.classList.remove('setup', 'setup-run');
+      document.body.classList.remove('setup', 'setup-run', 'su-expanded');
       document.getElementById('su-done').classList.remove('on');
       window.__setBrand(BRAND.name);
       // the deck is now a real deck: rebuild it properly and hand the feed over
@@ -6802,6 +6905,7 @@ const aboutCard = (p) => `
           deckEl.insertBefore(aboutWrap.firstElementChild, deckEl.firstElementChild);
         }
         deckEl.querySelectorAll('.col').forEach(c => c.classList.add('waiting'));
+        window.__paintDeckTabs();
         SETUP_COLS.forEach(k => setColStatus(k, k === 'about' ? 'Reading your store' : 'Waiting on the brand'));
         sideEl.innerHTML = suHTML();
       });
