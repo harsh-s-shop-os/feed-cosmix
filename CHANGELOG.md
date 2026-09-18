@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-19 — Intro card: slide 2 gets its image
+
+Slide 2 ("Approve it, and it ships.") now carries `assets/intro-2.jpg`: the approved card, its ring filled, leaving the stack to the right with a trail behind it. Slide 3 is the last one still on the colour wash.
+
 ## 2026-09-18 — Intro card: new copy, slide 1 gets its final image
 
 The carousel now tells one story in three lines: "Six agents. One feed. New work every day." / "Approve it, and it ships." / "Remix with an agent. Jam with the team." Title "This is your feed"; the description covers what posts here, that each card is finished work, and the three actions (approve, remix, jam).
