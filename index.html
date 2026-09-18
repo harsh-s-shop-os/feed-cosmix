@@ -2215,8 +2215,12 @@
        itself, rather than handing that off to the next positioned ancestor up
        the tree and detaching the pill from its tab. */
     .topbar-left{flex:0 0 auto}
-    .seg{position:relative;left:auto;transform:none;flex:1;min-width:0;
-         display:flex;justify-content:center;margin:0}
+    /* the pill is painted on .seg itself, so on the desktop's flex:1 the dark
+       capsule stretched across the whole middle of the bar even though the
+       tabs sat centred inside it. On a phone .seg instead sizes to its tabs
+       and a wrapper does the centring, so the capsule hugs Feed/Chat only. */
+    .topbar-mid{flex:1;min-width:0;display:flex;justify-content:center}
+    .seg{position:relative;left:auto;transform:none;flex:0 0 auto;min-width:0;margin:0}
     .topbar-right{flex:0 0 auto;margin-left:0}
     .tab{padding:0 20px}
     .view.is-out{left:0}
@@ -3407,6 +3411,7 @@
     </button>
   </div>
 
+  <div class="topbar-mid">
   <nav class="seg" role="tablist" aria-label="Primary">
     <span class="seg-pill" id="seg-pill" aria-hidden="true"></span>
     <button class="tab" role="tab" aria-selected="true">
@@ -3423,6 +3428,7 @@
       Chat
     </button>
   </nav>
+  </div>
 
   <div class="topbar-right">
     <div class="tb-ls" id="layout-switch-top"></div>

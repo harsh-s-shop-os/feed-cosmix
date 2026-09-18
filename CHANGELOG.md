@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Fixed: the Feed | Chat pill stretched across the phone topbar
+
+On a phone the dark capsule behind Feed/Chat was stretching almost edge to edge, with the two tabs floating centred inside a much wider bar than they needed. The pill background lives on the same element that was also set to fill the space between the menu button and the right-side controls (`flex:1`) — so the background painted that whole span, not just the tabs. Fixed by giving that spacer its own wrapper: the wrapper stretches and centers, the pill now sizes to just Feed and Chat. Desktop is unaffected.
+
 ## 2026-09-18 — Intro card: an illustration on each slide
 
 The empty upper half of each intro slide now carries a small line illustration, built from the real agent avatars (unchanged, static) and simple card shapes. Only the props move, slowly, at the tempo of the gradient behind them.
