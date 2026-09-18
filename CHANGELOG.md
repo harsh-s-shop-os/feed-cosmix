@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-18 — Reverted: agent avatar accents
+
+The small looping accent added to each agent avatar (spark, arrow, glint, ping, dot, halo) is reverted — misread the brief. All six avatars are back to exactly their prior static SVGs.
+
 ## 2026-09-18 — Each agent's face carries one small, looping idea
 
 (Its code landed already, folded into an unrelated tab-padding commit by timing; this entry describes it.) The six agent avatars — top-left of every card, and everywhere else the avatar appears — stay static: no blinking, no breathing. But each now carries one tiny animated detail, conceptually tied to what that agent does:
