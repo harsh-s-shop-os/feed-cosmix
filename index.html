@@ -160,9 +160,8 @@
     background:#f5f5f5;color:#0a0a0a;
     font-size:12.5px;font-weight:500;line-height:28px;white-space:nowrap;
   }
-  .rail-item:hover .rail-tip,
-  .rail-item:focus-within .rail-tip{opacity:1;visibility:visible;transform:none}
-  .rail.open .rail-tip{display:none}
+  /* no hover tooltips on the rail: hovering opens it and the labels take over */
+  .rail-tip{display:none}
   body.hist-open .rail-item[data-item="history"] .rail-tip{display:none}
 
   .rail-fly{
@@ -2814,7 +2813,12 @@
      the URL brings it back). Three square slides, each a single brand colour
      washed and drifting the way the story slides do, with one headline that
      reveals word by word every time the slide comes into view. */
-  .card.is-intro .card-actions{height:52px}
+  /* the slide dots ride in the empty top-right of the image, not in an actions
+     row of their own; the copy follows the image directly */
+  .card.is-intro .media .dots{left:auto;top:18px;right:18px;transform:none;z-index:3}
+  .card.is-intro .media .dots i{background:rgba(255,255,255,.35)}
+  .card.is-intro .media .dots i.on{background:#fff}
+  .card.is-intro .card-body{padding-top:16px}
   .intro-slide{
     position:relative;isolation:isolate;overflow:hidden;
     --ink:#fff;
@@ -4507,9 +4511,6 @@
         </div>
         <button class="nav nav-prev" hidden aria-label="Previous slide">${svg(I.chevronLeft, 18)}</button>
         <button class="nav nav-next" aria-label="Next slide">${svg(I.chevronRight, 18)}</button>
-      </div>
-
-      <div class="card-actions">
         ${dots(INTRO.slides.length)}
       </div>
 
@@ -5847,14 +5848,11 @@
     setRail(!railPinned));
   railScrim.addEventListener('click', () => setRail(false));
 
-  // Desktop only, pointer only. Resting on the strip itself opens the rail;
-  // resting on one of the three visible icons (or the logo) does not, so
-  // their tooltips get to do their job. Once open it stays open until the
-  // pointer leaves the rail altogether.
+  // Desktop only, pointer only. Resting anywhere on the rail opens it, icons
+  // included; it stays open until the pointer leaves the rail altogether.
   const railHover = window.matchMedia('(min-width:701px) and (hover:hover)');
-  rail.addEventListener('mousemove', (e) => {
+  rail.addEventListener('mouseenter', () => {
     if (!railHover.matches || railPinned || rail.classList.contains('open')) return;
-    if (e.target.closest('.rail-item, .rail-logo')) return;
     setRail(true, { pin:false });
   });
   rail.addEventListener('mouseleave', () => {
