@@ -37,6 +37,17 @@
     min-height:100vh;
     padding-bottom:120px;
     padding-left:60px;
+    transition:padding-left .34s cubic-bezier(.32,.72,0,1);
+  }
+  /* The open rail is part of the layout, so the page moves over instead of
+     being covered or dimmed. Phones keep padding-left:0 - there the rail is a
+     drawer - which is why this is desktop-only. The three fixed panels that
+     were measured off the 60px strip move with it. */
+  @media (min-width:701px){
+    body.rail-wide{padding-left:236px}
+    body.rail-wide .hist{left:248px}
+    body.rail-wide .view.is-out{left:236px}
+    body.rail-wide .composer-dock{left:calc(50% + 118px)}
   }
 
   /* ---------- left rail ---------- */
@@ -47,10 +58,13 @@
     background:var(--bg);border-right:1px solid var(--line-soft);
     transition:width .34s cubic-bezier(.32,.72,0,1), background .2s;
   }
+  /* Two states, not a sheet. Open, the rail is simply wider and the page
+     makes room for it (body.rail-wide, below). The drop shadow belongs to the
+     phone drawer, which really does sit over the page; on desktop there is
+     nothing for it to cast onto. */
   .rail.open{
     width:236px;
     background:#0f0f0f;
-    box-shadow:26px 0 60px rgba(0,0,0,.55);
   }
 
   .rail-logo{
@@ -160,8 +174,15 @@
     background:#f5f5f5;color:#0a0a0a;
     font-size:12.5px;font-weight:500;line-height:28px;white-space:nowrap;
   }
-  /* no hover tooltips on the rail: hovering opens it and the labels take over */
-  .rail-tip{display:none}
+  /* Collapsed, the visible icons name themselves on hover. Agents is the
+     exception: it answers with the fly-out of the four agents instead, the
+     same one it shows when the rail is open. Open, every label is already on
+     screen, so the tips stay out of the way. */
+  .rail:not(.open) .rail-item:hover > .rail-tip,
+  .rail:not(.open) .rail-item:focus-within > .rail-tip{
+    opacity:1;visibility:visible;transform:none;
+  }
+  .rail.open .rail-tip{display:none}
   body.hist-open .rail-item[data-item="history"] .rail-tip{display:none}
 
   .rail-fly{
@@ -5017,11 +5038,11 @@
       return;
     }
     const cta = e.target.closest('[data-pro-cta]');
-    if (cta) { if (cta.closest('.rail')) setRail(false); return openModal('pro-scrim'); }
+    if (cta) { if (cta.closest('.rail')) dismissRail(); return openModal('pro-scrim'); }
     const l = e.target.closest('[data-layout]');
     if (!l) return;
-    // switching from inside the drawer closes it behind you
-    if (l.closest('.rail')) setRail(false);
+    // switching from inside the phone drawer closes it behind you
+    if (l.closest('.rail')) dismissRail();
     const want = l.dataset.layout;
     if (want === layout) return;
     if (want === 'deck' && !pro) return openModal('pro-scrim');
@@ -5835,31 +5856,27 @@
   railScrim.className = 'rail-scrim';
   document.body.appendChild(railScrim);
 
-  // pinned = opened by a click (logo or the phone menu button); it dims the page
-  // and stays. Hover-opened is quieter: no scrim, and it folds when the pointer leaves.
-  let railPinned = false;
-  const setRail = (open, { pin = open } = {}) => {
-    railPinned = open && pin;
+  // Two states and nothing in between: collapsed (60px, three icons) and open
+  // (236px, full labels). Only the logo toggles it. Hovering the rail never
+  // opens it - that jumped the layout around - the icons answer with a tooltip
+  // instead, or with the agents fly-out.
+  const railDrawer = window.matchMedia('(max-width:700px)');
+  let railOpen = false;
+  const setRail = (open) => {
+    railOpen = open;
     rail.classList.toggle('open', open);
-    railScrim.classList.toggle('on', railPinned);
+    // desktop: the page makes room for the open rail, undimmed and still live.
+    // phone: the rail is a drawer over the page, so it keeps the scrim.
+    document.body.classList.toggle('rail-wide', open && !railDrawer.matches);
+    railScrim.classList.toggle('on', open && railDrawer.matches);
     document.getElementById('rail-logo').setAttribute('aria-expanded', String(open));
   };
+  // clicking through the rail dismisses it only where it is a drawer; on
+  // desktop the state is the user's, not the click's
+  const dismissRail = () => { if (railDrawer.matches) setRail(false); };
 
-  document.getElementById('rail-logo').addEventListener('click', () =>
-    setRail(!railPinned));
+  document.getElementById('rail-logo').addEventListener('click', () => setRail(!railOpen));
   railScrim.addEventListener('click', () => setRail(false));
-
-  // Desktop only, pointer only. Resting anywhere on the rail opens it, icons
-  // included; it stays open until the pointer leaves the rail altogether.
-  const railHover = window.matchMedia('(min-width:701px) and (hover:hover)');
-  rail.addEventListener('mouseenter', () => {
-    if (!railHover.matches || railPinned || rail.classList.contains('open')) return;
-    setRail(true, { pin:false });
-  });
-  rail.addEventListener('mouseleave', () => {
-    if (railPinned || !rail.classList.contains('open')) return;
-    setRail(false);
-  });
   // on a phone the rail is a drawer; the menu button in the top bar opens it
   document.getElementById('tb-menu')?.addEventListener('click', () => setRail(true));
   // the drawer never stays open across a breakpoint change
@@ -5877,7 +5894,7 @@
 
   document.querySelectorAll('.rail-btn').forEach(b => b.addEventListener('click', () => {
     const key = b.dataset.nav;
-    setRail(false);
+    dismissRail();
 
     // search and history are overlays: they never take the selected state
     if (key === 'search')  return setSpot(true);
@@ -5904,7 +5921,7 @@
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    setRail(false);
+    dismissRail();
     if (histEl.classList.contains('on')) setHistory(false);
   });
 

@@ -14,6 +14,15 @@ The slide dots now sit in the card header, next to the ShopOS byline, instead of
 
 Slide 3 ("Approve and publish to your platforms.") now uses a new illustration: a phone radiating light with a card/photo held at its center. Replaces the previous card-leaving-the-stack composition.
 
+## 2026-09-20 — Left rail: two states, tooltips back, no hover-open
+
+The rail is now a sidebar with exactly two states, collapsed or expanded, and nothing temporary in between.
+
+- **Hover no longer opens it.** A collapsed rail stays collapsed wherever the pointer rests. The jump on every pass of the mouse is gone.
+- **The visible icons name themselves again.** Home and Search each show a small tooltip on hover. Agents shows its fly-out of the four agents — Creative generation, AI visibility, Performance marketing, Shopify store — the same list, in the same place, whether the rail is collapsed or expanded.
+- **Clicking the logo expands the rail into the layout, not over it.** No dimming, no scrim: the page keeps working and simply shifts right to make room, and shifts back when you collapse it. The history panel and the docked composer move with it.
+- **It stays where you put it.** Clicking Home, or any other nav item, no longer folds the rail behind you. Only the logo toggles the state. On a phone the rail is still a drawer, scrim and all.
+
 ## 2026-09-19 — Launch Reveal card: new creative
 
 The "Position the launch as an occasion, not a product drop" post now uses the final cloche-lift photography (pancake mix pouch + shake glass under the lifted glass cloche, warm amber spotlight) instead of the placeholder image.
