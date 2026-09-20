@@ -205,6 +205,14 @@
     font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);
   }
   .fly-head:first-child{margin-top:2px}
+  /* The fly-out names itself only while the rail is collapsed: there the icon
+     has no label beside it, so the menu has to say what it belongs to. Open,
+     the word "Agents" is already sitting right next to it. */
+  .fly-title{
+    margin:6px 0 7px;padding:0 12px;
+    font-size:12px;font-weight:500;line-height:1;color:var(--fg-3);
+  }
+  .rail.open .fly-title{display:none}
   .fly-row{
     display:flex;align-items:center;gap:13px;width:100%;
     height:46px;padding:0 12px;border:0;border-radius:14px;
@@ -3289,6 +3297,7 @@
       <span class="rail-label">Agents</span>
     </button>
       <div class="rail-fly">
+        <p class="fly-title">Agents</p>
         <button class="fly-row" data-fly="Creative generation"><img src="assets/agent-creative.svg" alt="">Creative generation<svg class="go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></button>
         <button class="fly-row" data-fly="AI visibility"><img src="assets/agent-visibility.svg" alt="">AI visibility<svg class="go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></button>
         <button class="fly-row" data-fly="Performance marketing"><img src="assets/agent-performance.svg" alt="">Performance marketing<svg class="go" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></button>
