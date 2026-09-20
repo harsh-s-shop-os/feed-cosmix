@@ -14,6 +14,10 @@ The slide dots now sit in the card header, next to the ShopOS byline, instead of
 
 Slide 3 ("Approve and publish to your platforms.") now uses a new illustration: a phone radiating light with a card/photo held at its center. Replaces the previous card-leaving-the-stack composition.
 
+## 2026-09-20 — Left rail: workspace badge stays visible when collapsed
+
+Collapsed, the Cosmix workspace badge at the foot of the rail no longer disappears — it shrinks to just its icon, same as Home and Search, and answers a hover with a "Cosmix workspace" tooltip. Expanded, it reads in full as before.
+
 ## 2026-09-20 — Left rail: two states, tooltips back, no hover-open
 
 The rail is now a sidebar with exactly two states, collapsed or expanded, and nothing temporary in between.

@@ -129,12 +129,18 @@
   .rail.open .rail-btn{width:100%}
   .rail.open .rail-label{opacity:1;transition-delay:.08s}
 
+  .rail-badge-wrap{
+    position:relative;flex:0 0 auto;
+    width:36px;margin-top:8px;
+    transition:width .34s cubic-bezier(.32,.72,0,1);
+  }
+  .rail.open .rail-badge-wrap{width:100%}
   .rail-badge{
-    flex:0 0 auto;display:flex;align-items:center;gap:12px;overflow:hidden;
-    width:36px;height:36px;padding:0;margin-top:8px;
+    display:flex;align-items:center;gap:12px;overflow:hidden;
+    width:100%;height:36px;padding:0;
     border:0;border-radius:10px;background:transparent;
     cursor:pointer;font:inherit;color:var(--fg-2);
-    transition:background .15s,width .34s cubic-bezier(.32,.72,0,1);
+    transition:background .15s;
   }
   .rail-badge .ini{
     width:36px;height:36px;flex:0 0 auto;border-radius:10px;
@@ -142,7 +148,6 @@
   }
   .rail-badge .ini img{width:100%;height:100%;object-fit:cover;display:block}
   .rail-badge:hover{background:#1a1a1a;color:var(--fg)}
-  .rail.open .rail-badge{width:100%}
 
   /* The utilities the top bar used to carry on its right: the view toggle,
      notifications and theme. They live at the foot of the rail so the top bar
@@ -179,7 +184,9 @@
      same one it shows when the rail is open. Open, every label is already on
      screen, so the tips stay out of the way. */
   .rail:not(.open) .rail-item:hover > .rail-tip,
-  .rail:not(.open) .rail-item:focus-within > .rail-tip{
+  .rail:not(.open) .rail-item:focus-within > .rail-tip,
+  .rail:not(.open) .rail-badge-wrap:hover > .rail-tip,
+  .rail:not(.open) .rail-badge-wrap:focus-within > .rail-tip{
     opacity:1;visibility:visible;transform:none;
   }
   .rail.open .rail-tip{display:none}
@@ -352,28 +359,26 @@
     .hist,.spot,.spot-scrim{transition:none}
   }
 
-  /* Collapsed, the strip carries three destinations: Home, Search, Agents.
-     Everything else (Library, Skills, Memory, History, the foot, the workspace
-     badge) folds to zero height and comes back as the rail widens, so the
-     three icons do not jump when the rest arrives. On a phone the rail is a
-     drawer that is only ever seen open, so none of this applies there. */
-  .rail-item,.rail-foot,.rail-badge{
+  /* Collapsed, the strip carries three destinations (Home, Search, Agents)
+     plus the workspace badge at the foot, icon-only with its own tooltip.
+     Library, Skills, Memory, History and the rest of the foot fold to zero
+     height and come back as the rail widens, so the visible icons do not
+     jump when the rest arrives. On a phone the rail is a drawer that is only
+     ever seen open, so none of this applies there. */
+  .rail-item,.rail-foot{
     transition:max-height .34s cubic-bezier(.32,.72,0,1),opacity .2s ease,
                margin .34s cubic-bezier(.32,.72,0,1),padding .34s cubic-bezier(.32,.72,0,1),
                width .34s cubic-bezier(.32,.72,0,1),background .15s;
   }
   .rail-item{max-height:36px}
   .rail-foot{max-height:260px}
-  .rail-badge{max-height:36px}
   @media (min-width:701px){
     .rail:not(.open) .rail-nav .rail-item:not([data-item="home"]):not([data-item="search"]):not([data-item="agents"]),
-    .rail:not(.open) .rail-foot,
-    .rail:not(.open) .rail-badge{
+    .rail:not(.open) .rail-foot{
       max-height:0;opacity:0;overflow:hidden;pointer-events:none;
       margin-top:-4px;   /* swallow the nav's 4px gap so the three icons stay adjacent */
     }
     .rail:not(.open) .rail-foot{padding-top:0;margin-top:0;border-top-color:transparent}
-    .rail:not(.open) .rail-badge{margin-top:0}
   }
 
   .rail-scrim{
@@ -383,7 +388,7 @@
   .rail-scrim.on{opacity:1;visibility:visible}
 
   @media (prefers-reduced-motion:reduce){
-    .rail,.rail-btn,.rail-badge{transition:none}
+    .rail,.rail-btn,.rail-badge,.rail-badge-wrap{transition:none}
   }
 
   /* ---------- top bar ---------- */
@@ -2256,7 +2261,7 @@
     .rail.open{width:min(280px,86vw);transform:none;box-shadow:26px 0 60px rgba(0,0,0,.55)}
     .rail .rail-logo{width:100%;padding:0 6px}
     .rail .rail-word{opacity:1}
-    .rail .rail-btn,.rail .rail-badge{width:100%}
+    .rail .rail-btn,.rail .rail-badge-wrap{width:100%}
     .rail .rail-label{opacity:1}
     .rail-tip{display:none}
     .tb-menu{display:grid}
@@ -3373,10 +3378,13 @@
     </div>
   </div>
 
-  <button class="rail-badge" aria-label="Cosmix workspace">
-    <span class="ini"><img src="assets/brand-mark.jpg" alt="" width="36" height="36"></span>
-    <span class="rail-label">Cosmix</span>
-  </button>
+  <div class="rail-badge-wrap">
+    <button class="rail-badge" aria-label="Cosmix workspace">
+      <span class="ini"><img src="assets/brand-mark.jpg" alt="" width="36" height="36"></span>
+      <span class="rail-label">Cosmix</span>
+    </button>
+    <span class="rail-tip">Cosmix workspace</span>
+  </div>
 </aside>
 
 <section class="start" id="start">
