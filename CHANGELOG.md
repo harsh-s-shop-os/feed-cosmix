@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-22 — Proof-led campaign post: product swapped to Fermented Yeast Protein
+
+The "proof-led campaign" performance post now names Fermented Yeast Protein, built around the FERMAGUT fermentation process, instead of the No-Nonsense pancake mix. Image is a placeholder — assets/cx-fyp-campaign.jpg needs to be added.
+
 ## 2026-09-22 — Shift-budget post: product swapped to My Happy Gut
 
 The "carrying the account this week" performance post now names My Happy Gut instead of No-Nonsense Plant Protein (29% of spend / 41% of revenue), so it doesn't overlap with the Made to Absorb and Fermented Yeast Protein posts already in the same deck column. The ads-agent status line was updated to match. Image is a placeholder — assets/cx-pack-happygut.jpg needs to be added.
