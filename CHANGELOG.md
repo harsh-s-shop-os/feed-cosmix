@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-22 — Fermented Yeast Protein: variation 2 image added
+
+assets/v2/cx-fyp-campaign.jpg is the splash/pour shot for the proof-led campaign post's variation 2. assets/v3/ got a copy of the variation 1 image as a placeholder so the version switch does not break on that slot until a real variation 3 lands. Note: the switch's file registry lives in the uncommitted asset-version-switch feature already in this working tree (not mine), so wiring this file in was done there too but is not part of this commit.
+
 ## 2026-09-22 — Fermented Yeast Protein campaign: real image added
 
 assets/cx-fyp-campaign.jpg is now the actual Indonesian Cacao pack shot (purple bag, iced drink), replacing the placeholder for the "A proof-led campaign for Fermented Yeast Protein" post.
