@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-22 — Shift-budget post: product swapped to My Happy Gut
+
+The "carrying the account this week" performance post now names My Happy Gut instead of No-Nonsense Plant Protein (29% of spend / 41% of revenue), so it doesn't overlap with the Made to Absorb and Fermented Yeast Protein posts already in the same deck column. The ads-agent status line was updated to match. Image is a placeholder — assets/cx-pack-happygut.jpg needs to be added.
+
 ## 2026-09-21 — Left rail: no divider line above Notifications when collapsed
 
 The foot's divider only made sense once labels were on screen to separate from. Collapsed, it left a stray line above the bell now that Notifications sits there; that line is gone. The divider still shows once the rail is open.
