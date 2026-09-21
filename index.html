@@ -4740,7 +4740,7 @@
 
   const deckEl = document.getElementById('deck');
 
-  const COL_CONNECT = { ads:'meta', storefront:'shopify', catalog:'shopify' };
+  const COL_CONNECT = { storefront:'shopify', catalog:'shopify' };
 
   const colHTML = (k, empty) => {
     const cards = empty ? [] : byAgent(k);
@@ -5280,14 +5280,12 @@
   // removed, commented out) independently of this file, and an index here
   // would silently point at the wrong card the next time it does
   const FEED_CONNECT_AFTER = {
-    meta: POSTS.find(p => p.title === 'A proof-led campaign for Fermented Yeast Protein'),
     shopify: POSTS.find(p => p.title === 'The My Happy Gut description reads like an ingredient list')
   };
   document.getElementById('feed').insertAdjacentHTML('beforeend',
     (introWanted ? introCard() : '') +
     FEED_ORDER.map(c => card(c) +
-      (c === FEED_CONNECT_AFTER.meta ? connectCard('meta') :
-       c === FEED_CONNECT_AFTER.shopify ? connectCard('shopify') : '')).join(''));
+      (c === FEED_CONNECT_AFTER.shopify ? connectCard('shopify') : '')).join(''));
   paintSubbars();
   wireIntro();
 
