@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-21 — Left rail: no divider line above Notifications when collapsed
+
+The foot's divider only made sense once labels were on screen to separate from. Collapsed, it left a stray line above the bell now that Notifications sits there; that line is gone. The divider still shows once the rail is open.
+
 ## 2026-09-21 — Left rail: Notifications stays visible when collapsed
 
 The collapsed rail now keeps Notifications at the foot, above the workspace badge, so both are reachable without opening the rail. It behaves like every other collapsed icon: hover gives it the same tooltip and highlight, and the rail does not widen. The layout switch, theme and credits still fold away until the rail opens.

@@ -379,6 +379,9 @@
       max-height:0;opacity:0;overflow:hidden;pointer-events:none;
       margin-top:-4px;   /* swallow the nav's 4px gap so the icons stay adjacent */
     }
+    /* the foot's divider only makes sense once labels are on screen to divide
+       from; collapsed, Notifications sits right under Agents with no line */
+    .rail:not(.open) .rail-foot{border-top-color:transparent}
   }
 
   .rail-scrim{
