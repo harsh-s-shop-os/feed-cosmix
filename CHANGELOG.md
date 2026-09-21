@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-22 — Fermented Yeast Protein campaign: real image added
+
+assets/cx-fyp-campaign.jpg is now the actual Indonesian Cacao pack shot (purple bag, iced drink), replacing the placeholder for the "A proof-led campaign for Fermented Yeast Protein" post.
+
 ## 2026-09-22 — Proof-led campaign post: product swapped to Fermented Yeast Protein
 
 The "proof-led campaign" performance post now names Fermented Yeast Protein, built around the FERMAGUT fermentation process, instead of the No-Nonsense pancake mix. Image is a placeholder — assets/cx-fyp-campaign.jpg needs to be added.
