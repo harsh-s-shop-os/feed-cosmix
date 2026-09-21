@@ -2,6 +2,10 @@
 
 Human-readable log of what changed in the onboarding prototype, for product review. Updated at each local commit — most recent first.
 
+## 2026-09-21 — Left rail: Notifications stays visible when collapsed
+
+The collapsed rail now keeps Notifications at the foot, above the workspace badge, so both are reachable without opening the rail. It behaves like every other collapsed icon: hover gives it the same tooltip and highlight, and the rail does not widen. The layout switch, theme and credits still fold away until the rail opens.
+
 ## 2026-09-19 — Cards peek instead of disappearing
 
 Cards that have not been scrolled to yet now rest at 20% opacity instead of fully invisible, so on a fresh load the next card is visible at the bottom edge and it is obvious there is more feed below. They still come up to full opacity as you reach them. The first reveal after onboarding is unchanged — that one still rises in from nothing.

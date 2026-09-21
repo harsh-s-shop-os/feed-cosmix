@@ -359,12 +359,13 @@
     .hist,.spot,.spot-scrim{transition:none}
   }
 
-  /* Collapsed, the strip carries three destinations (Home, Search, Agents)
-     plus the workspace badge at the foot, icon-only with its own tooltip.
-     Library, Skills, Memory, History and the rest of the foot fold to zero
-     height and come back as the rail widens, so the visible icons do not
-     jump when the rest arrives. On a phone the rail is a drawer that is only
-     ever seen open, so none of this applies there. */
+  /* Collapsed, the strip carries three destinations (Home, Search, Agents),
+     then Notifications and the workspace badge at the foot — each icon-only
+     with its own tooltip. Library, Skills, Memory, History, the layout
+     switch, theme and credits fold to zero height and come back as the rail
+     widens, so the visible icons do not jump when the rest arrives. On a
+     phone the rail is a drawer that is only ever seen open, so none of this
+     applies there. */
   .rail-item,.rail-foot{
     transition:max-height .34s cubic-bezier(.32,.72,0,1),opacity .2s ease,
                margin .34s cubic-bezier(.32,.72,0,1),padding .34s cubic-bezier(.32,.72,0,1),
@@ -374,11 +375,10 @@
   .rail-foot{max-height:260px}
   @media (min-width:701px){
     .rail:not(.open) .rail-nav .rail-item:not([data-item="home"]):not([data-item="search"]):not([data-item="agents"]),
-    .rail:not(.open) .rail-foot{
+    .rail:not(.open) .rail-foot .rail-item:not([data-item="alerts"]){
       max-height:0;opacity:0;overflow:hidden;pointer-events:none;
-      margin-top:-4px;   /* swallow the nav's 4px gap so the three icons stay adjacent */
+      margin-top:-4px;   /* swallow the nav's 4px gap so the icons stay adjacent */
     }
-    .rail:not(.open) .rail-foot{padding-top:0;margin-top:0;border-top-color:transparent}
   }
 
   .rail-scrim{
