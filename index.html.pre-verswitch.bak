@@ -1545,31 +1545,6 @@
   .pill:active{transform:scale(.98)}
   .pill svg{flex:0 0 auto}
 
-  /* ---------- prototype asset-version switch ---------- */
-  .ver-switch{
-    position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:50;
-    display:flex;flex-direction:column;align-items:center;
-    background:#1c1c1c;border-radius:999px;padding:8px 0;gap:0;
-    box-shadow:0 8px 30px rgba(0,0,0,.5);
-  }
-  .ver-btn{
-    display:flex;align-items:center;justify-content:center;
-    width:36px;height:32px;border:0;background:transparent;color:var(--fg-2);
-    cursor:pointer;transition:background .15s ease,color .15s ease;
-  }
-  .ver-btn:first-child{border-radius:999px 999px 4px 4px}
-  .ver-btn:last-child{border-radius:4px 4px 999px 999px}
-  .ver-btn:hover:not(:disabled){background:#262626;color:var(--fg)}
-  .ver-btn:disabled{opacity:.3;cursor:default}
-  .ver-btn svg{display:block}
-  .ver-num{
-    width:36px;height:26px;display:flex;align-items:center;justify-content:center;
-    font-size:13px;font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums;
-  }
-  @media (max-width:860px){
-    .ver-switch{right:10px}
-  }
-
   .btn-primary{background:#fafafa;color:#0a0a0a;font-weight:600}
   .btn-primary:hover{background:#fff}
   .btn-secondary{background:#1c1c1c;color:var(--fg)}
@@ -3931,16 +3906,6 @@
   </button>
 </div>
 
-<div class="ver-switch" id="ver-switch" role="group" aria-label="Prototype asset version">
-  <button class="ver-btn" id="ver-up" aria-label="Next asset version">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-  </button>
-  <span class="ver-num" id="ver-num">1</span>
-  <button class="ver-btn" id="ver-down" aria-label="Previous asset version">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-  </button>
-</div>
-
 <script>
   /* ---------------- data ---------------- */
   const AGENTS = {
@@ -3989,9 +3954,9 @@
       cta:{ label:'Publish Campaign', logo:'meta', brandColor:'#0866FF' } },
 
     { agent:'performance', time:'28 min', ratio:'wide', fit:'contain',
-      images:['assets/cx-fyp-campaign.jpg'],
-      title:'A proof-led campaign for Fermented Yeast Protein',
-      sub:'The FERMAGUT fermentation process and a clean label, called out on the pack itself rather than buried in copy underneath it.',
+      images:['assets/cx-pancake-pack.jpg'],
+      title:'A proof-led campaign for No-Nonsense Plant Protein',
+      sub:'27g of plant protein and a clean label, called out on the pack itself rather than buried in copy underneath it.',
       cta:{ label:'Approve concept' } },
 
     { agent:'visibility', time:'45 min',
@@ -4004,13 +3969,13 @@
       cta:{ label:'Open report' } },
 
     { agent:'creative', time:'1 hr', ratio:'square', campaign:'Morning Ritual',
-      images:['assets/cx-bmb-travertine-1.png', 'assets/cx-bmb-travertine-2.png', 'assets/cx-bmb-travertine-3.png'],
+      images:['assets/cx-creative-3.jpg'],
       title:'Show the supplement in a real morning, not a gym-filtered one',
       sub:'A woman mid-stir in her own kitchen — not a studio, not a workout — positions Cosmix as a habit that belongs in ordinary mornings, not just aspirational ones.',
       cta:{ label:'Start creating' } },
 
     { agent:'storefront', time:'3 hr', ratio:'square',
-      images:['assets/cx-carousel-1.jpg'],
+      images:['assets/cx-carousel-1.jpg','assets/cx-carousel-2.jpg','assets/cx-carousel-3.jpg','assets/cx-carousel-4.jpg','assets/cx-carousel-5.jpg'],
       title:'The My Happy Gut description reads like an ingredient list',
       sub:'Rewritten around how it makes you feel rather than what is in it. Fourteen listings are in the same state.',
       cta:{ label:'Apply Update' } },
@@ -4352,9 +4317,9 @@
   /* ---------------- deck: one column per agent ---------------- */
   // extra cards so the columns read at the volume the deck is built for
   const DECK_ONLY = [
-    { agent:'performance', time:'40 min', ratio:'square', images:['assets/cx-pack-happygut.jpg'],
-      title:'My Happy Gut is carrying the account this week',
-      sub:'It is taking 29% of spend and returning 41% of revenue. Worth widening the budget before the New Year reset.',
+    { agent:'performance', time:'40 min', ratio:'square', images:['assets/cx-pack-vanilla.jpg'],
+      title:'No-Nonsense Plant Protein is carrying the account this week',
+      sub:'It is taking 38% of spend and returning 51% of revenue. Worth widening the budget before the New Year reset.',
       cta:{ label:'Shift budget', logo:'meta', brandColor:'#0866FF' } },
     { agent:'performance', time:'5 hr', ratio:'wide', images:['assets/cx-pancake-lifestyle.jpg'],
       title:'Three Made to Absorb creatives are past frequency 4',
@@ -4653,7 +4618,7 @@
     signals:    { on:false, note:'Waiting on your customer data' },
     catalog:    { on:true,  every:5200, shimmer:'3.1s', stream:['Re-syncing 80 products','Checking Meta feed rejections','Matching GTINs against Shopify','Re-reading stock on the live feed','Scoring the top 20 by rating'] },
     creatives:  { on:true,  every:4300, shimmer:'2.7s', stream:['Finding new trends','Cutting three hero frames','Reading what landed last week','Matching the launch to placements','Drafting the next brief'] },
-    ads:        { on:true,  every:5900, shimmer:'3.4s', stream:['Reading yesterday spend','Checking frequency on four sets','Pulling a CPA delta','Watching the My Happy Gut set','Scoring creative by hold rate'] },
+    ads:        { on:true,  every:5900, shimmer:'3.4s', stream:['Reading yesterday spend','Checking frequency on four sets','Pulling a CPA delta','Watching the No-Nonsense Plant Protein set','Scoring creative by hold rate'] },
     storefront: { on:false, note:'Idle, last run 40 min ago' },
     visibility: { on:false, note:'Queued, next run in 12 min', soon:true }
   };
@@ -5286,7 +5251,7 @@
   // removed, commented out) independently of this file, and an index here
   // would silently point at the wrong card the next time it does
   const FEED_CONNECT_AFTER = {
-    meta: POSTS.find(p => p.title === 'A proof-led campaign for Fermented Yeast Protein'),
+    meta: POSTS.find(p => p.title === 'A proof-led campaign for No-Nonsense Plant Protein'),
     shopify: POSTS.find(p => p.title === 'The My Happy Gut description reads like an ingredient list')
   };
   document.getElementById('feed').insertAdjacentHTML('beforeend',
@@ -7485,85 +7450,6 @@ const aboutCard = (p) => `
 
   })();
 
-</script>
-
-<script>
-  /* ---------- prototype asset-version switch ----------
-     Three self-contained image sets (v1/v2/v3) behind one number, so the
-     same flow/layout/copy can be tested with different product imagery.
-     v1 = the current, real Cosmix asset set, loaded from its original
-     assets/ path. v2 and v3 read from assets/v2/ and assets/v3/ (same
-     filenames as v1, different folder) -- currently placeholder copies of
-     v1 until the real sets are dropped in.
-     Rewrites <img src> and inline background-image:url(...) after the fact
-     rather than touching every render call site, so it stays correct for
-     the feed, the deck, load-more, the story viewer and anything rendered
-     later -- a MutationObserver reapplies it to newly-inserted nodes. */
-  (() => {
-    const ASSET_VERSION_FILES = new Set([
-      // feed / deck creative posts
-      'cx-creative-2.jpg', 'cx-pancake-pack.jpg', 'cx-creative-3.jpg',
-      'cx-carousel-1.jpg', 'cx-carousel-2.jpg', 'cx-carousel-3.jpg', 'cx-carousel-4.jpg', 'cx-carousel-5.jpg',
-      'cx-creative-5.jpg', 'cx-creative-6.jpg',
-      'cx-pack-vanilla.jpg', 'cx-pancake-lifestyle.jpg', 'cx-fyp-annotated.jpg', 'cx-nutrition-panel.jpg',
-      'cx-fyp-campaign.jpg',
-      // story viewer ("Popular ads")
-      'cx-story-holding.jpg', 'cx-story-mocha-wide.jpg', 'cx-story-mocha.jpg'
-    ]);
-
-    let version = 1;
-    try {
-      const saved = parseInt(localStorage.getItem('protoAssetVersion'), 10);
-      if (saved >= 1 && saved <= 3) version = saved;
-    } catch {}
-
-    const versionedSrc = (src) => {
-      const file = src.split('/').pop();
-      if (!ASSET_VERSION_FILES.has(file)) return src;
-      return version === 1 ? `assets/${file}` : `assets/v${version}/${file}`;
-    };
-
-    const refreshVersionedAssets = (root) => {
-      root.querySelectorAll('img[src]').forEach((img) => {
-        const cur = img.getAttribute('src');
-        const next = versionedSrc(cur);
-        if (next !== cur) img.setAttribute('src', next);
-      });
-      root.querySelectorAll('[style*="background-image"]').forEach((el) => {
-        const m = el.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
-        if (!m) return;
-        const next = versionedSrc(m[1]);
-        if (next !== m[1]) el.style.backgroundImage = `url(${next})`;
-      });
-    };
-
-    const verNumEl = document.getElementById('ver-num');
-    const verUpEl = document.getElementById('ver-up');
-    const verDownEl = document.getElementById('ver-down');
-    if (!verNumEl || !verUpEl || !verDownEl) return;
-
-    const setVersion = (v) => {
-      version = Math.max(1, Math.min(3, v));
-      try { localStorage.setItem('protoAssetVersion', version); } catch {}
-      verNumEl.textContent = version;
-      verUpEl.disabled = version === 3;
-      verDownEl.disabled = version === 1;
-      refreshVersionedAssets(document);
-    };
-
-    verUpEl.addEventListener('click', () => setVersion(version + 1));
-    verDownEl.addEventListener('click', () => setVersion(version - 1));
-
-    // catches cards/slides rendered after this runs -- load-more, deck view,
-    // the story viewer, remix panels -- without touching those render paths
-    new MutationObserver((muts) => {
-      for (const m of muts) {
-        if (m.addedNodes.length) { refreshVersionedAssets(document); break; }
-      }
-    }).observe(document.body, { childList: true, subtree: true });
-
-    setVersion(version); // syncs the control and applies a restored v2/v3 on load
-  })();
 </script>
 
 </body>
